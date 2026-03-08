@@ -1,0 +1,61 @@
+# -------------------------------
+# Archivos de Visual Studio
+# -------------------------------
+.vs/
+*.user
+*.suo
+*.csproj.user
+
+# -------------------------------
+# Build results
+# -------------------------------
+bin/
+obj/
+
+# -------------------------------
+# Paquetes NuGet
+# -------------------------------
+packages/
+*.nupkg
+
+# -------------------------------
+# Archivos de publicación / deploy
+# -------------------------------
+publish/
+*.Publish.xml
+
+# -------------------------------
+# Archivos de depuración y caché
+# -------------------------------
+*.pdb
+*.mdb
+*.log
+*.cache
+*.tmp
+
+# -------------------------------
+# Configuración de IDEs y editores
+# -------------------------------
+.vscode/
+.idea/
+*.sln.iml
+*.code-workspace
+*.vspscc
+*.vssscc
+
+# -------------------------------
+# Archivos del sistema
+# -------------------------------
+Thumbs.db
+Desktop.ini
+
+# -------------------------------
+# Configuraciones locales / sensibles
+# -------------------------------
+*.local.json
+
+# -------------------------------
+# Logs de actualización de Visual Studio
+# -------------------------------
+UpgradeLog*.htm
+UpgradeLog*.XML
