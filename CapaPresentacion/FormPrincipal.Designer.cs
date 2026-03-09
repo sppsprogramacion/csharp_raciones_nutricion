@@ -33,6 +33,7 @@
             this.btnCargarElaboradas = new System.Windows.Forms.Button();
             this.btnVerRacionesElaboradasCargadas = new System.Windows.Forms.Button();
             this.btnVerRacionesSolicitadasCargadas = new System.Windows.Forms.Button();
+            this.btnConsultas = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnUsuarios
@@ -110,12 +111,27 @@
             this.btnVerRacionesSolicitadasCargadas.UseVisualStyleBackColor = false;
             this.btnVerRacionesSolicitadasCargadas.Click += new System.EventHandler(this.btnVerRacionesSolicitadasCargadas_Click);
             // 
+            // btnConsultas
+            // 
+            this.btnConsultas.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnConsultas.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnConsultas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConsultas.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConsultas.ForeColor = System.Drawing.Color.White;
+            this.btnConsultas.Location = new System.Drawing.Point(150, 124);
+            this.btnConsultas.Name = "btnConsultas";
+            this.btnConsultas.Size = new System.Drawing.Size(120, 70);
+            this.btnConsultas.TabIndex = 19;
+            this.btnConsultas.Text = "CONSULTAS";
+            this.btnConsultas.UseVisualStyleBackColor = false;
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnConsultas);
             this.Controls.Add(this.btnVerRacionesSolicitadasCargadas);
             this.Controls.Add(this.btnVerRacionesElaboradasCargadas);
             this.Controls.Add(this.btnCargarElaboradas);
@@ -136,6 +152,7 @@
         private System.Windows.Forms.Button btnCargarElaboradas;
         private System.Windows.Forms.Button btnVerRacionesElaboradasCargadas;
         private System.Windows.Forms.Button btnVerRacionesSolicitadasCargadas;
+        private System.Windows.Forms.Button btnConsultas;
     }
 }
 
