@@ -1,6 +1,0 @@
-D:\Pedro\PROGRAMACION-SPPS\C-SHARP\PROYECTOS\RACIONES_NUTRICION\RacionesNutricion\CommonCache\bin\Debug\CommonCache.dll
-D:\Pedro\PROGRAMACION-SPPS\C-SHARP\PROYECTOS\RACIONES_NUTRICION\RacionesNutricion\CommonCache\bin\Debug\CommonCache.pdb
-D:\Pedro\PROGRAMACION-SPPS\C-SHARP\PROYECTOS\RACIONES_NUTRICION\RacionesNutricion\CommonCache\obj\Debug\CommonCache.csproj.AssemblyReference.cache
-D:\Pedro\PROGRAMACION-SPPS\C-SHARP\PROYECTOS\RACIONES_NUTRICION\RacionesNutricion\CommonCache\obj\Debug\CommonCache.csproj.CoreCompileInputs.cache
-D:\Pedro\PROGRAMACION-SPPS\C-SHARP\PROYECTOS\RACIONES_NUTRICION\RacionesNutricion\CommonCache\obj\Debug\CommonCache.dll
-D:\Pedro\PROGRAMACION-SPPS\C-SHARP\PROYECTOS\RACIONES_NUTRICION\RacionesNutricion\CommonCache\obj\Debug\CommonCache.pdb
