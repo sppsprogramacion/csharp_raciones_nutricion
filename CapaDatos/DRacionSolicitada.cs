@@ -26,5 +26,8 @@ namespace CapaDatos
 
         //propiedad de navegacion detalles
         public virtual ICollection<DRacionesSolicitadasDetalles> raciones_solicitadas_detalles { get; set; }
+        
+        //propiedad de navegacion observaciones solicitada
+        public virtual ICollection<DObservacionSolicitada> observaciones_solicitada { get; set; }
     }
 }

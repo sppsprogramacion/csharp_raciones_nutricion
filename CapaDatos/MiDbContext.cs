@@ -15,6 +15,7 @@ namespace CapaDatos
         }
 
         public DbSet<DMenu> Menus { get; set; }
+        public DbSet<DObservacionSolicitada> ObservacionesSolicitada { get; set; }
         public DbSet<DRacionElaborada> RacionesElaboradas { get; set; }
         public DbSet<DRacionElaboradaDetalles> RacionesElaboradasDetalles { get; set; }
         public DbSet<DRacionSolicitada> RacionesSolicitadas { get; set; }
@@ -108,6 +109,7 @@ namespace CapaDatos
                 .WillCascadeOnDelete(false);            
 
             //relaciones raciones solicitadas detalles
+
             modelBuilder.Entity<DRacionesSolicitadasDetalles>()
                .HasRequired(u => u.racion_solicitada)
                .WithMany(r => r.raciones_solicitadas_detalles) // sin propiedad de navegación en DRol
@@ -138,7 +140,24 @@ namespace CapaDatos
                 .HasForeignKey(u => u.usuario_id)
                 .WillCascadeOnDelete(false);
 
+            //relaciones observaciones solicitada
+            modelBuilder.Entity<DObservacionSolicitada>()
+               .HasRequired(u => u.racion_solicitada)
+               .WithMany(r => r.observaciones_solicitada)
+               .HasForeignKey(u => u.racion_solicitada_id)
+               .WillCascadeOnDelete(false);
+
+
+            modelBuilder.Entity<DObservacionSolicitada>()
+                .HasRequired(u => u.usuario)
+                .WithMany() // sin propiedad de navegación
+                .HasForeignKey(u => u.usuario_id)
+                .WillCascadeOnDelete(false);
+
             base.OnModelCreating(modelBuilder);
+
+            
+
 
 
         }
