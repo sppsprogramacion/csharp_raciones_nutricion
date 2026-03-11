@@ -118,7 +118,7 @@ namespace CapaPresentacion
                 }//fin if
                 else
                 {
-                    MessageBox.Show("Debe seleccionar un interno.");
+                    MessageBox.Show("Debe seleccionar un registro.");
                 }
 
             }
@@ -134,7 +134,7 @@ namespace CapaPresentacion
         }
         //FIN LIMPIAR CONTROLES
 
-        //METODO PARA OBTENER LA LISTA DE USUARIOS
+        //METODO PARA OBTENER LA LISTA
         private void CargarDataSolicitadas()
         {
             var nRacionSolicitada = new NRacionSolicitada();
@@ -173,7 +173,7 @@ namespace CapaPresentacion
                 dtgRacionesSolicitadas.Columns[3].Width = 180;
             }
         }       
-        //FIN METODO PARA OBTENER LA LISTA DE USUARIOS..............................................
+        //FIN METODO PARA OBTENER LA LISTA..............................................
 
 
     }

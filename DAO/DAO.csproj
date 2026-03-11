@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="IAuthDao.cs" />
     <Compile Include="IMenuDao.cs" />
+    <Compile Include="IObservacionElaboradaDAO.cs" />
+    <Compile Include="IObservacionGeneralDAO.cs" />
     <Compile Include="IObservacionSolicitadaDAO.cs" />
     <Compile Include="IRacionElaboradaDAO.cs" />
     <Compile Include="IRacionElaboradaDetallesDAO.cs" />

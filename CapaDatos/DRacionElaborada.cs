@@ -22,10 +22,13 @@ namespace CapaDatos
         public int usuario_id { get; set; }
                
 
-        // Propiedad de navegación sap       
+        // Propiedad de navegación usuario       
         public virtual DUsuario usuario { get; set; }
 
         //propiedad de navegacion detalles
         public virtual List<DRacionElaboradaDetalles> raciones_elaboradas_detalles { get; set; }
+
+        //propiedad de navegacion observaciones solicitada
+        public virtual ICollection<DObservacionElaborada> observaciones_elaborada { get; set; }
     }
 }

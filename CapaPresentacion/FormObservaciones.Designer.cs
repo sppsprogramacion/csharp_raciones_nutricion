@@ -30,17 +30,17 @@
         {
             this.chkVigente = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.txtIdUsuario = new System.Windows.Forms.TextBox();
+            this.txtIdObservacion = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtApellido = new System.Windows.Forms.TextBox();
+            this.txtObservacion = new System.Windows.Forms.TextBox();
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnNuevo = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.dtgUsuarios = new System.Windows.Forms.DataGridView();
+            this.dtgObservaciones = new System.Windows.Forms.DataGridView();
             this.lblDatos = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dtgUsuarios)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgObservaciones)).BeginInit();
             this.SuspendLayout();
             // 
             // chkVigente
@@ -63,13 +63,13 @@
             this.label11.TabIndex = 110;
             this.label11.Text = "ID OBSERVACION";
             // 
-            // txtIdUsuario
+            // txtIdObservacion
             // 
-            this.txtIdUsuario.Enabled = false;
-            this.txtIdUsuario.Location = new System.Drawing.Point(18, 54);
-            this.txtIdUsuario.Name = "txtIdUsuario";
-            this.txtIdUsuario.Size = new System.Drawing.Size(133, 20);
-            this.txtIdUsuario.TabIndex = 90;
+            this.txtIdObservacion.Enabled = false;
+            this.txtIdObservacion.Location = new System.Drawing.Point(18, 54);
+            this.txtIdObservacion.Name = "txtIdObservacion";
+            this.txtIdObservacion.Size = new System.Drawing.Size(133, 20);
+            this.txtIdObservacion.TabIndex = 90;
             // 
             // label8
             // 
@@ -89,13 +89,13 @@
             this.label4.TabIndex = 106;
             this.label4.Text = "OBSERVACION";
             // 
-            // txtApellido
+            // txtObservacion
             // 
-            this.txtApellido.Enabled = false;
-            this.txtApellido.Location = new System.Drawing.Point(18, 95);
-            this.txtApellido.Name = "txtApellido";
-            this.txtApellido.Size = new System.Drawing.Size(639, 20);
-            this.txtApellido.TabIndex = 91;
+            this.txtObservacion.Enabled = false;
+            this.txtObservacion.Location = new System.Drawing.Point(18, 95);
+            this.txtObservacion.Name = "txtObservacion";
+            this.txtObservacion.Size = new System.Drawing.Size(653, 20);
+            this.txtObservacion.TabIndex = 91;
             // 
             // btnEditar
             // 
@@ -110,6 +110,7 @@
             this.btnEditar.TabIndex = 98;
             this.btnEditar.Text = "Editar";
             this.btnEditar.UseVisualStyleBackColor = false;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnNuevo
             // 
@@ -124,6 +125,7 @@
             this.btnNuevo.TabIndex = 97;
             this.btnNuevo.Text = "Nuevo";
             this.btnNuevo.UseVisualStyleBackColor = false;
+            this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
             // 
             // btnGuardar
             // 
@@ -139,6 +141,7 @@
             this.btnGuardar.TabIndex = 100;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = false;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // btnCancelar
             // 
@@ -154,24 +157,28 @@
             this.btnCancelar.TabIndex = 101;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = false;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
-            // dtgUsuarios
+            // dtgObservaciones
             // 
-            this.dtgUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgUsuarios.Location = new System.Drawing.Point(12, 207);
-            this.dtgUsuarios.Name = "dtgUsuarios";
-            this.dtgUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dtgUsuarios.Size = new System.Drawing.Size(776, 203);
-            this.dtgUsuarios.TabIndex = 102;
+            this.dtgObservaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtgObservaciones.Location = new System.Drawing.Point(12, 207);
+            this.dtgObservaciones.Name = "dtgObservaciones";
+            this.dtgObservaciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dtgObservaciones.Size = new System.Drawing.Size(776, 203);
+            this.dtgObservaciones.TabIndex = 102;
+            this.dtgObservaciones.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dtgObservaciones_KeyDown);
             // 
             // lblDatos
             // 
             this.lblDatos.AutoSize = true;
+            this.lblDatos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDatos.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.lblDatos.Location = new System.Drawing.Point(20, 9);
             this.lblDatos.Name = "lblDatos";
-            this.lblDatos.Size = new System.Drawing.Size(98, 13);
+            this.lblDatos.Size = new System.Drawing.Size(59, 16);
             this.lblDatos.TabIndex = 112;
-            this.lblDatos.Text = "ID OBSERVACION";
+            this.lblDatos.Text = "DATOS";
             // 
             // FormObservaciones
             // 
@@ -181,19 +188,19 @@
             this.Controls.Add(this.lblDatos);
             this.Controls.Add(this.chkVigente);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.txtIdUsuario);
+            this.Controls.Add(this.txtIdObservacion);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.txtApellido);
+            this.Controls.Add(this.txtObservacion);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.btnNuevo);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.btnCancelar);
-            this.Controls.Add(this.dtgUsuarios);
+            this.Controls.Add(this.dtgObservaciones);
             this.Name = "FormObservaciones";
             this.Text = "OBSERVACIONES";
             this.Load += new System.EventHandler(this.FormObservaciones_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dtgUsuarios)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgObservaciones)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -203,15 +210,15 @@
 
         private System.Windows.Forms.CheckBox chkVigente;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txtIdUsuario;
+        private System.Windows.Forms.TextBox txtIdObservacion;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtApellido;
+        private System.Windows.Forms.TextBox txtObservacion;
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnNuevo;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button btnCancelar;
-        private System.Windows.Forms.DataGridView dtgUsuarios;
+        private System.Windows.Forms.DataGridView dtgObservaciones;
         private System.Windows.Forms.Label lblDatos;
     }
 }

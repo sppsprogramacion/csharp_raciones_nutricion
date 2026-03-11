@@ -743,5 +743,17 @@ namespace CapaPresentacion
                 MessageBox.Show(ex.Message, "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void btnObservaciones_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtIdRacionElaborada.Text))
+            {
+                MessageBox.Show("Debe seleccionar una elaborada", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            FormObservaciones formObservaciones = new FormObservaciones("observacion_elaborada", Convert.ToInt32(txtIdRacionElaborada.Text));
+            formObservaciones.ShowDialog();
+        }
     }
 }

@@ -109,6 +109,8 @@
     <Compile Include="AuthDaoImpl.cs" />
     <Compile Include="ErrorHelper.cs" />
     <Compile Include="MenuDaoImplement.cs" />
+    <Compile Include="ObservacionElaboradaDaoImplement.cs" />
+    <Compile Include="ObservacionGeneralDaoImplement.cs" />
     <Compile Include="ObservacionSolicitadaDaoImplement.cs" />
     <Compile Include="RacionElaboradaDaoImplement.cs" />
     <Compile Include="RacionElaboradaDetallesDaoImplement.cs" />

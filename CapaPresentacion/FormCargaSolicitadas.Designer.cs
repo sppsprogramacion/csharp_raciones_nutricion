@@ -441,6 +441,7 @@
             this.btnObservaciones.TabIndex = 152;
             this.btnObservaciones.Text = "Observaciones";
             this.btnObservaciones.UseVisualStyleBackColor = false;
+            this.btnObservaciones.Click += new System.EventHandler(this.btnObservaciones_Click);
             // 
             // FormCargaSolicitadas
             // 

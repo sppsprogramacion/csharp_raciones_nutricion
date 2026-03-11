@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnActualizarUnidades = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.btnNuevo = new System.Windows.Forms.Button();
@@ -60,6 +60,7 @@
             this.GuardarEditarEncabezado = new System.Windows.Forms.Button();
             this.dtpFechaElaborada = new System.Windows.Forms.DateTimePicker();
             this.btnCancelarEditarEncabezado = new System.Windows.Forms.Button();
+            this.btnObservaciones = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtgUnidadesCantidades)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtgSapMenus)).BeginInit();
             this.SuspendLayout();
@@ -228,8 +229,8 @@
             this.dtgUnidadesCantidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgUnidadesCantidades.Location = new System.Drawing.Point(9, 321);
             this.dtgUnidadesCantidades.Name = "dtgUnidadesCantidades";
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtgUnidadesCantidades.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtgUnidadesCantidades.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dtgUnidadesCantidades.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgUnidadesCantidades.Size = new System.Drawing.Size(1231, 378);
             this.dtgUnidadesCantidades.TabIndex = 112;
@@ -426,6 +427,21 @@
             this.btnCancelarEditarEncabezado.UseVisualStyleBackColor = false;
             this.btnCancelarEditarEncabezado.Click += new System.EventHandler(this.btnCancelarEditarEncabezado_Click);
             // 
+            // btnObservaciones
+            // 
+            this.btnObservaciones.BackColor = System.Drawing.Color.White;
+            this.btnObservaciones.FlatAppearance.BorderColor = System.Drawing.Color.Indigo;
+            this.btnObservaciones.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnObservaciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnObservaciones.ForeColor = System.Drawing.Color.Indigo;
+            this.btnObservaciones.Location = new System.Drawing.Point(126, 167);
+            this.btnObservaciones.Name = "btnObservaciones";
+            this.btnObservaciones.Size = new System.Drawing.Size(112, 28);
+            this.btnObservaciones.TabIndex = 153;
+            this.btnObservaciones.Text = "Observaciones";
+            this.btnObservaciones.UseVisualStyleBackColor = false;
+            this.btnObservaciones.Click += new System.EventHandler(this.btnObservaciones_Click);
+            // 
             // FormCargarElaboradas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -433,6 +449,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1264, 749);
+            this.Controls.Add(this.btnObservaciones);
             this.Controls.Add(this.btnCancelarEditarEncabezado);
             this.Controls.Add(this.dtpFechaElaborada);
             this.Controls.Add(this.GuardarEditarEncabezado);
@@ -508,5 +525,6 @@
         private System.Windows.Forms.Button GuardarEditarEncabezado;
         private System.Windows.Forms.DateTimePicker dtpFechaElaborada;
         private System.Windows.Forms.Button btnCancelarEditarEncabezado;
+        private System.Windows.Forms.Button btnObservaciones;
     }
 }

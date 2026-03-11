@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace DAOImplement
 {
-    public class ObservacionSolicitadaDaoImplement : IObservacionSolicitadaDAO
+    public class ObservacionGeneralDaoImplement : IObservacionGeneralDAO
     {
-        //NUEVO
-        public void Insertar(DObservacionSolicitada observacionSolicitada)
+        public void Insertar(DObservacionGeneral observacionGeneral)
         {
-            observacionSolicitada.usuario_id = 1;
-            observacionSolicitada.vigente = true;
+            observacionGeneral.usuario_id = 1;
+            observacionGeneral.vigente = true;
+
             try
             {
 
                 using (var db = new MiDbContext())
                 using (var tran = db.Database.BeginTransaction())
                 {
-                    db.ObservacionesSolicitada.Add(observacionSolicitada);
+                    db.ObservacionesGeneral.Add(observacionGeneral);
                     db.SaveChanges();
                     tran.Commit();
                 }
@@ -64,24 +64,23 @@ namespace DAOImplement
                 throw new Exception("Error al insertar: " + mensaje);
             }
         }
-        //FIN NUEVO......................................................
 
         //EDITAR
-        public void Editar(DObservacionSolicitada observacionSolicitada)
+        public void Editar(DObservacionGeneral observacionGeneral)
         {
             try
             {
                 using (var db = new MiDbContext())
                 {
                     // Verificar si existe
-                    var existente = db.ObservacionesSolicitada.Find(observacionSolicitada.id_observacion_solicitada);
+                    var existente = db.ObservacionesGeneral.Find(observacionGeneral.id_observacion_general);
                     if (existente == null)
                         throw new Exception("La observacion que intenta editar no existe.");
 
                     // Actualizar manualmente los campos
-                    existente.observacion = observacionSolicitada.observacion;
+                    existente.observacion = observacionGeneral.observacion;
                     existente.historial = existente.historial + " modificado en fecha: " + DateTime.Now.ToString("dd/MM/yyyy") + " //";
-                    existente.vigente = observacionSolicitada.vigente;
+                    existente.vigente = observacionGeneral.vigente;
                     // Agregar acá todos los campos que quieras actualizar
 
                     db.SaveChanges();
@@ -96,22 +95,21 @@ namespace DAOImplement
                 throw new Exception("Error al actualizar el registro: " + mensaje);
             }
         }
-        //FIN EDITAR...............................................
+        //FIN EDITAR....................................................
 
-        //BUSCAR X ID SOLICITADA
-        public (List<DObservacionSolicitada> lista, string error) ListaTodosXSolicitada(int id)
+        //LISTA TODOS GENERAL
+        public (List<DObservacionGeneral> lista, string error) ListaTodos()
         {
-            List<DObservacionSolicitada> lista = new List<DObservacionSolicitada>();
+            List<DObservacionGeneral> lista = new List<DObservacionGeneral>();
 
             try
             {
                 using (var db = new MiDbContext())
                 {
-                    lista = db.ObservacionesSolicitada
-                     .Include(s => s.racion_solicitada)
+                    lista = db.ObservacionesGeneral
                      .Include(s => s.usuario)
-                     .Where(s => s.racion_solicitada_id == id && s.vigente == true)
-                     .OrderBy(s => s.id_observacion_solicitada)   // Orden ascendente
+                     .Where(s => s.vigente == true)
+                     .OrderBy(s => s.id_observacion_general)   // Orden ascendente
                      .ToList();
 
                     return (lista, null);
@@ -129,25 +127,23 @@ namespace DAOImplement
                 return (null, "Error inesperado: " + ex.Message);
             }
         }
-        //FIN BUSCAR X ID SOLICITADA.....................................................
+        //FIN LISTA TODOS GENERAL........................................
 
-        //BUSCAR POR ID 
-        public (DObservacionSolicitada observacionSolicitada, string error) ObtenerPorId(int id)
+        //BUSCAR POR ID OBSERVACION
+        public (DObservacionGeneral observacionGeneral, string error) ObtenerPorId(int idObservacion)
         {
-            DObservacionSolicitada observacionSolicitada = new DObservacionSolicitada();
+            DObservacionGeneral observacionGeneral = new DObservacionGeneral();
 
             try
             {
                 using (var db = new MiDbContext())
                 {
-                    observacionSolicitada = db.ObservacionesSolicitada
-                     .Include(s => s.racion_solicitada)
+                    observacionGeneral = db.ObservacionesGeneral
                      .Include(s => s.usuario)
-                     .Where(s => s.racion_solicitada_id == id)
-                     .OrderBy(s => s.id_observacion_solicitada)   // Orden ascendente
+                     .OrderBy(s => s.id_observacion_general)   // Orden ascendente
                      .FirstOrDefault();
 
-                    return (observacionSolicitada, null);
+                    return (observacionGeneral, null);
                 }
             }
             catch (Exception ex)
@@ -162,7 +158,6 @@ namespace DAOImplement
                 return (null, "Error inesperado: " + ex.Message);
             }
         }
-        //FIN BUSCAR POR ID ........................................................
-
+        //FIN BUSCAR POR ID OBSERVACION.............................................
     }
 }

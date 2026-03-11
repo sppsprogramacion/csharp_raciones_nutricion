@@ -111,6 +111,8 @@
     <Compile Include="DFactores.cs" />
     <Compile Include="DLogin.cs" />
     <Compile Include="DMenu.cs" />
+    <Compile Include="DObservacionElaborada.cs" />
+    <Compile Include="DObservacionGeneral.cs" />
     <Compile Include="DObservacionSolicitada.cs" />
     <Compile Include="DPlanillaLiquidacion.cs" />
     <Compile Include="DRacionElaborada.cs" />

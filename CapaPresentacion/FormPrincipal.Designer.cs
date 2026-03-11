@@ -34,6 +34,7 @@
             this.btnVerRacionesElaboradasCargadas = new System.Windows.Forms.Button();
             this.btnVerRacionesSolicitadasCargadas = new System.Windows.Forms.Button();
             this.btnConsultas = new System.Windows.Forms.Button();
+            this.btnObservacionesGenerales = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnUsuarios
@@ -125,12 +126,28 @@
             this.btnConsultas.Text = "CONSULTAS";
             this.btnConsultas.UseVisualStyleBackColor = false;
             // 
+            // btnObservacionesGenerales
+            // 
+            this.btnObservacionesGenerales.BackColor = System.Drawing.Color.SlateGray;
+            this.btnObservacionesGenerales.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnObservacionesGenerales.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnObservacionesGenerales.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnObservacionesGenerales.ForeColor = System.Drawing.Color.White;
+            this.btnObservacionesGenerales.Location = new System.Drawing.Point(276, 124);
+            this.btnObservacionesGenerales.Name = "btnObservacionesGenerales";
+            this.btnObservacionesGenerales.Size = new System.Drawing.Size(120, 70);
+            this.btnObservacionesGenerales.TabIndex = 20;
+            this.btnObservacionesGenerales.Text = "OBS GENERALES";
+            this.btnObservacionesGenerales.UseVisualStyleBackColor = false;
+            this.btnObservacionesGenerales.Click += new System.EventHandler(this.btnObservacionesGenerales_Click);
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnObservacionesGenerales);
             this.Controls.Add(this.btnConsultas);
             this.Controls.Add(this.btnVerRacionesSolicitadasCargadas);
             this.Controls.Add(this.btnVerRacionesElaboradasCargadas);
@@ -153,6 +170,7 @@
         private System.Windows.Forms.Button btnVerRacionesElaboradasCargadas;
         private System.Windows.Forms.Button btnVerRacionesSolicitadasCargadas;
         private System.Windows.Forms.Button btnConsultas;
+        private System.Windows.Forms.Button btnObservacionesGenerales;
     }
 }
 

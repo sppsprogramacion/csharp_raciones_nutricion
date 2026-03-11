@@ -15,6 +15,8 @@ namespace CapaDatos
         }
 
         public DbSet<DMenu> Menus { get; set; }
+        public DbSet<DObservacionElaborada> ObservacionesElaborada { get; set; }
+        public DbSet<DObservacionGeneral> ObservacionesGeneral { get; set; }
         public DbSet<DObservacionSolicitada> ObservacionesSolicitada { get; set; }
         public DbSet<DRacionElaborada> RacionesElaboradas { get; set; }
         public DbSet<DRacionElaboradaDetalles> RacionesElaboradasDetalles { get; set; }
@@ -101,6 +103,20 @@ namespace CapaDatos
                 .HasForeignKey(u => u.usuario_id)
                 .WillCascadeOnDelete(false);
 
+            //relaciones observaciones elaborada
+            modelBuilder.Entity<DObservacionElaborada>()
+               .HasRequired(u => u.racion_elaborada)
+               .WithMany(r => r.observaciones_elaborada)
+               .HasForeignKey(u => u.racion_elaborada_id)
+               .WillCascadeOnDelete(false);
+
+
+            modelBuilder.Entity<DObservacionElaborada>()
+                .HasRequired(u => u.usuario)
+                .WithMany() // sin propiedad de navegación
+                .HasForeignKey(u => u.usuario_id)
+                .WillCascadeOnDelete(false);
+
             //relaciones raciones solicitadas
             modelBuilder.Entity<DRacionSolicitada>()
                 .HasRequired(u => u.usuario)
@@ -140,6 +156,8 @@ namespace CapaDatos
                 .HasForeignKey(u => u.usuario_id)
                 .WillCascadeOnDelete(false);
 
+            
+
             //relaciones observaciones solicitada
             modelBuilder.Entity<DObservacionSolicitada>()
                .HasRequired(u => u.racion_solicitada)
@@ -154,12 +172,15 @@ namespace CapaDatos
                 .HasForeignKey(u => u.usuario_id)
                 .WillCascadeOnDelete(false);
 
+            //relaciones observaciones elaborada
+            modelBuilder.Entity<DObservacionGeneral>()
+                .HasRequired(u => u.usuario)
+                .WithMany() // sin propiedad de navegación
+                .HasForeignKey(u => u.usuario_id)
+                .WillCascadeOnDelete(false);
+
             base.OnModelCreating(modelBuilder);
-
             
-
-
-
         }
     }
 }

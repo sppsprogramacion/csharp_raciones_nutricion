@@ -55,5 +55,12 @@ namespace CapaPresentacion
             FormRacionesSolicitadas form = new FormRacionesSolicitadas();
             form.ShowDialog();
         }
+
+        private void btnObservacionesGenerales_Click(object sender, EventArgs e)
+        {
+            int id = 0;
+            FormObservaciones formObservaciones = new FormObservaciones("observacion_general", id);
+            formObservaciones.ShowDialog();
+        }
     }
 }
