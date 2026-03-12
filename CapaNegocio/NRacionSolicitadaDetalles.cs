@@ -23,6 +23,12 @@ namespace CapaNegocio
 
         }
 
+        public void InsertarUnDetalle(DRacionesSolicitadasDetalles detalle)
+        {
+            racionSolicitadaDetallesDAO.InsertarUno(detalle);
+
+        }
+
         public void EditarDetalle(DRacionesSolicitadasDetalles solicitadaDetalle)
         {
             racionSolicitadaDetallesDAO.Editar(solicitadaDetalle);

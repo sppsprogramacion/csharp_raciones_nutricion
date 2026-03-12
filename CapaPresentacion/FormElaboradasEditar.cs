@@ -38,6 +38,50 @@ namespace CapaPresentacion
             FormularioAyudas.AjustarFormulario(this);
 
             this.ActualizarUnidadesCantidades();
+
+            //Carga datagrid SapMenus
+            NSapMenu nSapMenu = new NSapMenu();
+            int id_unidad = Convert.ToInt32(this.idUnidadGlobal);
+            //Ccargar Sap y Menus de la unidad
+            (List<DSapMenu> listaSapMenu, string errorResponse) = nSapMenu.ListarxUnidad(id_unidad);
+
+            if (errorResponse != null)
+            {
+                MessageBox.Show(errorResponse, "Nutricion: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            listaSapMenu = listaSapMenu
+                .OrderBy(s => s.tipo_menu.orden)
+                .ToList();
+
+            var datosfiltrados = listaSapMenu
+                .Select(c => new
+                {
+                    IdSap = c.sap_id,
+                    Sap = c.sap.sap,
+                    IdTipoMenu = c.tipo_menu_id,
+                    TipoMenu = c.tipo_menu.tipo_menu,
+                })
+                .ToList();
+
+            dtgTiposMenus.DataSource = null;
+            dtgTiposMenus.Columns.Clear();
+            dtgTiposMenus.Rows.Clear();
+            dtgTiposMenus.DataSource = datosfiltrados;
+            dtgTiposMenus.Columns["IdSap"].Visible = false;
+            dtgTiposMenus.Columns["IdTipoMenu"].Visible = false;
+
+            if (listaSapMenu.Count == 0)
+            {
+                MessageBox.Show("No se encontraron registros", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            else
+            {
+                dtgTiposMenus.Columns[1].Width = 180;
+                dtgTiposMenus.Columns[3].Width = 130;
+            }
         }
         
         private void dtgRacionesCargadas_KeyDown(object sender, KeyEventArgs e)
@@ -157,11 +201,83 @@ namespace CapaPresentacion
             {
                 dtgRacionesCargadas.Columns[0].Width = 80;
                 dtgRacionesCargadas.Columns[1].Width = 150;
-                dtgRacionesCargadas.Columns[2].Width = 150;
+                dtgRacionesCargadas.Columns[2].Width = 130;
                 dtgRacionesCargadas.Columns[3].Width = 50;
                 dtgRacionesCargadas.Columns[4].Width = 50;
             }
         }//FIN ACTUALIZAR UNIADES CANTIDADES...........................................................
 
+        private void dtgTiposMenus_KeyDown(object sender, KeyEventArgs e)
+        {
+            //AL PRESIONAR ENTER MOSTRAR EL TRAMITE
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+
+                if (dtgRacionesCargadas.SelectedRows.Count > 0)
+                {
+                    //cargar datos de datagrid a controles
+                    txtIdMenuCargarUna.Text = txtMenuCargarUna.Text = dtgTiposMenus.CurrentRow.Cells["IdTipoMenu"].Value.ToString();
+                    txtMenuCargarUna.Text = dtgTiposMenus.CurrentRow.Cells["TipoMenu"].Value.ToString();
+                    txtIdSapCargarUna.Text = dtgTiposMenus.CurrentRow.Cells["IdSap"].Value.ToString();
+
+                }
+            }
+        }
+
+        private void btnCancelarCargaUna_Click(object sender, EventArgs e)
+        {
+            txtIdMenuCargarUna.Text = string.Empty;
+            txtMenuCargarUna.Text = string.Empty;
+            txtIdSapCargarUna.Text = string.Empty;
+            txtAlmuerzoCargaUna.Text = string.Empty;
+            txtCenaCargaUna.Text = string.Empty;
+        }
+
+        private void btnGuardarCargaUna_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtIdRacionElaborada.Text))
+            {
+                MessageBox.Show("No hay una elaborada cargada", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(txtIdMenuCargarUna.Text))
+            {
+                MessageBox.Show("Debe seleccionar un registro", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            var entidad = new DRacionElaboradaDetalles
+            {
+                racion_elaborada_id = Convert.ToInt32(txtIdRacionElaborada.Text),
+                sap_id = Convert.ToInt32(txtIdSapCargarUna.Text),
+                unidad_id = Convert.ToInt32(this.idUnidadGlobal),
+                tipo_menu_id = Convert.ToInt32(txtIdMenuCargarUna.Text),
+                almuerzo = Convert.ToInt32(txtAlmuerzoCargaUna.Text),
+                cena = Convert.ToInt32(txtCenaCargaUna.Text),
+                usuario_id = 1
+                // fecha_carga NO se asigna
+            };
+
+            try
+            {
+                var dao = new NRacionElaboradaDetalles();
+                dao.InsertarUnDetalle(entidad);
+
+                MessageBox.Show("Datos guardados correctamente", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.ActualizarUnidadesCantidades();
+
+                txtIdMenuCargarUna.Text = string.Empty;
+                txtMenuCargarUna.Text = string.Empty;
+                txtIdSapCargarUna.Text = string.Empty;
+                txtAlmuerzoCargaUna.Text = string.Empty;
+                txtCenaCargaUna.Text = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
     }
 }

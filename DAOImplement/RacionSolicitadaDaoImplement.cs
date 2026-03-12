@@ -66,6 +66,7 @@ namespace DAOImplement
         }
         //FIN NUEVO.................................................
 
+        //EDITAR
         public void Editar(DRacionSolicitada racionSolicitada)
         {
             try
@@ -94,6 +95,8 @@ namespace DAOImplement
                 throw new Exception("Error al actualizar el registro: " + mensaje);
             }
         }        
+        //FIN EDITAR.............................................
+        
         public DRacionSolicitada ObtenerPorId(int id)
         {
             throw new NotImplementedException();
@@ -127,7 +130,7 @@ namespace DAOImplement
                 return (null, "Error inesperado: " + ex.Message);
             }
         }
-        //FIN LISTAR TODOS
+        //FIN LISTAR TODOS..................................................................
 
         //LISTA POR FECHA
         public (List<DRacionSolicitada> lista, string error) ListaXFecha(string fechaInicio, string fechaFin)
@@ -173,6 +176,51 @@ namespace DAOImplement
                 return (null, "Error inesperado: " + ex.Message);
             }
         }
-        //FIN LISTA POR FECHA
+        //FIN LISTA POR FECHA.........................................................
+
+        //LISTA POR FECHA Y UNIDAD
+        public (List<DRacionSolicitada> lista, string error) ListaXFechaXUnidad(string fechaSolicitada, int unidad)
+        {
+            List<DRacionSolicitada> lista = new List<DRacionSolicitada>();
+
+            DateTime fechaX;
+
+            if (!DateTime.TryParse(fechaSolicitada, out fechaX))
+            {
+                return (null, "Fecha inicio inválida");
+            }
+
+            
+            try
+            {
+                using (var db = new MiDbContext())
+                {
+                    lista = db.RacionesSolicitadas
+                     .Include(s => s.usuario)
+                     .Include(s => s.raciones_solicitadas_detalles)
+                     .Where(s => s.fecha_solicitada == fechaX)
+                     .OrderByDescending(s => s.fecha_solicitada)   // Orden ascendente
+                     .ToList();
+
+                    //foreach (DRacionSolicitada solicitada in lista)
+                    //{
+                    //    List<DRacionesSolicitadasDetalles> detalle = solicitada.raciones_solicitadas_detalles;
+                    //}
+                    return (lista, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                // 🟦 Detecta si realmente es error de conexión MySQL
+                if (ErrorHelper.EsErrorDeConexion(ex))
+                {
+                    return (null, "No hay conexión con el servidor de base de datos.");
+                }
+
+                // Si no es mysqlEx → error inesperado
+                return (null, "Error inesperado: " + ex.Message);
+            }
+        }
+        //FIN LISTA POR FECHA Y UNIDAD................................................
     }
 }

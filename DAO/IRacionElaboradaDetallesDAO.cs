@@ -10,6 +10,7 @@ namespace DAO
     public interface IRacionElaboradaDetallesDAO
     {
         void InsertarLista(List<DRacionElaboradaDetalles> listaDetalles);
+        void InsertarUno(DRacionElaboradaDetalles racionElaborada);
         void Editar(DRacionElaboradaDetalles racionElaborada);
         DRacionElaboradaDetalles ObtenerPorId(int id);
 

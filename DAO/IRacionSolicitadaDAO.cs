@@ -15,5 +15,6 @@ namespace DAO
         DRacionSolicitada ObtenerPorId(int id);
         (List<DRacionSolicitada> lista, string error) ListaTodos();
         (List<DRacionSolicitada> lista, string error) ListaXFecha(string fechaInicio, string fechaFin);
+        (List<DRacionSolicitada> lista, string error) ListaXFechaXUnidad(string fechaSolicitada, int unidad);
     }
 }

@@ -46,8 +46,6 @@
             this.txtFechaElaborada = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.txtIdRacionSolicitada = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.cmbTipoMenu = new System.Windows.Forms.ComboBox();
             this.gboxEditarCargadas = new System.Windows.Forms.GroupBox();
             this.gboxCargarUna = new System.Windows.Forms.GroupBox();
             this.txtAlmuerzoCargaUna = new System.Windows.Forms.TextBox();
@@ -56,9 +54,18 @@
             this.btnCancelarCargaUna = new System.Windows.Forms.Button();
             this.txtCenaCargaUna = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.dtgTiposMenus = new System.Windows.Forms.DataGridView();
+            this.txtIdMenuCargarUna = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtMenuCargarUna = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtIdSapCargarUna = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dtgRacionesCargadas)).BeginInit();
             this.gboxEditarCargadas.SuspendLayout();
             this.gboxCargarUna.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgTiposMenus)).BeginInit();
             this.SuspendLayout();
             // 
             // label7
@@ -180,7 +187,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 16);
+            this.label1.Location = new System.Drawing.Point(6, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(124, 13);
             this.label1.TabIndex = 147;
@@ -189,10 +196,10 @@
             // dtgRacionesCargadas
             // 
             this.dtgRacionesCargadas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgRacionesCargadas.Location = new System.Drawing.Point(8, 32);
+            this.dtgRacionesCargadas.Location = new System.Drawing.Point(8, 36);
             this.dtgRacionesCargadas.Name = "dtgRacionesCargadas";
             this.dtgRacionesCargadas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dtgRacionesCargadas.Size = new System.Drawing.Size(589, 259);
+            this.dtgRacionesCargadas.Size = new System.Drawing.Size(520, 259);
             this.dtgRacionesCargadas.TabIndex = 146;
             this.dtgRacionesCargadas.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dtgRacionesCargadas_KeyDown);
             // 
@@ -232,24 +239,6 @@
             this.txtIdRacionSolicitada.Size = new System.Drawing.Size(108, 20);
             this.txtIdRacionSolicitada.TabIndex = 142;
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 16);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(67, 13);
-            this.label8.TabIndex = 161;
-            this.label8.Text = "TIPO MENU";
-            // 
-            // cmbTipoMenu
-            // 
-            this.cmbTipoMenu.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbTipoMenu.FormattingEnabled = true;
-            this.cmbTipoMenu.Location = new System.Drawing.Point(9, 32);
-            this.cmbTipoMenu.Name = "cmbTipoMenu";
-            this.cmbTipoMenu.Size = new System.Drawing.Size(259, 21);
-            this.cmbTipoMenu.TabIndex = 160;
-            // 
             // gboxEditarCargadas
             // 
             this.gboxEditarCargadas.Controls.Add(this.label1);
@@ -266,33 +255,40 @@
             this.gboxEditarCargadas.Controls.Add(this.label4);
             this.gboxEditarCargadas.Location = new System.Drawing.Point(10, 60);
             this.gboxEditarCargadas.Name = "gboxEditarCargadas";
-            this.gboxEditarCargadas.Size = new System.Drawing.Size(604, 417);
+            this.gboxEditarCargadas.Size = new System.Drawing.Size(540, 417);
             this.gboxEditarCargadas.TabIndex = 162;
             this.gboxEditarCargadas.TabStop = false;
             this.gboxEditarCargadas.Text = "Editar Cargadas";
             // 
             // gboxCargarUna
             // 
+            this.gboxCargarUna.Controls.Add(this.txtIdSapCargarUna);
+            this.gboxCargarUna.Controls.Add(this.label14);
+            this.gboxCargarUna.Controls.Add(this.label13);
+            this.gboxCargarUna.Controls.Add(this.txtIdMenuCargarUna);
+            this.gboxCargarUna.Controls.Add(this.dtgTiposMenus);
+            this.gboxCargarUna.Controls.Add(this.label8);
+            this.gboxCargarUna.Controls.Add(this.label12);
             this.gboxCargarUna.Controls.Add(this.txtAlmuerzoCargaUna);
+            this.gboxCargarUna.Controls.Add(this.txtMenuCargarUna);
             this.gboxCargarUna.Controls.Add(this.btnGuardarCargaUna);
             this.gboxCargarUna.Controls.Add(this.label9);
             this.gboxCargarUna.Controls.Add(this.btnCancelarCargaUna);
             this.gboxCargarUna.Controls.Add(this.txtCenaCargaUna);
             this.gboxCargarUna.Controls.Add(this.label10);
-            this.gboxCargarUna.Controls.Add(this.label8);
-            this.gboxCargarUna.Controls.Add(this.cmbTipoMenu);
-            this.gboxCargarUna.Location = new System.Drawing.Point(623, 62);
+            this.gboxCargarUna.Location = new System.Drawing.Point(561, 59);
             this.gboxCargarUna.Name = "gboxCargarUna";
-            this.gboxCargarUna.Size = new System.Drawing.Size(287, 417);
+            this.gboxCargarUna.Size = new System.Drawing.Size(402, 417);
             this.gboxCargarUna.TabIndex = 163;
             this.gboxCargarUna.TabStop = false;
-            this.gboxCargarUna.Text = "Cargar";
+            this.gboxCargarUna.Text = "Cargar nuevo";
+            this.gboxCargarUna.Enter += new System.EventHandler(this.gboxCargarUna_Enter);
             // 
             // txtAlmuerzoCargaUna
             // 
-            this.txtAlmuerzoCargaUna.Location = new System.Drawing.Point(8, 86);
+            this.txtAlmuerzoCargaUna.Location = new System.Drawing.Point(224, 335);
             this.txtAlmuerzoCargaUna.Name = "txtAlmuerzoCargaUna";
-            this.txtAlmuerzoCargaUna.Size = new System.Drawing.Size(90, 20);
+            this.txtAlmuerzoCargaUna.Size = new System.Drawing.Size(80, 20);
             this.txtAlmuerzoCargaUna.TabIndex = 162;
             // 
             // btnGuardarCargaUna
@@ -302,17 +298,18 @@
             this.btnGuardarCargaUna.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGuardarCargaUna.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuardarCargaUna.ForeColor = System.Drawing.Color.Green;
-            this.btnGuardarCargaUna.Location = new System.Drawing.Point(62, 127);
+            this.btnGuardarCargaUna.Location = new System.Drawing.Point(190, 368);
             this.btnGuardarCargaUna.Name = "btnGuardarCargaUna";
             this.btnGuardarCargaUna.Size = new System.Drawing.Size(98, 40);
             this.btnGuardarCargaUna.TabIndex = 166;
             this.btnGuardarCargaUna.Text = "Guardar";
             this.btnGuardarCargaUna.UseVisualStyleBackColor = false;
+            this.btnGuardarCargaUna.Click += new System.EventHandler(this.btnGuardarCargaUna_Click);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 72);
+            this.label9.Location = new System.Drawing.Point(222, 321);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(70, 13);
             this.label9.TabIndex = 163;
@@ -325,34 +322,108 @@
             this.btnCancelarCargaUna.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancelarCargaUna.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelarCargaUna.ForeColor = System.Drawing.Color.DarkOrange;
-            this.btnCancelarCargaUna.Location = new System.Drawing.Point(166, 127);
+            this.btnCancelarCargaUna.Location = new System.Drawing.Point(294, 368);
             this.btnCancelarCargaUna.Name = "btnCancelarCargaUna";
             this.btnCancelarCargaUna.Size = new System.Drawing.Size(98, 40);
             this.btnCancelarCargaUna.TabIndex = 167;
             this.btnCancelarCargaUna.Text = "Cancelar";
             this.btnCancelarCargaUna.UseVisualStyleBackColor = false;
+            this.btnCancelarCargaUna.Click += new System.EventHandler(this.btnCancelarCargaUna_Click);
             // 
             // txtCenaCargaUna
             // 
-            this.txtCenaCargaUna.Location = new System.Drawing.Point(108, 86);
+            this.txtCenaCargaUna.Location = new System.Drawing.Point(313, 335);
             this.txtCenaCargaUna.Name = "txtCenaCargaUna";
-            this.txtCenaCargaUna.Size = new System.Drawing.Size(90, 20);
+            this.txtCenaCargaUna.Size = new System.Drawing.Size(80, 20);
             this.txtCenaCargaUna.TabIndex = 164;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(105, 72);
+            this.label10.Location = new System.Drawing.Point(310, 321);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(39, 13);
             this.label10.TabIndex = 165;
             this.label10.Text = "CENA:";
             // 
+            // dtgTiposMenus
+            // 
+            this.dtgTiposMenus.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtgTiposMenus.Location = new System.Drawing.Point(9, 37);
+            this.dtgTiposMenus.Name = "dtgTiposMenus";
+            this.dtgTiposMenus.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dtgTiposMenus.Size = new System.Drawing.Size(385, 259);
+            this.dtgTiposMenus.TabIndex = 168;
+            this.dtgTiposMenus.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dtgTiposMenus_KeyDown);
+            // 
+            // txtIdMenuCargarUna
+            // 
+            this.txtIdMenuCargarUna.Enabled = false;
+            this.txtIdMenuCargarUna.Location = new System.Drawing.Point(11, 384);
+            this.txtIdMenuCargarUna.Name = "txtIdMenuCargarUna";
+            this.txtIdMenuCargarUna.ReadOnly = true;
+            this.txtIdMenuCargarUna.Size = new System.Drawing.Size(46, 20);
+            this.txtIdMenuCargarUna.TabIndex = 160;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(7, 321);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(70, 13);
+            this.label8.TabIndex = 163;
+            this.label8.Text = "TIPO MENU:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(8, 370);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(49, 13);
+            this.label12.TabIndex = 161;
+            this.label12.Text = "ID TIPO:";
+            // 
+            // txtMenuCargarUna
+            // 
+            this.txtMenuCargarUna.Enabled = false;
+            this.txtMenuCargarUna.Location = new System.Drawing.Point(10, 335);
+            this.txtMenuCargarUna.Name = "txtMenuCargarUna";
+            this.txtMenuCargarUna.ReadOnly = true;
+            this.txtMenuCargarUna.Size = new System.Drawing.Size(205, 20);
+            this.txtMenuCargarUna.TabIndex = 162;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(8, 21);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(92, 13);
+            this.label13.TabIndex = 169;
+            this.label13.Text = "TIPOS DE MENU";
+            // 
+            // txtIdSapCargarUna
+            // 
+            this.txtIdSapCargarUna.Enabled = false;
+            this.txtIdSapCargarUna.Location = new System.Drawing.Point(76, 384);
+            this.txtIdSapCargarUna.Name = "txtIdSapCargarUna";
+            this.txtIdSapCargarUna.ReadOnly = true;
+            this.txtIdSapCargarUna.Size = new System.Drawing.Size(46, 20);
+            this.txtIdSapCargarUna.TabIndex = 170;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(73, 370);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(45, 13);
+            this.label14.TabIndex = 171;
+            this.label14.Text = "ID SAP:";
+            // 
             // FormSolicitadasEditar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(919, 489);
+            this.ClientSize = new System.Drawing.Size(984, 489);
             this.Controls.Add(this.gboxCargarUna);
             this.Controls.Add(this.gboxEditarCargadas);
             this.Controls.Add(this.label2);
@@ -362,6 +433,7 @@
             this.Controls.Add(this.label11);
             this.Controls.Add(this.txtIdRacionSolicitada);
             this.Name = "FormSolicitadasEditar";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EDITAR SOLICITADAS";
             this.Load += new System.EventHandler(this.FormSolicitadasEditar_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgRacionesCargadas)).EndInit();
@@ -369,6 +441,7 @@
             this.gboxEditarCargadas.PerformLayout();
             this.gboxCargarUna.ResumeLayout(false);
             this.gboxCargarUna.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgTiposMenus)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -394,8 +467,6 @@
         private System.Windows.Forms.TextBox txtFechaElaborada;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtIdRacionSolicitada;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox cmbTipoMenu;
         private System.Windows.Forms.GroupBox gboxEditarCargadas;
         private System.Windows.Forms.GroupBox gboxCargarUna;
         private System.Windows.Forms.TextBox txtAlmuerzoCargaUna;
@@ -404,5 +475,13 @@
         private System.Windows.Forms.Button btnCancelarCargaUna;
         private System.Windows.Forms.TextBox txtCenaCargaUna;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.DataGridView dtgTiposMenus;
+        private System.Windows.Forms.TextBox txtIdMenuCargarUna;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtMenuCargarUna;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txtIdSapCargarUna;
+        private System.Windows.Forms.Label label14;
     }
 }

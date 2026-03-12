@@ -71,6 +71,76 @@ namespace DAOImplement
         }
         //FIN INSERTAR DETALLES.....................................................
 
+        //INSERTAR UNO
+        public void InsertarUno(DRacionElaboradaDetalles racionElaborada)
+        {
+            (List<DRacionElaboradaDetalles> listaDetallesResponse, string errorResponse) = this.ListaXIdRacionELaboradaXUnidad(racionElaborada.racion_elaborada_id, racionElaborada.unidad_id);
+
+            if (listaDetallesResponse == null)
+            {
+                throw new Exception("Error: " + errorResponse);
+            }
+
+            if (listaDetallesResponse.Count > 0)
+            {
+                foreach (DRacionElaboradaDetalles detalle in listaDetallesResponse)
+                {
+                    if (racionElaborada.tipo_menu_id == detalle.tipo_menu_id)
+                    {
+                        throw new Exception("Ya se encuentra cargado este menu en esta elaborada.");
+                    }
+                }
+            }
+
+            try
+            {
+
+                using (var db = new MiDbContext())
+                using (var tran = db.Database.BeginTransaction())
+                {
+                    db.RacionesElaboradasDetalles.Add(racionElaborada);
+                    db.SaveChanges();
+                    tran.Commit();
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                string mensaje = ex.InnerException?.Message ?? ex.Message;
+                string msg = ex.ToString();
+                // Detectar error de duplicado buscando "Duplicate entry" o "errno 1062"
+                if (msg.Contains("Duplicate entry") || msg.Contains("errno 1062"))
+                {
+                    string campo = "desconocido";
+                    string valor = "desconocido";
+
+                    // Extraer valor duplicado
+                    int startValue = msg.IndexOf("Duplicate entry '") + "Duplicate entry '".Length;
+                    int endValue = msg.IndexOf("'", startValue);
+                    if (startValue >= 0 && endValue > startValue)
+                    {
+                        valor = msg.Substring(startValue, endValue - startValue);
+                    }
+
+                    // Extraer nombre del índice
+                    int indexKey = msg.IndexOf("for key '") + "for key '".Length;
+                    int endIndex = msg.IndexOf("'", indexKey);
+                    if (indexKey >= 0 && endIndex > indexKey)
+                    {
+                        campo = msg.Substring(indexKey, endIndex - indexKey);
+
+                        if (campo.EndsWith("_UNIQUE"))
+                            campo = campo.Substring(0, campo.Length - "_UNIQUE".Length);
+                    }
+
+                    throw new Exception($"No se puede insertar: el campo '{campo}' ya existe con el valor '{valor}'.");
+                }
+
+                // Otros errores
+                throw new Exception("Error al insertar: " + mensaje);
+            }
+        }
+        //FIN INSERTAR UNO......................................................
+
         //EDITAR
         public void Editar(DRacionElaboradaDetalles racionElaborada)
         {
@@ -204,6 +274,6 @@ namespace DAOImplement
             }
         }
 
-
+        
     }
 }
