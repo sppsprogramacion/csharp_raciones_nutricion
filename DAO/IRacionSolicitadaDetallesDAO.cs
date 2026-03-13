@@ -16,6 +16,7 @@ namespace DAO
 
         (List<DRacionesSolicitadasDetalles> lista, string error) ListaXIdRacionSolicitada(int idRacionSolicitada);
         (List<DRacionesSolicitadasDetalles> lista, string error) ListaXIdRacionSolicitadaXUnidad(int idRacionSolicitada, int idUnidad);
+        (List<DRacionesSolicitadasDetalles> lista, string error) ListaXFechaSolicitadaXUnidad(string fechaSolicitada, int idUnidad);
         (List<DRacionesSolicitadasDetalles> lista, string error) ListaTodos();
 
         void EliminarRacionesCargadas(int idRacionSolicitada);

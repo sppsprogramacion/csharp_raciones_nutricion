@@ -45,6 +45,13 @@ namespace CapaNegocio
             return racionSolicitadaDetallesDAO.ListaXIdRacionSolicitadaXUnidad(idRacionSolicitada, idUnidad);
         }
 
+        //LISTA POR fecha y unidad
+        public (List<DRacionesSolicitadasDetalles> lista, string error) ListaXFechaSolicitadaXUnidad(string fechaSoicitada, int idUnidad)
+        {
+            return racionSolicitadaDetallesDAO.ListaXFechaSolicitadaXUnidad(fechaSoicitada, idUnidad);
+        }
+        //FIN LISTA POR FECHA y UNIDAD..................................
+
         public void EliminarDetalles(int idRacionSolicitada)
         {
             racionSolicitadaDetallesDAO.EliminarRacionesCargadas(idRacionSolicitada);

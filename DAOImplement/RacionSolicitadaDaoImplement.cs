@@ -194,12 +194,6 @@ namespace DAOImplement
             {
                 using (var db = new MiDbContext())
                 {
-                    //lista = db.RacionesSolicitadas
-                    // .Include(s => s.usuario)
-                    // .Include(s => s.raciones_solicitadas_detalles)
-                    // .Where(s => s.fecha_solicitada == fechaX)
-                    // .OrderByDescending(s => s.fecha_solicitada)   // Orden ascendente
-                    // .ToList();
 
                     var lista = db.RacionesSolicitadas
                         .Where(s => s.fecha_solicitada == fechaX)
@@ -216,10 +210,7 @@ namespace DAOImplement
                         .Where(s => s.raciones_solicitadas_detalles.Any())
                         .ToList();
 
-                    //foreach (DRacionSolicitada solicitada in lista)
-                    //{
-                    //    DRacionesSolicitadasDetalles detalle = solicitada.raciones_solicitadas_detalles;
-                    //}
+                    
                     return (lista, null);
                 }
             }

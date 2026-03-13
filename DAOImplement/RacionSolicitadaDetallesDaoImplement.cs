@@ -227,6 +227,50 @@ namespace DAOImplement
         }
         //FIN LISTA POR IDRACIONSOLICITADA Y UNIDAD........................................
 
+        //LISTA POR FECHA Y UNIDAD
+        public (List<DRacionesSolicitadasDetalles> lista, string error) ListaXFechaSolicitadaXUnidad(string fechaSolicitada, int idUnidad)
+        {
+            List<DRacionesSolicitadasDetalles> lista = new List<DRacionesSolicitadasDetalles>();
+
+            DateTime fechaSolicitadaX;
+
+            if (!DateTime.TryParse(fechaSolicitada, out fechaSolicitadaX))
+            {
+                return (null, "Fecha solicitada inválida");
+            }
+
+            try
+            {
+                using (var db = new MiDbContext())
+                {
+
+                    lista = db.RacionesSolicitadasDetalles
+                    .Include(s => s.racion_solicitada)
+                    .Include(s => s.sap)
+                    .Include(s => s.unidad)
+                    .Include(s => s.tipo_menu)
+                    .Include(s => s.usuario)
+                    .Where(s => s.racion_solicitada.fecha_solicitada == fechaSolicitadaX && s.unidad_id == idUnidad)
+                    .ToList();
+
+                    return (lista, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                // 🟦 Detecta si realmente es error de conexión MySQL
+                if (ErrorHelper.EsErrorDeConexion(ex))
+                {
+                    return (null, "No hay conexión con el servidor de base de datos.");
+                }
+
+                // Si no es mysqlEx → error inesperado
+                Console.WriteLine(ex);
+                return (null, "Error inesperado: " + ex.Message);
+            }
+        }
+        //FIN LISTA POR FECHA Y UNIDAD........................................
+
 
         //LISTA POR IDRACIONSOLICITADA
         public (List<DRacionesSolicitadasDetalles> lista, string error) ListaXIdRacionSolicitada(int idRacionSolicitada)

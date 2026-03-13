@@ -166,10 +166,10 @@ namespace CapaPresentacion
             }
 
             //CONTROLAR CON RACIONES SOLICITADAS CARGADAS CON LA MISMA FECHA DE ELABORADA EN SOLICITADA Y UNIDAD
-            var nRacionSolicitada = new NRacionSolicitada();
+            var nRacionSolicitadaDetalles = new NRacionSolicitadaDetalles();
 
             int idUnidad = Convert.ToInt32(this.cmbUnidades.SelectedValue.ToString());
-            var (listaRacionSolicitadas, error) = nRacionSolicitada.ListaXFechaXUnidad(dtpFechaElaborada.Value.ToString("yyyy-MM-dd"), idUnidad);
+            var (listaRacionSolicitadaDetalles, error) = nRacionSolicitadaDetalles.ListaXFechaSolicitadaXUnidad(dtpFechaElaborada.Value.ToString("yyyy-MM-dd"), idUnidad);
 
             if (error != null)
             {
@@ -177,9 +177,43 @@ namespace CapaPresentacion
                 return;
             }
 
-            if (listaRacionSolicitadas.Count() <= 0)
+            if (listaRacionSolicitadaDetalles.Count() <= 0)
             {
-                MessageBox.Show("No se encontraron cargas de solictada para esta fecha y unidad", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("No se encontraron cargas de menus de solictada para esta fecha y unidad", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            string menusNoconciden = "No coinciden estos menus:";
+            bool alertaCoincideMenu = false;
+            foreach (var elaborada in lista)
+            {
+                var solicitada = listaRacionSolicitadaDetalles
+                    .FirstOrDefault(x => x.tipo_menu_id == elaborada.tipo_menu_id);
+
+                if (solicitada != null)
+                {
+                    // acciones
+                    if(elaborada.almuerzo != solicitada.almuerzo)
+                    {
+                        alertaCoincideMenu = true;
+                        menusNoconciden = menusNoconciden + Environment.NewLine 
+                            + solicitada.tipo_menu.tipo_menu + " (elaborada almuerzo= " + elaborada.almuerzo 
+                            + " - solicitada almuerzo= " + solicitada.almuerzo + ")";
+                    }
+                    if (elaborada.cena != solicitada.cena)
+                    {
+                        alertaCoincideMenu = true;
+                        menusNoconciden = menusNoconciden + Environment.NewLine 
+                            + solicitada.tipo_menu.tipo_menu + " (elaborada cena= " + elaborada.cena 
+                            + " - solicitada cena= " + solicitada.cena + ")";
+                    }
+                }
+
+            }
+
+            if (alertaCoincideMenu)
+            {
+                MessageBox.Show(menusNoconciden, "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 

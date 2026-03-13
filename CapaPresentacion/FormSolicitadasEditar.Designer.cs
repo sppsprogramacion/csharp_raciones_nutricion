@@ -48,20 +48,20 @@
             this.txtIdRacionSolicitada = new System.Windows.Forms.TextBox();
             this.gboxEditarCargadas = new System.Windows.Forms.GroupBox();
             this.gboxCargarUna = new System.Windows.Forms.GroupBox();
+            this.txtIdSapCargarUna = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtIdMenuCargarUna = new System.Windows.Forms.TextBox();
+            this.dtgTiposMenus = new System.Windows.Forms.DataGridView();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             this.txtAlmuerzoCargaUna = new System.Windows.Forms.TextBox();
+            this.txtMenuCargarUna = new System.Windows.Forms.TextBox();
             this.btnGuardarCargaUna = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.btnCancelarCargaUna = new System.Windows.Forms.Button();
             this.txtCenaCargaUna = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.dtgTiposMenus = new System.Windows.Forms.DataGridView();
-            this.txtIdMenuCargarUna = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txtMenuCargarUna = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.txtIdSapCargarUna = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dtgRacionesCargadas)).BeginInit();
             this.gboxEditarCargadas.SuspendLayout();
             this.gboxCargarUna.SuspendLayout();
@@ -169,7 +169,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(234, 13);
+            this.label2.Location = new System.Drawing.Point(243, 11);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(52, 13);
             this.label2.TabIndex = 149;
@@ -178,7 +178,7 @@
             // txtUnidad
             // 
             this.txtUnidad.Enabled = false;
-            this.txtUnidad.Location = new System.Drawing.Point(237, 27);
+            this.txtUnidad.Location = new System.Drawing.Point(246, 25);
             this.txtUnidad.Name = "txtUnidad";
             this.txtUnidad.ReadOnly = true;
             this.txtUnidad.Size = new System.Drawing.Size(177, 20);
@@ -206,7 +206,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(129, 13);
+            this.label3.Location = new System.Drawing.Point(138, 11);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(45, 13);
             this.label3.TabIndex = 145;
@@ -215,7 +215,7 @@
             // txtFechaElaborada
             // 
             this.txtFechaElaborada.Enabled = false;
-            this.txtFechaElaborada.Location = new System.Drawing.Point(131, 27);
+            this.txtFechaElaborada.Location = new System.Drawing.Point(140, 25);
             this.txtFechaElaborada.Name = "txtFechaElaborada";
             this.txtFechaElaborada.ReadOnly = true;
             this.txtFechaElaborada.Size = new System.Drawing.Size(97, 20);
@@ -224,7 +224,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(7, 13);
+            this.label11.Location = new System.Drawing.Point(16, 11);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(87, 13);
             this.label11.TabIndex = 143;
@@ -233,7 +233,7 @@
             // txtIdRacionSolicitada
             // 
             this.txtIdRacionSolicitada.Enabled = false;
-            this.txtIdRacionSolicitada.Location = new System.Drawing.Point(10, 27);
+            this.txtIdRacionSolicitada.Location = new System.Drawing.Point(19, 25);
             this.txtIdRacionSolicitada.Name = "txtIdRacionSolicitada";
             this.txtIdRacionSolicitada.ReadOnly = true;
             this.txtIdRacionSolicitada.Size = new System.Drawing.Size(108, 20);
@@ -284,12 +284,85 @@
             this.gboxCargarUna.Text = "Cargar nuevo";
             this.gboxCargarUna.Enter += new System.EventHandler(this.gboxCargarUna_Enter);
             // 
+            // txtIdSapCargarUna
+            // 
+            this.txtIdSapCargarUna.Enabled = false;
+            this.txtIdSapCargarUna.Location = new System.Drawing.Point(76, 384);
+            this.txtIdSapCargarUna.Name = "txtIdSapCargarUna";
+            this.txtIdSapCargarUna.ReadOnly = true;
+            this.txtIdSapCargarUna.Size = new System.Drawing.Size(46, 20);
+            this.txtIdSapCargarUna.TabIndex = 170;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(73, 370);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(45, 13);
+            this.label14.TabIndex = 171;
+            this.label14.Text = "ID SAP:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(8, 21);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(92, 13);
+            this.label13.TabIndex = 169;
+            this.label13.Text = "TIPOS DE MENU";
+            // 
+            // txtIdMenuCargarUna
+            // 
+            this.txtIdMenuCargarUna.Enabled = false;
+            this.txtIdMenuCargarUna.Location = new System.Drawing.Point(11, 384);
+            this.txtIdMenuCargarUna.Name = "txtIdMenuCargarUna";
+            this.txtIdMenuCargarUna.ReadOnly = true;
+            this.txtIdMenuCargarUna.Size = new System.Drawing.Size(46, 20);
+            this.txtIdMenuCargarUna.TabIndex = 160;
+            // 
+            // dtgTiposMenus
+            // 
+            this.dtgTiposMenus.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtgTiposMenus.Location = new System.Drawing.Point(9, 37);
+            this.dtgTiposMenus.Name = "dtgTiposMenus";
+            this.dtgTiposMenus.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dtgTiposMenus.Size = new System.Drawing.Size(385, 259);
+            this.dtgTiposMenus.TabIndex = 168;
+            this.dtgTiposMenus.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dtgTiposMenus_KeyDown);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(7, 321);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(70, 13);
+            this.label8.TabIndex = 163;
+            this.label8.Text = "TIPO MENU:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(8, 370);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(49, 13);
+            this.label12.TabIndex = 161;
+            this.label12.Text = "ID TIPO:";
+            // 
             // txtAlmuerzoCargaUna
             // 
             this.txtAlmuerzoCargaUna.Location = new System.Drawing.Point(224, 335);
             this.txtAlmuerzoCargaUna.Name = "txtAlmuerzoCargaUna";
             this.txtAlmuerzoCargaUna.Size = new System.Drawing.Size(80, 20);
             this.txtAlmuerzoCargaUna.TabIndex = 162;
+            // 
+            // txtMenuCargarUna
+            // 
+            this.txtMenuCargarUna.Enabled = false;
+            this.txtMenuCargarUna.Location = new System.Drawing.Point(10, 335);
+            this.txtMenuCargarUna.Name = "txtMenuCargarUna";
+            this.txtMenuCargarUna.ReadOnly = true;
+            this.txtMenuCargarUna.Size = new System.Drawing.Size(205, 20);
+            this.txtMenuCargarUna.TabIndex = 162;
             // 
             // btnGuardarCargaUna
             // 
@@ -345,79 +418,6 @@
             this.label10.Size = new System.Drawing.Size(39, 13);
             this.label10.TabIndex = 165;
             this.label10.Text = "CENA:";
-            // 
-            // dtgTiposMenus
-            // 
-            this.dtgTiposMenus.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgTiposMenus.Location = new System.Drawing.Point(9, 37);
-            this.dtgTiposMenus.Name = "dtgTiposMenus";
-            this.dtgTiposMenus.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dtgTiposMenus.Size = new System.Drawing.Size(385, 259);
-            this.dtgTiposMenus.TabIndex = 168;
-            this.dtgTiposMenus.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dtgTiposMenus_KeyDown);
-            // 
-            // txtIdMenuCargarUna
-            // 
-            this.txtIdMenuCargarUna.Enabled = false;
-            this.txtIdMenuCargarUna.Location = new System.Drawing.Point(11, 384);
-            this.txtIdMenuCargarUna.Name = "txtIdMenuCargarUna";
-            this.txtIdMenuCargarUna.ReadOnly = true;
-            this.txtIdMenuCargarUna.Size = new System.Drawing.Size(46, 20);
-            this.txtIdMenuCargarUna.TabIndex = 160;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(7, 321);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(70, 13);
-            this.label8.TabIndex = 163;
-            this.label8.Text = "TIPO MENU:";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(8, 370);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(49, 13);
-            this.label12.TabIndex = 161;
-            this.label12.Text = "ID TIPO:";
-            // 
-            // txtMenuCargarUna
-            // 
-            this.txtMenuCargarUna.Enabled = false;
-            this.txtMenuCargarUna.Location = new System.Drawing.Point(10, 335);
-            this.txtMenuCargarUna.Name = "txtMenuCargarUna";
-            this.txtMenuCargarUna.ReadOnly = true;
-            this.txtMenuCargarUna.Size = new System.Drawing.Size(205, 20);
-            this.txtMenuCargarUna.TabIndex = 162;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(8, 21);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(92, 13);
-            this.label13.TabIndex = 169;
-            this.label13.Text = "TIPOS DE MENU";
-            // 
-            // txtIdSapCargarUna
-            // 
-            this.txtIdSapCargarUna.Enabled = false;
-            this.txtIdSapCargarUna.Location = new System.Drawing.Point(76, 384);
-            this.txtIdSapCargarUna.Name = "txtIdSapCargarUna";
-            this.txtIdSapCargarUna.ReadOnly = true;
-            this.txtIdSapCargarUna.Size = new System.Drawing.Size(46, 20);
-            this.txtIdSapCargarUna.TabIndex = 170;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(73, 370);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(45, 13);
-            this.label14.TabIndex = 171;
-            this.label14.Text = "ID SAP:";
             // 
             // FormSolicitadasEditar
             // 
