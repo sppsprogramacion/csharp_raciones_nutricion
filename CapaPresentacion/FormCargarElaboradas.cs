@@ -126,6 +126,7 @@ namespace CapaPresentacion
                 return;
             }
 
+            //creacion de lista a guardar
             foreach (DataGridViewRow fila in dtgSapMenus.Rows)
             {
                 if (fila.IsNewRow) continue;
@@ -163,6 +164,26 @@ namespace CapaPresentacion
                 MessageBox.Show("No hay datos para guardar", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
+
+            //CONTROLAR CON RACIONES SOLICITADAS CARGADAS CON LA MISMA FECHA DE ELABORADA EN SOLICITADA Y UNIDAD
+            var nRacionSolicitada = new NRacionSolicitada();
+
+            int idUnidad = Convert.ToInt32(this.cmbUnidades.SelectedValue.ToString());
+            var (listaRacionSolicitadas, error) = nRacionSolicitada.ListaXFechaXUnidad(dtpFechaElaborada.Value.ToString("yyyy-MM-dd"), idUnidad);
+
+            if (error != null)
+            {
+                MessageBox.Show(error, "Nutricion: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (listaRacionSolicitadas.Count() <= 0)
+            {
+                MessageBox.Show("No se encontraron cargas de solictada para esta fecha y unidad", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+
 
             try
             {

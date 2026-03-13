@@ -181,7 +181,7 @@ namespace DAOImplement
         //LISTA POR FECHA Y UNIDAD
         public (List<DRacionSolicitada> lista, string error) ListaXFechaXUnidad(string fechaSolicitada, int unidad)
         {
-            List<DRacionSolicitada> lista = new List<DRacionSolicitada>();
+            //List<DRacionSolicitada> lista = new List<DRacionSolicitada>();
 
             DateTime fechaX;
 
@@ -189,22 +189,36 @@ namespace DAOImplement
             {
                 return (null, "Fecha inicio inválida");
             }
-
-            
+                        
             try
             {
                 using (var db = new MiDbContext())
                 {
-                    lista = db.RacionesSolicitadas
-                     .Include(s => s.usuario)
-                     .Include(s => s.raciones_solicitadas_detalles)
-                     .Where(s => s.fecha_solicitada == fechaX)
-                     .OrderByDescending(s => s.fecha_solicitada)   // Orden ascendente
-                     .ToList();
+                    //lista = db.RacionesSolicitadas
+                    // .Include(s => s.usuario)
+                    // .Include(s => s.raciones_solicitadas_detalles)
+                    // .Where(s => s.fecha_solicitada == fechaX)
+                    // .OrderByDescending(s => s.fecha_solicitada)   // Orden ascendente
+                    // .ToList();
+
+                    var lista = db.RacionesSolicitadas
+                        .Where(s => s.fecha_solicitada == fechaX)
+                        .Select(s => new DRacionSolicitada
+                        {
+                            id_racion_solicitada = s.id_racion_solicitada,
+                            fecha_solicitada = s.fecha_solicitada,
+                            usuario = s.usuario,
+
+                            raciones_solicitadas_detalles = s.raciones_solicitadas_detalles
+                                .Where(d => d.unidad_id == unidad)
+                                .ToList()
+                        })
+                        .Where(s => s.raciones_solicitadas_detalles.Any())
+                        .ToList();
 
                     //foreach (DRacionSolicitada solicitada in lista)
                     //{
-                    //    List<DRacionesSolicitadasDetalles> detalle = solicitada.raciones_solicitadas_detalles;
+                    //    DRacionesSolicitadasDetalles detalle = solicitada.raciones_solicitadas_detalles;
                     //}
                     return (lista, null);
                 }
