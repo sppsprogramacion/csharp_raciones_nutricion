@@ -80,7 +80,7 @@ namespace CapaPresentacion
             {
                 // 🔴 NUEVA instancia en cada vuelta
                 var planillaLiquidacion = new DPlanillaLiquidacion();
-                planillaLiquidacion.fecha = racionSolicitada.fecha_solicitada.ToShortDateString();
+                planillaLiquidacion.fecha = racionSolicitada.fecha_solicitada.ToString("dd-MM");
 
 
                 List<DRacionesSolicitadasDetalles> listaDetalles = racionSolicitada.raciones_solicitadas_detalles.ToList();
@@ -106,281 +106,281 @@ namespace CapaPresentacion
 
                     if (tipoMenu.id_tipo_menu == 1)
                     {
-                        planillaLiquidacion.P12_D = desayuno;
-                        planillaLiquidacion.P12_A = almuerzo;
-                        planillaLiquidacion.P12_M = merienda;
-                        planillaLiquidacion.P12_C = cena;
+                        planillaLiquidacion.Pers_12hs_D = desayuno;
+                        planillaLiquidacion.Pers_12hs_A = almuerzo;
+                        planillaLiquidacion.Pers_12hs_M = merienda;
+                        planillaLiquidacion.Pers_12hs_C = cena;
 
                         // 🔴 NUEVA instanciaa
                         var dFactores1 = new DFactores();
-                        dFactores1.tipo_menu = "P12_D";
+                        dFactores1.tipo_menu = "Pers_12hs_D";
                         dFactores1.factor = tipoMenu.menu.factor_desayuno;
                         listaFactores.Add(dFactores1);
 
                         // 🔴 NUEVA instancia
                         var dFactores2 = new DFactores();
-                        dFactores2.tipo_menu = "P12_A";
+                        dFactores2.tipo_menu = "Pers_12hs_A";
                         dFactores2.factor = tipoMenu.menu.factor_almuerzo;
                         listaFactores.Add(dFactores2);
 
                         // 🔴 NUEVA instanciaa
                         var dFactores3 = new DFactores();
-                        dFactores3.tipo_menu = "P12_M";
+                        dFactores3.tipo_menu = "Pers_12hs_M";
                         dFactores3.factor = tipoMenu.menu.factor_merienda;
                         listaFactores.Add(dFactores3);
 
                         // 🔴 NUEVA instancia
                         var dFactores4 = new DFactores();
-                        dFactores4.tipo_menu = "P12_C";
+                        dFactores4.tipo_menu = "Pers_12hs_C";
                         dFactores4.factor = tipoMenu.menu.factor_cena;
                         listaFactores.Add(dFactores4);
 
                     }
                     if (tipoMenu.id_tipo_menu == 2)
                     {
-                        planillaLiquidacion.P24_D = desayuno;
-                        planillaLiquidacion.P24_A = almuerzo;
-                        planillaLiquidacion.P24_M = merienda;
-                        planillaLiquidacion.P24_C = cena;
+                        planillaLiquidacion.Pers_24hs_D = desayuno;
+                        planillaLiquidacion.Pers_24hs_A = almuerzo;
+                        planillaLiquidacion.Pers_24hs_M = merienda;
+                        planillaLiquidacion.Pers_24hs_C = cena;
 
                         // 🔴 NUEVA instanciaa
                         var dFactores5 = new DFactores();
-                        dFactores5.tipo_menu = "P24_D";
+                        dFactores5.tipo_menu = "Pers_24hs_D";
                         dFactores5.factor = tipoMenu.menu.factor_desayuno;
                         listaFactores.Add(dFactores5);
 
                         // 🔴 NUEVA instancia
                         var dFactores6 = new DFactores();
-                        dFactores6.tipo_menu = "P24_A";
+                        dFactores6.tipo_menu = "Pers_24hs_A";
                         dFactores6.factor = tipoMenu.menu.factor_almuerzo;
                         listaFactores.Add(dFactores6);
 
                         // 🔴 NUEVA instanciaa
                         var dFactores7 = new DFactores();
-                        dFactores7.tipo_menu = "P24_M";
+                        dFactores7.tipo_menu = "Pers_24hs_M";
                         dFactores7.factor = tipoMenu.menu.factor_merienda;
                         listaFactores.Add(dFactores7);
 
                         // 🔴 NUEVA instancia
                         var dFactores8 = new DFactores();
-                        dFactores8.tipo_menu = "P24_C";
+                        dFactores8.tipo_menu = "Pers_24hs_C";
                         dFactores8.factor = tipoMenu.menu.factor_cena;
                         listaFactores.Add(dFactores8);
                     }
                     if (tipoMenu.id_tipo_menu == 3)
                     {
-                        planillaLiquidacion.IntN_D = desayuno;
-                        planillaLiquidacion.IntN_A = almuerzo;
-                        planillaLiquidacion.IntN_M = merienda;
-                        planillaLiquidacion.IntN_C = cena;
+                        planillaLiquidacion.Int_NORM_D = desayuno;
+                        planillaLiquidacion.Int_NORM_A = almuerzo;
+                        planillaLiquidacion.Int_NORM_M = merienda;
+                        planillaLiquidacion.Int_NORM_C = cena;
 
                         // 🔴 NUEVA instanciaa
                         var dFactores1 = new DFactores();
-                        dFactores1.tipo_menu = "IntN_D";
+                        dFactores1.tipo_menu = "Int_NORM_D";
                         dFactores1.factor = tipoMenu.menu.factor_desayuno;
                         listaFactores.Add(dFactores1);
 
                         // 🔴 NUEVA instancia
                         var dFactores2 = new DFactores();
-                        dFactores2.tipo_menu = "IntN_A";
+                        dFactores2.tipo_menu = "Int_NORM_A";
                         dFactores2.factor = tipoMenu.menu.factor_almuerzo;
                         listaFactores.Add(dFactores2);
 
                         // 🔴 NUEVA instanciaa
                         var dFactores3 = new DFactores();
-                        dFactores3.tipo_menu = "IntN_M";
+                        dFactores3.tipo_menu = "Int_NORM_M";
                         dFactores3.factor = tipoMenu.menu.factor_merienda;
                         listaFactores.Add(dFactores3);
 
                         // 🔴 NUEVA instancia
                         var dFactores4 = new DFactores();
-                        dFactores4.tipo_menu = "IntN_C";
+                        dFactores4.tipo_menu = "Int_NORM_C";
                         dFactores4.factor = tipoMenu.menu.factor_cena;
                         listaFactores.Add(dFactores4);
                     }
                     if (tipoMenu.id_tipo_menu == 4)
                     {
-                        planillaLiquidacion.Astr_D = desayuno;
-                        planillaLiquidacion.Astr_A = almuerzo;
-                        planillaLiquidacion.Astr_M = merienda;
-                        planillaLiquidacion.Astr_C = cena;
+                        planillaLiquidacion.Int_ASTR_D = desayuno;
+                        planillaLiquidacion.Int_ASTR_A = almuerzo;
+                        planillaLiquidacion.Int_ASTR_M = merienda;
+                        planillaLiquidacion.Int_ASTR_C = cena;
 
                         // 🔴 NUEVA instanciaa
                         var dFactores1 = new DFactores();
-                        dFactores1.tipo_menu = "Astr_D";
+                        dFactores1.tipo_menu = "Int_AST_D";
                         dFactores1.factor = tipoMenu.menu.factor_desayuno;
                         listaFactores.Add(dFactores1);
 
                         // 🔴 NUEVA instancia
                         var dFactores2 = new DFactores();
-                        dFactores2.tipo_menu = "Astr_A";
+                        dFactores2.tipo_menu = "Int_AST_A";
                         dFactores2.factor = tipoMenu.menu.factor_almuerzo;
                         listaFactores.Add(dFactores2);
 
                         // 🔴 NUEVA instanciaa
                         var dFactores3 = new DFactores();
-                        dFactores3.tipo_menu = "Astr_M";
+                        dFactores3.tipo_menu = "Int_AST_M";
                         dFactores3.factor = tipoMenu.menu.factor_merienda;
                         listaFactores.Add(dFactores3);
 
                         // 🔴 NUEVA instancia
                         var dFactores4 = new DFactores();
-                        dFactores4.tipo_menu = "Astr_C";
+                        dFactores4.tipo_menu = "Int_AST_C";
                         dFactores4.factor = tipoMenu.menu.factor_cena;
                         listaFactores.Add(dFactores4);
                     }
                     if (tipoMenu.id_tipo_menu == 5)
                     {
-                        planillaLiquidacion.Celi_D = desayuno;
-                        planillaLiquidacion.Celi_A = almuerzo;
-                        planillaLiquidacion.Celi_M = merienda;
-                        planillaLiquidacion.Celi_C = cena;
+                        planillaLiquidacion.Int_CELI_D = desayuno;
+                        planillaLiquidacion.Int_CELI_A = almuerzo;
+                        planillaLiquidacion.Int_CELI_M = merienda;
+                        planillaLiquidacion.Int_CELI_C = cena;
 
                         // 🔴 NUEVA instanciaa
                         var dFactores1 = new DFactores();
-                        dFactores1.tipo_menu = "Celi_D";
+                        dFactores1.tipo_menu = "Int_CELI_D";
                         dFactores1.factor = tipoMenu.menu.factor_desayuno;
                         listaFactores.Add(dFactores1);
 
                         // 🔴 NUEVA instancia
                         var dFactores2 = new DFactores();
-                        dFactores2.tipo_menu = "Celi_A";
+                        dFactores2.tipo_menu = "Int_CELI_A";
                         dFactores2.factor = tipoMenu.menu.factor_almuerzo;
                         listaFactores.Add(dFactores2);
 
                         // 🔴 NUEVA instanciaa
                         var dFactores3 = new DFactores();
-                        dFactores3.tipo_menu = "Celi_M";
+                        dFactores3.tipo_menu = "Int_CELI_M";
                         dFactores3.factor = tipoMenu.menu.factor_merienda;
                         listaFactores.Add(dFactores3);
 
                         // 🔴 NUEVA instancia
                         var dFactores4 = new DFactores();
-                        dFactores4.tipo_menu = "Celi_C";
+                        dFactores4.tipo_menu = "Int_CELI_C";
                         dFactores4.factor = tipoMenu.menu.factor_cena;
                         listaFactores.Add(dFactores4);
                     }
                     if (tipoMenu.id_tipo_menu == 6)
                     {
-                        planillaLiquidacion.AFib_D = desayuno;
-                        planillaLiquidacion.AFib_A = almuerzo;
-                        planillaLiquidacion.AFib_M = merienda;
-                        planillaLiquidacion.AFib_C = cena;
+                        planillaLiquidacion.Int_A_Fib_D = desayuno;
+                        planillaLiquidacion.Int_A_Fib_A = almuerzo;
+                        planillaLiquidacion.Int_A_Fib_M = merienda;
+                        planillaLiquidacion.Int_A_Fib_C = cena;
 
                         // 🔴 NUEVA instanciaa
                         var dFactores1 = new DFactores();
-                        dFactores1.tipo_menu = "AFib_D";
+                        dFactores1.tipo_menu = "Int_A_Fib_D";
                         dFactores1.factor = tipoMenu.menu.factor_desayuno;
                         listaFactores.Add(dFactores1);
 
                         // 🔴 NUEVA instancia
                         var dFactores2 = new DFactores();
-                        dFactores2.tipo_menu = "AFib_A";
+                        dFactores2.tipo_menu = "Int_A_Fib_A";
                         dFactores2.factor = tipoMenu.menu.factor_almuerzo;
                         listaFactores.Add(dFactores2);
 
                         // 🔴 NUEVA instanciaa
                         var dFactores3 = new DFactores();
-                        dFactores3.tipo_menu = "AFib_M";
+                        dFactores3.tipo_menu = "Int_A_Fib_M";
                         dFactores3.factor = tipoMenu.menu.factor_merienda;
                         listaFactores.Add(dFactores3);
 
                         // 🔴 NUEVA instancia
                         var dFactores4 = new DFactores();
-                        dFactores4.tipo_menu = "AFib_C";
+                        dFactores4.tipo_menu = "Int_A_Fib_C";
                         dFactores4.factor = tipoMenu.menu.factor_cena;
                         listaFactores.Add(dFactores4);
                     }
                     if (tipoMenu.id_tipo_menu == 7)
                     {
-                        planillaLiquidacion.Hep_D = desayuno;
-                        planillaLiquidacion.Hep_A = almuerzo;
-                        planillaLiquidacion.Hep_M = merienda;
-                        planillaLiquidacion.Hep_C = cena;
+                        planillaLiquidacion.Int_Hepat_D = desayuno;
+                        planillaLiquidacion.Int_Hepat_A = almuerzo;
+                        planillaLiquidacion.Int_Hepat_M = merienda;
+                        planillaLiquidacion.Int_Hepat_C = cena;
 
                         // 🔴 NUEVA instanciaa
                         var dFactores1 = new DFactores();
-                        dFactores1.tipo_menu = "Hep_D";
+                        dFactores1.tipo_menu = "Int_Hepat_D";
                         dFactores1.factor = tipoMenu.menu.factor_desayuno;
                         listaFactores.Add(dFactores1);
 
                         // 🔴 NUEVA instancia
                         var dFactores2 = new DFactores();
-                        dFactores2.tipo_menu = "Hep_A";
+                        dFactores2.tipo_menu = "Int_Hepat_A";
                         dFactores2.factor = tipoMenu.menu.factor_almuerzo;
                         listaFactores.Add(dFactores2);
 
                         // 🔴 NUEVA instanciaa
                         var dFactores3 = new DFactores();
-                        dFactores3.tipo_menu = "Hep_M";
+                        dFactores3.tipo_menu = "Int_Hepat_M";
                         dFactores3.factor = tipoMenu.menu.factor_merienda;
                         listaFactores.Add(dFactores3);
 
                         // 🔴 NUEVA instancia
                         var dFactores4 = new DFactores();
-                        dFactores4.tipo_menu = "Hep_C";
+                        dFactores4.tipo_menu = "Int_Hepat_C";
                         dFactores4.factor = tipoMenu.menu.factor_cena;
                         listaFactores.Add(dFactores4);
                     }
                     if (tipoMenu.id_tipo_menu == 8)
                     {
-                        planillaLiquidacion.SSal_D = desayuno;
-                        planillaLiquidacion.SSal_A = almuerzo;
-                        planillaLiquidacion.SSal_M = merienda;
-                        planillaLiquidacion.SSal_C = cena;
+                        planillaLiquidacion.Int_SSAL_D = desayuno;
+                        planillaLiquidacion.Int_SSAL_A = almuerzo;
+                        planillaLiquidacion.Int_SSAL_M = merienda;
+                        planillaLiquidacion.Int_SSAL_C = cena;
 
                         // 🔴 NUEVA instanciaa
                         var dFactores1 = new DFactores();
-                        dFactores1.tipo_menu = "SSal_D";
+                        dFactores1.tipo_menu = "Int_SSAL_D";
                         dFactores1.factor = tipoMenu.menu.factor_desayuno;
                         listaFactores.Add(dFactores1);
 
                         // 🔴 NUEVA instancia
                         var dFactores2 = new DFactores();
-                        dFactores2.tipo_menu = "SSal_A";
+                        dFactores2.tipo_menu = "Int_SSAL_A";
                         dFactores2.factor = tipoMenu.menu.factor_almuerzo;
                         listaFactores.Add(dFactores2);
 
                         // 🔴 NUEVA instanciaa
                         var dFactores3 = new DFactores();
-                        dFactores3.tipo_menu = "SSal_M";
+                        dFactores3.tipo_menu = "Int_SSAL_M";
                         dFactores3.factor = tipoMenu.menu.factor_merienda;
                         listaFactores.Add(dFactores3);
 
                         // 🔴 NUEVA instancia
                         var dFactores4 = new DFactores();
-                        dFactores4.tipo_menu = "SSal_C";
+                        dFactores4.tipo_menu = "Int_SSAL_C";
                         dFactores4.factor = tipoMenu.menu.factor_cena;
                         listaFactores.Add(dFactores4);
                     }
                     if (tipoMenu.id_tipo_menu == 9)
                     {
-                        planillaLiquidacion.HivTbc_D = desayuno;
-                        planillaLiquidacion.HivTbc_A = almuerzo;
-                        planillaLiquidacion.HivTbc_M = merienda;
-                        planillaLiquidacion.HivTbc_C = cena;
+                        planillaLiquidacion.Int_HIV_D = desayuno;
+                        planillaLiquidacion.Int_HIV_A = almuerzo;
+                        planillaLiquidacion.Int_HIV_M = merienda;
+                        planillaLiquidacion.Int_HIV_C = cena;
 
                         // 🔴 NUEVA instanciaa
                         var dFactores1 = new DFactores();
-                        dFactores1.tipo_menu = "HivTbc_D";
+                        dFactores1.tipo_menu = "Int_HIV_D";
                         dFactores1.factor = tipoMenu.menu.factor_desayuno;
                         listaFactores.Add(dFactores1);
 
                         // 🔴 NUEVA instancia
                         var dFactores2 = new DFactores();
-                        dFactores2.tipo_menu = "HivTbc_A";
+                        dFactores2.tipo_menu = "Int_HIV_A";
                         dFactores2.factor = tipoMenu.menu.factor_almuerzo;
                         listaFactores.Add(dFactores2);
 
                         // 🔴 NUEVA instanciaa
                         var dFactores3 = new DFactores();
-                        dFactores3.tipo_menu = "HivTbc_M";
+                        dFactores3.tipo_menu = "Int_HIV_M";
                         dFactores3.factor = tipoMenu.menu.factor_merienda;
                         listaFactores.Add(dFactores3);
 
                         // 🔴 NUEVA instancia
                         var dFactores4 = new DFactores();
-                        dFactores4.tipo_menu = "HivTbc_C";
+                        dFactores4.tipo_menu = "Int_HIV_C";
                         dFactores4.factor = tipoMenu.menu.factor_cena;
                         listaFactores.Add(dFactores4);
                     }
@@ -392,10 +392,10 @@ namespace CapaPresentacion
                         //planillaLiquidacion.Men_C = cena;
 
                         //los hijos menores son contados como racion de internos normal
-                        planillaLiquidacion.IntN_D = planillaLiquidacion.IntN_D + desayuno;
-                        planillaLiquidacion.IntN_A = planillaLiquidacion.IntN_A + almuerzo;
-                        planillaLiquidacion.IntN_M = planillaLiquidacion.IntN_M + merienda;
-                        planillaLiquidacion.IntN_C = planillaLiquidacion.IntN_C + cena;
+                        planillaLiquidacion.Int_NORM_D = planillaLiquidacion.Int_NORM_D + desayuno;
+                        planillaLiquidacion.Int_NORM_A = planillaLiquidacion.Int_NORM_A + almuerzo;
+                        planillaLiquidacion.Int_NORM_M = planillaLiquidacion.Int_NORM_M + merienda;
+                        planillaLiquidacion.Int_NORM_C = planillaLiquidacion.Int_NORM_C + cena;
 
                         // 🔴 NUEVA instanciaa
                         var dFactores1 = new DFactores();
@@ -440,6 +440,7 @@ namespace CapaPresentacion
             // Columnas dinámicas por FECHA
             foreach (var item in listaPlanillaLiquidacion)
             {
+
                 dtgRacionesCargadas.Columns.Add(
                     item.fecha,
                     item.fecha
