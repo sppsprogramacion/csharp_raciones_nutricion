@@ -445,6 +445,7 @@ namespace CapaPresentacion
             dtgRacionesCargadas.Rows.Clear();
             dtgRacionesCargadas.AutoGenerateColumns = false;
 
+            //--Creacion de datagrid ---
             // Columna fija: Concepto
             dtgRacionesCargadas.Columns.Add("Menus", "Menus");
 
@@ -457,7 +458,7 @@ namespace CapaPresentacion
                 );
             }
 
-            // Columnas finales
+            // Agrega Columnas finales
             dtgRacionesCargadas.Columns.Add("Subtotal", "Subtotal");
             dtgRacionesCargadas.Columns.Add("Factor", "Factor");
             dtgRacionesCargadas.Columns.Add("Total", "Total");
@@ -514,67 +515,7 @@ namespace CapaPresentacion
 
             if (listaPlanillaLiquidacion.Count > 0)
             {
-                //dtgRacionesCargadas.Columns[1].Width = 50;
-                //dtgRacionesCargadas.Columns[2].Width = 50;
-                //dtgRacionesCargadas.Columns[3].Width = 50;
-                //dtgRacionesCargadas.Columns[4].Width = 50;
-                //dtgRacionesCargadas.Columns[5].Width = 50;
-                //dtgRacionesCargadas.Columns[6].Width = 50;
-                //dtgRacionesCargadas.Columns[7].Width = 50;
-                //dtgRacionesCargadas.Columns[8].Width = 50;
-                //dtgRacionesCargadas.Columns[9].Width = 50;
-                //dtgRacionesCargadas.Columns[10].Width = 50;
-                //dtgRacionesCargadas.Columns[11].Width = 50;
-                //dtgRacionesCargadas.Columns[12].Width = 50;
-                //dtgRacionesCargadas.Columns[13].Width = 50;
-                //dtgRacionesCargadas.Columns[14].Width = 50;
-                //dtgRacionesCargadas.Columns[15].Width = 50;
-                //dtgRacionesCargadas.Columns[16].Width = 50;
-                //dtgRacionesCargadas.Columns[17].Width = 50;
-                //dtgRacionesCargadas.Columns[18].Width = 50;
-                //dtgRacionesCargadas.Columns[19].Width = 50;
-                //dtgRacionesCargadas.Columns[20].Width = 50;
-                //dtgRacionesCargadas.Columns[21].Width = 50;
-                //dtgRacionesCargadas.Columns[22].Width = 50;
-                //dtgRacionesCargadas.Columns[23].Width = 50;
-                //dtgRacionesCargadas.Columns[24].Width = 50;
-                //dtgRacionesCargadas.Columns[25].Width = 50;
-                //dtgRacionesCargadas.Columns[26].Width = 50;
-                //dtgRacionesCargadas.Columns[27].Width = 50;
-                //dtgRacionesCargadas.Columns[28].Width = 50;
-                //dtgRacionesCargadas.Columns[29].Width = 50;
-                //dtgRacionesCargadas.Columns[30].Width = 50;
-                //dtgRacionesCargadas.Columns[31].Width = 50;
-                //dtgRacionesCargadas.Columns[32].Width = 50;
-                //dtgRacionesCargadas.Columns[33].Width = 60;
-                //dtgRacionesCargadas.Columns[34].Width = 60;
-                //dtgRacionesCargadas.Columns[35].Width = 60;
-                //dtgRacionesCargadas.Columns[36].Width = 60;
-                //dtgRacionesCargadas.Columns[37].Width = 50;
-                //dtgRacionesCargadas.Columns[38].Width = 50;
-                //dtgRacionesCargadas.Columns[39].Width = 50;
-                //dtgRacionesCargadas.Columns[40].Width = 50;
-
-                //dtgRacionesCargadas.Columns[1].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[2].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[3].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[4].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[9].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[10].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[11].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[12].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[17].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[18].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[19].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[20].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[25].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[26].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[27].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[28].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[33].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[34].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[35].DefaultCellStyle.BackColor = Color.SandyBrown;
-                //dtgRacionesCargadas.Columns[36].DefaultCellStyle.BackColor = Color.SandyBrown;
+                
 
             }
 
