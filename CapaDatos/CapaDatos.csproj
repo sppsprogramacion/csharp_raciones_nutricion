@@ -115,6 +115,7 @@
     <Compile Include="DObservacionGeneral.cs" />
     <Compile Include="DObservacionSolicitada.cs" />
     <Compile Include="DPlanillaLiquidacion.cs" />
+    <Compile Include="DPlanillaLiquidacion2da.cs" />
     <Compile Include="DRacionElaborada.cs" />
     <Compile Include="DRacionesSolicitadasDetalles.cs" />
     <Compile Include="DRacionSolicitada.cs" />

@@ -38,6 +38,7 @@
             this.btnImprimir = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.txtTotal = new System.Windows.Forms.TextBox();
+            this.txtNumeroRendicion = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dtgRacionesCargadas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -139,6 +140,13 @@
             this.txtTotal.Size = new System.Drawing.Size(229, 22);
             this.txtTotal.TabIndex = 120;
             // 
+            // txtNumeroRendicion
+            // 
+            this.txtNumeroRendicion.Location = new System.Drawing.Point(686, 22);
+            this.txtNumeroRendicion.Name = "txtNumeroRendicion";
+            this.txtNumeroRendicion.Size = new System.Drawing.Size(100, 20);
+            this.txtNumeroRendicion.TabIndex = 122;
+            // 
             // FormRacionesCargadas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -146,6 +154,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1184, 691);
+            this.Controls.Add(this.txtNumeroRendicion);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtTotal);
             this.Controls.Add(this.btnImprimir);
@@ -176,5 +185,6 @@
         private System.Windows.Forms.Button btnImprimir;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtTotal;
+        private System.Windows.Forms.TextBox txtNumeroRendicion;
     }
 }

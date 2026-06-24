@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAOImplement
 {
@@ -237,6 +235,54 @@ namespace DAOImplement
                     .Where(s => s.racion_elaborada_id == idRacionElaborada && s.unidad_id == idUnidad)
                     .ToList();
 
+
+                    return (lista, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                // 🟦 Detecta si realmente es error de conexión MySQL
+                if (ErrorHelper.EsErrorDeConexion(ex))
+                {
+                    return (null, "No hay conexión con el servidor de base de datos.");
+                }
+
+                // Si no es mysqlEx → error inesperado
+                Console.WriteLine(ex);
+                return (null, "Error inesperado: " + ex.Message);
+            }
+        }
+        //FIN LISTA POR IDRACIONSELABORADA Y UNIDAD........................................
+
+        //LISTA POR IDRACIONSELABORADA Y UNIDAD
+        public (List<DRacionElaboradaDetalles> lista, string error) ListaXFechaRacionElaborada(string fechaInicio, string fechaFin)
+        {
+            List<DRacionElaboradaDetalles> lista = new List<DRacionElaboradaDetalles>();
+
+            DateTime fechaInicioX;
+            DateTime fechaFinX;
+
+            if (!DateTime.TryParse(fechaInicio, out fechaInicioX))
+            {
+                return (null, "Fecha inicio inválida");
+            }
+
+            if (!DateTime.TryParse(fechaFin, out fechaFinX))
+            {
+                return (null, "Fecha fin inválida");
+            }
+
+            try
+            {
+                using (var db = new MiDbContext())
+                {
+
+                    lista = db.RacionesElaboradasDetalles
+                    .Include(s => s.racion_elaborada)
+                    .Include(s => s.tipo_menu)
+                    .Include(s => s.usuario)
+                    .Where(s => s.racion_elaborada.fecha_elaborada >= fechaInicioX && s.racion_elaborada.fecha_elaborada <= fechaFinX)
+                    .ToList();
 
                     return (lista, null);
                 }

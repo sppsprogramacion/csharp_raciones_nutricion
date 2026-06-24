@@ -1,16 +1,11 @@
 ﻿using CapaDatos;
-using CommonCache;
 using DAO;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Mysqlx.Crud;
 
 namespace DAOImplement
 {
@@ -158,6 +153,10 @@ namespace DAOImplement
                     lista = db.RacionesElaboradas
                      .Include(s => s.usuario)
                      .Include(s => s.raciones_elaboradas_detalles)
+                     .Include(x => x.raciones_elaboradas_detalles.Select(d => d.tipo_menu))
+                     .Include(x => x.raciones_elaboradas_detalles.Select(d => d.tipo_menu.menu))
+                     .Include(x => x.raciones_elaboradas_detalles.Select(d => d.sap))
+                     .Include(x => x.raciones_elaboradas_detalles.Select(d => d.unidad))
                      .Where(s => s.fecha_elaborada >= fechaInicioX && s.fecha_elaborada <= fechaFinX)
                      .OrderByDescending(s => s.fecha_elaborada)   // Orden ascendente
                      .ToList();

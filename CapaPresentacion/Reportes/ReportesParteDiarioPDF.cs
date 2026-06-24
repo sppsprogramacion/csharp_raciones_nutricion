@@ -1,0 +1,1339 @@
+﻿using CapaDatos;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using CapaNegocio;
+using System.Runtime.CompilerServices;
+
+namespace CapaPresentacion.Reportes
+{
+    public class ReportesParteDiarioPDF
+    {
+        //PLANILLA PARTE DIARIO
+        public static MemoryStream RepPdfPlanillaParteDiario(List<DUnidadMenuCantidades> listaUnidadesCantidades)
+        {
+            MemoryStream ms = new MemoryStream();
+
+            Document doc = new Document(PageSize.A4.Rotate(), 5, 5, 5, 5);
+
+            PdfWriter writer = PdfWriter.GetInstance(doc, ms);
+            writer.CloseStream = false;
+
+            doc.Open();
+
+            // Fuentes
+            Font fuenteLogo = FontFactory.GetFont(FontFactory.TIMES_BOLD, 8);
+            Font fuenteOrganismo = FontFactory.GetFont(FontFactory.TIMES, 8);
+            Font fuenteTitulo = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
+            Font fuenteEncabezado = FontFactory.GetFont(FontFactory.TIMES_BOLD, 7);
+            Font fuenteCelda = FontFactory.GetFont(FontFactory.TIMES, 7);
+            Font fuenteTotales = FontFactory.GetFont(FontFactory.TIMES_BOLD, 7);
+
+            // Encabezado
+            PdfPTable tablaEncabezado = new PdfPTable(2);
+            tablaEncabezado.WidthPercentage = 100;
+            tablaEncabezado.SetWidths(new float[] { 30f, 70f });
+
+            PdfPCell celdaIzq = new PdfPCell( new Phrase("SERVICIO PENITENCIARIO DE LA\nPROVINCIA DE SALTA\nDiv. Nutrición", fuenteLogo));
+
+            celdaIzq.Border = Rectangle.NO_BORDER;
+            celdaIzq.HorizontalAlignment = Element.ALIGN_CENTER;
+
+            PdfPCell celdaFecha = new PdfPCell( new Phrase("Salta, " + DateTime.Now.ToString("dddd d 'de' MMMM 'de' yyyy"), fuenteLogo));
+
+            celdaFecha.Border = Rectangle.NO_BORDER;
+            celdaFecha.HorizontalAlignment = Element.ALIGN_RIGHT;
+
+            tablaEncabezado.AddCell(celdaIzq);
+            tablaEncabezado.AddCell(celdaFecha);
+
+            doc.Add(tablaEncabezado);
+
+            Paragraph titulo = new Paragraph("Raciones SOLICITADAS", fuenteTitulo);
+
+            titulo.Alignment = Element.ALIGN_CENTER;
+
+            doc.Add(titulo);
+
+            doc.Add(new Paragraph(" "));
+
+            // AQUÍ VENDRÁ LA TABLA
+            PdfPTable tabla = new PdfPTable(23);
+            tabla.WidthPercentage = 100;
+
+            tabla.SetWidths(new float[]
+            {
+                4f,      // Unidad
+
+                .7f,.7f, // P12
+                .7f,.7f, // P24
+                .7f,.7f, // IntN
+                .7f,.7f, // Astr
+                .7f,.7f, // Celi
+                .7f,.7f, // AFib
+                .7f,.7f, // Hep
+                .7f,.7f, // SSal
+                .7f,.7f, // HivTbc
+                .7f,.7f, // Men
+                .7f,.7f  // SobreAl
+            });
+
+            //agregar filas de encabezados
+            // UNIDADES
+            PdfPCell celdaUnidad = new PdfPCell(new Phrase("Unidades\nCarcelarias", fuenteEncabezado));
+            celdaUnidad.Rowspan = 3;
+            celdaUnidad.HorizontalAlignment = Element.ALIGN_CENTER;
+            celdaUnidad.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tabla.AddCell(celdaUnidad);
+
+            // PERSONAL (12Hs + 24Hs = 4 columnas)
+            PdfPCell celdaPersonal = new PdfPCell(new Phrase("PERSONAL", fuenteEncabezado));
+
+            celdaPersonal.Colspan = 4;
+            celdaPersonal.HorizontalAlignment = Element.ALIGN_CENTER;
+            tabla.AddCell(celdaPersonal);
+
+            // INTERNOS NORMAL (2 columnas)
+            PdfPCell celdaInternos = new PdfPCell(new Phrase("Internos\n(Normal)", fuenteEncabezado));
+            celdaInternos.Colspan = 2;
+            celdaInternos.Rowspan = 2;
+            celdaInternos.HorizontalAlignment = Element.ALIGN_CENTER;
+            celdaInternos.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tabla.AddCell(celdaInternos);
+
+            // REGIMEN DIETOTERAPICO (16 columnas)
+            PdfPCell celdaRegimen = new PdfPCell(new Phrase("Régimen DIETOTERÁPICO: Personal/Internos", fuenteEncabezado));
+            celdaRegimen.Colspan = 16;
+            celdaRegimen.HorizontalAlignment = Element.ALIGN_CENTER;
+            tabla.AddCell(celdaRegimen);
+
+            //--segunda fila encabezado
+            AgregarGrupo(tabla, "12Hs", fuenteEncabezado);
+            AgregarGrupo(tabla, "24Hs", fuenteEncabezado);
+
+            AgregarGrupo(tabla, "Dieta\nAstring.", fuenteEncabezado);
+            AgregarGrupo(tabla, "Dieta\nCelíaco", fuenteEncabezado);
+            AgregarGrupo(tabla, "Dieta Alta\nen Fibra", fuenteEncabezado);
+            AgregarGrupo(tabla, "Dieta Hepato\nProtectora", fuenteEncabezado);
+            AgregarGrupo(tabla, "Dieta\nS/Sal", fuenteEncabezado);
+            AgregarGrupo(tabla, "Dieta\nHIV/TBC", fuenteEncabezado);
+            AgregarGrupo(tabla, "Menores", fuenteEncabezado);
+            AgregarGrupo(tabla, "Sobre\nAlim.", fuenteEncabezado);
+
+
+            //--tercer fila encabezado
+
+            BaseColor colorBlanco = BaseColor.WHITE;
+            BaseColor colorAlternado = new BaseColor(244, 220, 180); // parecido a SandyBrown
+            for (int i = 0; i < 11; i++)
+            {
+                BaseColor color = (i % 2 == 0)
+                    ? colorBlanco
+                    : colorAlternado;
+
+                PdfPCell celdaA = new PdfPCell(new Phrase("Alm.", fuenteEncabezado));
+                celdaA.BackgroundColor = color;
+                celdaA.HorizontalAlignment = Element.ALIGN_CENTER;
+                tabla.AddCell(celdaA);
+
+                PdfPCell celdaC = new PdfPCell(new Phrase("Cena", fuenteEncabezado));
+                celdaC.BackgroundColor = color;
+                celdaC.HorizontalAlignment = Element.ALIGN_CENTER;
+                tabla.AddCell(celdaC);
+            }
+
+
+            //agregar celdas
+            foreach (DUnidadMenuCantidades item in listaUnidadesCantidades)
+            {
+                Font fuente = item.unidad == "Totales"
+                    ? fuenteTotales
+                    : fuenteCelda;
+
+                BaseColor colorFondo = item.unidad == "Totales"
+                    ? BaseColor.LIGHT_GRAY
+                    : BaseColor.WHITE;
+
+
+                AgregarCelda(tabla, item.unidad, fuente, item.unidad == "Totales" ? BaseColor.LIGHT_GRAY : BaseColor.WHITE,
+                    Element.ALIGN_LEFT);
+
+                // Valores numéricos
+                int[] valores =
+                {
+                    item.P12_A, item.P12_C,
+                    item.P24_A, item.P24_C,
+                    item.IntN_A, item.IntN_C,
+                    item.Astr_A, item.Astr_C,
+                    item.Celi_A, item.Celi_C,
+                    item.AFib_A, item.AFib_C,
+                    item.Hep_A, item.Hep_C,
+                    item.SSal_A, item.SSal_C,
+                    item.HivTbc_A, item.HivTbc_C,
+                    item.Men_A, item.Men_C,
+                    item.SobreAl_A, item.SobreAl_C
+                };
+
+                //color de las columnas
+                BaseColor colorAlternado2 = new BaseColor(244, 220, 180);
+
+                for (int grupo = 0; grupo < 11; grupo++)
+                {
+                    BaseColor colorGrupo = (grupo % 2 == 0)
+                        ? BaseColor.WHITE
+                        : colorAlternado2;
+
+                    // Si es la fila Totales, mantener gris
+                    if (item.unidad == "Totales")
+                        colorGrupo = BaseColor.LIGHT_GRAY;
+
+                    AgregarCelda(tabla, valores[grupo * 2].ToString(), fuente, colorGrupo);
+
+                    AgregarCelda(tabla, valores[grupo * 2 + 1].ToString(), fuente, colorGrupo);
+                }
+            }
+
+            //agregar tabla
+            doc.Add(tabla);
+
+            doc.Close();
+
+            ms.Position = 0;
+
+            return ms;
+        }
+        //FIN PLANILLA PARTE DIARIO
+
+        // PARTE DIARIO NUEVO
+        public static MemoryStream RepPdfParteDiario(List<DRacionElaborada> listaRacionElaboradas, List<DRacionSolicitada> listaRacionSolicitadas, List<DUnidad> listaUnidades, List<DSap> listaSap, List<DTipoMenu> listaTipoMenu,  string fechaInicio, string fechaFin)
+        {
+            MemoryStream ms = new MemoryStream();
+
+            Document doc = new Document(PageSize.A4.Rotate(), 8, 8, 5, 5);
+
+            PdfWriter writer = PdfWriter.GetInstance(doc, ms);
+            writer.CloseStream = false;
+
+            doc.Open();
+
+
+            DateTime inicio = Convert.ToDateTime(fechaInicio);
+            DateTime fin = Convert.ToDateTime(fechaFin);
+
+            for (DateTime fecha = inicio; fecha <= fin; fecha = fecha.AddDays(1))
+            {
+
+                //GENERAR paginas de solicitadas: unidad y sap
+                DRacionSolicitada racionSolicitada = listaRacionSolicitadas.Where(x => x.fecha_solicitada == fecha).First();
+                List<DRacionesSolicitadasDetalles> listaDetallesSolicitada = racionSolicitada.raciones_solicitadas_detalles.ToList();
+
+                List<DUnidadMenuCantidades> listaUnidadesCantidadesSolicitadas = new List<DUnidadMenuCantidades>();
+                List<DSapMenuCantidades> listaSapCantidadesSolicitadas = new List<DSapMenuCantidades>();
+                listaUnidadesCantidadesSolicitadas = GenerarListaUnidadesCantidadesSolicitadas(listaDetallesSolicitada, listaUnidades, listaTipoMenu);
+                listaSapCantidadesSolicitadas = GenerarListaSapCantidadesSolicitadas(listaDetallesSolicitada, listaSap, listaTipoMenu);
+                //agregar una pagina al documento : Elaborada unidades
+                AgregarPagina(doc, listaUnidadesCantidadesSolicitadas, null, racionSolicitada.fecha_solicitada, "SOLICITADAS", "Unidades\nCarcelarias");
+                // --------------------------------- Nueva página ----------------------------------------------
+                doc.NewPage();
+                //agregar una pagina al documento : Elaborada sap
+                AgregarPagina(doc, null, listaSapCantidadesSolicitadas, racionSolicitada.fecha_solicitada, "SOLICITADAS", "Servicios de\nAlimentación");
+                // --------------------------------- Nueva página ----------------------------------------------
+                doc.NewPage();
+
+
+                //GENERAR paginas de elaboradas: unidad y sap
+                DRacionElaborada racionElaborada = listaRacionElaboradas.Where(x => x.fecha_elaborada == fecha).First();
+                List<DRacionElaboradaDetalles> listaDetallesElaboradas = racionElaborada.raciones_elaboradas_detalles.ToList();
+
+                List<DUnidadMenuCantidades> listaUnidadesCantidades = new List<DUnidadMenuCantidades>();
+                List<DSapMenuCantidades> listaSapCantidades = new List<DSapMenuCantidades>();
+
+                listaUnidadesCantidades = GenerarListaUnidadesCantidadesElaboradas(listaDetallesElaboradas, listaUnidades, listaTipoMenu);
+                listaSapCantidades = GenerarListaSapCantidadesElaboradas(listaDetallesElaboradas, listaSap, listaTipoMenu);
+                //agregar una pagina al documento : Elaborada unidades
+                AgregarPagina(doc, listaUnidadesCantidades, null, racionElaborada.fecha_elaborada, "ELABORADAS", "Unidades\nCarcelarias");
+                // --------------------------------- Nueva página ----------------------------------------------
+                doc.NewPage();
+                //agregar una pagina al documento : Elaborada sap
+                AgregarPagina(doc, null, listaSapCantidades, racionElaborada.fecha_elaborada, "ELABORADAS", "Servicios de\nAlimentación");
+                // --------------------------------- Nueva página ----------------------------------------------
+                doc.NewPage();
+
+                AgregarPaginaSapCantidades(doc,listaDetallesElaboradas, racionElaborada.fecha_elaborada, listaSap, listaTipoMenu);
+
+                // --------------------------------- Nueva página ----------------------------------------------
+                doc.NewPage();
+            }
+
+            
+
+            doc.Close();
+
+            ms.Position = 0;
+            
+            return ms;
+        }
+
+        //FIN PARTE DIARIO NUEVO...................................................................
+
+        //METODO GENERAR LISTA UNIDAD CANTIDADES ELABORADAS
+        private static List<DUnidadMenuCantidades> GenerarListaUnidadesCantidadesElaboradas(List<DRacionElaboradaDetalles> listaDetalles, List<DUnidad> listaUnidades, List<DTipoMenu> listaTipoMenu)
+        {
+            listaDetalles = listaDetalles
+                .OrderBy(s => s.tipo_menu.orden)
+                .ToList();
+            //fin Listar Detalles elaboradas
+
+            //contar valores de menus en cada unidad
+            List<DUnidadMenuCantidades> listaUnidadesCantidades = new List<DUnidadMenuCantidades>();
+
+            List<DRacionElaboradaDetalles> listaFiltroDetallesXUnidad = new List<DRacionElaboradaDetalles>();
+            foreach (DUnidad unidad in listaUnidades)
+            {
+                // 🔴 NUEVA instancia en cada vuelta
+                var unidadCantidades = new DUnidadMenuCantidades();
+                //indicar la unidad enque se esta tomando los valores
+                unidadCantidades.unidad = unidad.unidad;
+
+                foreach (DTipoMenu tipoMenu in listaTipoMenu)
+                {
+                    listaFiltroDetallesXUnidad = listaDetalles.Where(x => x.unidad_id == unidad.id_unidad && x.tipo_menu_id == tipoMenu.id_tipo_menu).ToList();
+                    int almuerzo = 0;
+                    int cena = 0;
+
+                    foreach (DRacionElaboradaDetalles detalle in listaFiltroDetallesXUnidad)
+                    {
+                        almuerzo = almuerzo + detalle.almuerzo;
+                        cena = cena + detalle.cena;
+                    }
+
+                    if (tipoMenu.id_tipo_menu == 1)
+                    {
+                        unidadCantidades.P12_A = almuerzo;
+                        unidadCantidades.P12_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 2)
+                    {
+                        unidadCantidades.P24_A = almuerzo;
+                        unidadCantidades.P24_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 3)
+                    {
+                        unidadCantidades.IntN_A = almuerzo;
+                        unidadCantidades.IntN_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 4)
+                    {
+                        unidadCantidades.Astr_A = almuerzo;
+                        unidadCantidades.Astr_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 5)
+                    {
+                        unidadCantidades.Celi_A = almuerzo;
+                        unidadCantidades.Celi_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 6)
+                    {
+                        unidadCantidades.AFib_A = almuerzo;
+                        unidadCantidades.AFib_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 7)
+                    {
+                        unidadCantidades.Hep_A = almuerzo;
+                        unidadCantidades.Hep_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 8)
+                    {
+                        unidadCantidades.SSal_A = almuerzo;
+                        unidadCantidades.SSal_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 9)
+                    {
+                        unidadCantidades.HivTbc_A = almuerzo;
+                        unidadCantidades.HivTbc_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 10)
+                    {
+                        unidadCantidades.Men_A = almuerzo;
+                        unidadCantidades.Men_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 11)
+                    {
+                        unidadCantidades.SobreAl_A = almuerzo;
+                        unidadCantidades.SobreAl_C = cena;
+                    }
+
+
+                }
+
+                listaUnidadesCantidades.Add(unidadCantidades);
+            }
+            //fin contar valores de menus en cada unidad
+
+            AgregarFilaTotales(listaUnidadesCantidades);
+
+            return listaUnidadesCantidades;
+        }
+        //FIN METODO GENERAR LISTA UNIDAD CANTIDADES..................................
+
+        //METODO GENERAR LISTA SAP CANTIDADES
+        private static List<DSapMenuCantidades> GenerarListaSapCantidadesElaboradas(List<DRacionElaboradaDetalles> listaDetalles, List<DSap> listaSap, List<DTipoMenu> listaTipoMenu)
+        {
+            //ordenar Listar Detalles elaboradas
+            listaDetalles = listaDetalles
+                .OrderBy(s => s.tipo_menu.orden)
+                .ToList();
+
+            //contar valores de menus en cada sap
+            List<DSapMenuCantidades> listaSapCantidades = new List<DSapMenuCantidades>();
+            List<DRacionElaboradaDetalles> listaFiltroDetallesXSap = new List<DRacionElaboradaDetalles>();
+
+            foreach (DSap sap in listaSap)
+            {
+                // 🔴 NUEVA instancia en cada vuelta
+                var sapCantidades = new DSapMenuCantidades();
+                sapCantidades.sap = sap.sap;
+
+                foreach (DTipoMenu tipoMenu in listaTipoMenu)
+                {
+                    listaFiltroDetallesXSap = listaDetalles.Where(x => x.sap_id == sap.id_sap && x.tipo_menu_id == tipoMenu.id_tipo_menu).ToList();
+
+                    int almuerzo = 0;
+                    int cena = 0;
+
+                    foreach (DRacionElaboradaDetalles detalle in listaFiltroDetallesXSap)
+                    {
+                        almuerzo = almuerzo + detalle.almuerzo;
+                        cena = cena + detalle.cena;
+                    }
+
+                    if (tipoMenu.id_tipo_menu == 1)
+                    {
+                        sapCantidades.P12_A = almuerzo;
+                        sapCantidades.P12_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 2)
+                    {
+                        sapCantidades.P24_A = almuerzo;
+                        sapCantidades.P24_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 3)
+                    {
+                        sapCantidades.IntN_A = almuerzo;
+                        sapCantidades.IntN_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 4)
+                    {
+                        sapCantidades.Astr_A = almuerzo;
+                        sapCantidades.Astr_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 5)
+                    {
+                        sapCantidades.Celi_A = almuerzo;
+                        sapCantidades.Celi_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 6)
+                    {
+                        sapCantidades.AFib_A = almuerzo;
+                        sapCantidades.AFib_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 7)
+                    {
+                        sapCantidades.Hep_A = almuerzo;
+                        sapCantidades.Hep_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 8)
+                    {
+                        sapCantidades.SSal_A = almuerzo;
+                        sapCantidades.SSal_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 9)
+                    {
+                        sapCantidades.HivTbc_A = almuerzo;
+                        sapCantidades.HivTbc_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 10)
+                    {
+                        sapCantidades.Men_A = almuerzo;
+                        sapCantidades.Men_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 11)
+                    {
+                        sapCantidades.SobreAl_A = almuerzo;
+                        sapCantidades.SobreAl_C = cena;
+                    }
+
+                }
+
+                listaSapCantidades.Add(sapCantidades);
+            }
+
+            //fin contar valores de menus en cada sap
+
+            AgregarFilaTotalesSap(listaSapCantidades);
+
+
+            return listaSapCantidades;
+        }
+        //FIN METODO GENERAR LISTA SAP CANTIDADES ELABORADAS..................................
+
+        //METODO GENERAR LISTA UNIDAD CANTIDADES SOLICITADAS
+        private static List<DUnidadMenuCantidades> GenerarListaUnidadesCantidadesSolicitadas(List<DRacionesSolicitadasDetalles> listaDetalles, List<DUnidad> listaUnidades, List<DTipoMenu> listaTipoMenu)
+        {
+            listaDetalles = listaDetalles
+                .OrderBy(s => s.tipo_menu.orden)
+                .ToList();
+            //fin Listar Detalles elaboradas
+
+            //contar valores de menus en cada unidad
+            List<DUnidadMenuCantidades> listaUnidadesCantidades = new List<DUnidadMenuCantidades>();
+
+            List<DRacionesSolicitadasDetalles> listaFiltroDetallesXUnidad = new List<DRacionesSolicitadasDetalles>();
+            foreach (DUnidad unidad in listaUnidades)
+            {
+                // 🔴 NUEVA instancia en cada vuelta
+                var unidadCantidades = new DUnidadMenuCantidades();
+                //indicar la unidad enque se esta tomando los valores
+                unidadCantidades.unidad = unidad.unidad;
+
+                foreach (DTipoMenu tipoMenu in listaTipoMenu)
+                {
+                    listaFiltroDetallesXUnidad = listaDetalles.Where(x => x.unidad_id == unidad.id_unidad && x.tipo_menu_id == tipoMenu.id_tipo_menu).ToList();
+                    int almuerzo = 0;
+                    int cena = 0;
+
+                    foreach (DRacionesSolicitadasDetalles detalle in listaFiltroDetallesXUnidad)
+                    {
+                        almuerzo = almuerzo + detalle.almuerzo;
+                        cena = cena + detalle.cena;
+                    }
+
+                    if (tipoMenu.id_tipo_menu == 1)
+                    {
+                        unidadCantidades.P12_A = almuerzo;
+                        unidadCantidades.P12_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 2)
+                    {
+                        unidadCantidades.P24_A = almuerzo;
+                        unidadCantidades.P24_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 3)
+                    {
+                        unidadCantidades.IntN_A = almuerzo;
+                        unidadCantidades.IntN_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 4)
+                    {
+                        unidadCantidades.Astr_A = almuerzo;
+                        unidadCantidades.Astr_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 5)
+                    {
+                        unidadCantidades.Celi_A = almuerzo;
+                        unidadCantidades.Celi_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 6)
+                    {
+                        unidadCantidades.AFib_A = almuerzo;
+                        unidadCantidades.AFib_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 7)
+                    {
+                        unidadCantidades.Hep_A = almuerzo;
+                        unidadCantidades.Hep_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 8)
+                    {
+                        unidadCantidades.SSal_A = almuerzo;
+                        unidadCantidades.SSal_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 9)
+                    {
+                        unidadCantidades.HivTbc_A = almuerzo;
+                        unidadCantidades.HivTbc_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 10)
+                    {
+                        unidadCantidades.Men_A = almuerzo;
+                        unidadCantidades.Men_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 11)
+                    {
+                        unidadCantidades.SobreAl_A = almuerzo;
+                        unidadCantidades.SobreAl_C = cena;
+                    }
+
+
+                }
+
+                listaUnidadesCantidades.Add(unidadCantidades);
+            }
+            //fin contar valores de menus en cada unidad
+
+            AgregarFilaTotales(listaUnidadesCantidades);
+
+            return listaUnidadesCantidades;
+        }
+        //FIN METODO GENERAR LISTA UNIDAD CANTIDADES SOLICITADAS..................................
+
+        //METODO GENERAR LISTA SAP CANTIDADES SOLICITADAS
+        private static List<DSapMenuCantidades> GenerarListaSapCantidadesSolicitadas(List<DRacionesSolicitadasDetalles> listaDetalles, List<DSap> listaSap, List<DTipoMenu> listaTipoMenu)
+        {
+            //ordenar Listar Detalles elaboradas
+            listaDetalles = listaDetalles
+                .OrderBy(s => s.tipo_menu.orden)
+                .ToList();
+
+            //contar valores de menus en cada sap
+            List<DSapMenuCantidades> listaSapCantidades = new List<DSapMenuCantidades>();
+            List<DRacionesSolicitadasDetalles> listaFiltroDetallesXSap = new List<DRacionesSolicitadasDetalles>();
+
+            foreach (DSap sap in listaSap)
+            {
+                // 🔴 NUEVA instancia en cada vuelta
+                var sapCantidades = new DSapMenuCantidades();
+                sapCantidades.sap = sap.sap;
+
+                foreach (DTipoMenu tipoMenu in listaTipoMenu)
+                {
+                    listaFiltroDetallesXSap = listaDetalles.Where(x => x.sap_id == sap.id_sap && x.tipo_menu_id == tipoMenu.id_tipo_menu).ToList();
+
+                    int almuerzo = 0;
+                    int cena = 0;
+
+                    foreach (DRacionesSolicitadasDetalles detalle in listaFiltroDetallesXSap)
+                    {
+                        almuerzo = almuerzo + detalle.almuerzo;
+                        cena = cena + detalle.cena;
+                    }
+
+                    if (tipoMenu.id_tipo_menu == 1)
+                    {
+                        sapCantidades.P12_A = almuerzo;
+                        sapCantidades.P12_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 2)
+                    {
+                        sapCantidades.P24_A = almuerzo;
+                        sapCantidades.P24_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 3)
+                    {
+                        sapCantidades.IntN_A = almuerzo;
+                        sapCantidades.IntN_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 4)
+                    {
+                        sapCantidades.Astr_A = almuerzo;
+                        sapCantidades.Astr_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 5)
+                    {
+                        sapCantidades.Celi_A = almuerzo;
+                        sapCantidades.Celi_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 6)
+                    {
+                        sapCantidades.AFib_A = almuerzo;
+                        sapCantidades.AFib_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 7)
+                    {
+                        sapCantidades.Hep_A = almuerzo;
+                        sapCantidades.Hep_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 8)
+                    {
+                        sapCantidades.SSal_A = almuerzo;
+                        sapCantidades.SSal_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 9)
+                    {
+                        sapCantidades.HivTbc_A = almuerzo;
+                        sapCantidades.HivTbc_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 10)
+                    {
+                        sapCantidades.Men_A = almuerzo;
+                        sapCantidades.Men_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 11)
+                    {
+                        sapCantidades.SobreAl_A = almuerzo;
+                        sapCantidades.SobreAl_C = cena;
+                    }
+
+                }
+
+                listaSapCantidades.Add(sapCantidades);
+            }
+
+            //fin contar valores de menus en cada sap
+
+            AgregarFilaTotalesSap(listaSapCantidades);
+
+
+            return listaSapCantidades;
+        }
+        //FIN METODO GENERAR LISTA SAP CANTIDADES SOLICITADAS..................................
+
+
+
+        //METODO AGREGAR PAGINA - tipo_planilla = SOLICITADAS o ELABORADAS
+        private static void AgregarPagina(Document doc, List<DUnidadMenuCantidades> listaUnidadesCantidades, List<DSapMenuCantidades> listaSapsCantidades, DateTime fecha, string tipo_planilla, string titulo_tabla)
+        {
+
+            // Fuentes
+            Font fuenteLogo = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
+            Font fuenteTitulo = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
+            Font fuenteTituloTabla = FontFactory.GetFont(FontFactory.TIMES_BOLD, 12);
+            Font fuenteEncabezado = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
+            Font fuenteCelda = FontFactory.GetFont(FontFactory.TIMES, 9);
+            Font fuenteTotales = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
+
+            // Encabezado
+            PdfPTable tablaEncabezado = new PdfPTable(2);
+            tablaEncabezado.WidthPercentage = 100;
+            tablaEncabezado.SetWidths(new float[] { 30f, 70f });
+
+            PdfPCell celdaIzq = new PdfPCell(new Phrase("SERVICIO PENITENCIARIO DE LA\nPROVINCIA DE SALTA\nDiv. Nutrición", fuenteLogo));
+
+            celdaIzq.Border = Rectangle.NO_BORDER;
+            celdaIzq.HorizontalAlignment = Element.ALIGN_CENTER;
+
+            PdfPCell celdaFecha = new PdfPCell(new Phrase("Salta, " + fecha.ToString("dddd d 'de' MMMM 'de' yyyy"), fuenteLogo));
+
+            celdaFecha.Border = Rectangle.NO_BORDER;
+            celdaFecha.HorizontalAlignment = Element.ALIGN_RIGHT;
+            celdaFecha.VerticalAlignment = Element.ALIGN_BOTTOM;
+
+            tablaEncabezado.AddCell(celdaIzq);
+            tablaEncabezado.AddCell(celdaFecha);
+
+            doc.Add(tablaEncabezado);
+
+            Paragraph titulo = new Paragraph("Raciones " + tipo_planilla, fuenteTitulo);
+
+            titulo.Alignment = Element.ALIGN_CENTER;
+
+            doc.Add(titulo);
+
+            //doc.Add(new Paragraph(" "));
+
+            // AQUÍ VENDRÁ LA TABLA
+            PdfPTable tabla = new PdfPTable(23);
+            tabla.WidthPercentage = 100;
+
+            tabla.SetWidths(new float[]
+            {
+                3f,      // Unidad
+
+                .7f,.7f, // P12
+                .7f,.7f, // P24
+                .7f,.7f, // IntN
+                .7f,.7f, // Astr
+                .7f,.7f, // Celi
+                .7f,.7f, // AFib
+                .7f,.7f, // Hep
+                .7f,.7f, // SSal
+                .7f,.7f, // HivTbc
+                .7f,.7f, // Men
+                .7f,.7f  // SobreAl
+            });
+
+            //agregar filas de encabezados
+            // UNIDADES
+            PdfPCell celdaUnidad = new PdfPCell(new Phrase(titulo_tabla, fuenteTituloTabla));
+            celdaUnidad.Rowspan = 3;
+            celdaUnidad.HorizontalAlignment = Element.ALIGN_CENTER;
+            celdaUnidad.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tabla.AddCell(celdaUnidad);
+
+            // PERSONAL (12Hs + 24Hs = 4 columnas)
+            PdfPCell celdaPersonal = new PdfPCell(new Phrase("PERSONAL", fuenteEncabezado));
+
+            celdaPersonal.Colspan = 4;
+            celdaPersonal.HorizontalAlignment = Element.ALIGN_CENTER;
+            tabla.AddCell(celdaPersonal);
+
+            // INTERNOS NORMAL (2 columnas)
+            PdfPCell celdaInternos = new PdfPCell(new Phrase("Internos\n(Normal)", fuenteEncabezado));
+            celdaInternos.Colspan = 2;
+            celdaInternos.Rowspan = 2;
+            celdaInternos.HorizontalAlignment = Element.ALIGN_CENTER;
+            celdaInternos.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tabla.AddCell(celdaInternos);
+
+            // REGIMEN DIETOTERAPICO (16 columnas)
+            PdfPCell celdaRegimen = new PdfPCell(new Phrase("Régimen DIETOTERÁPICO: Personal/Internos", fuenteEncabezado));
+            celdaRegimen.Colspan = 16;
+            celdaRegimen.HorizontalAlignment = Element.ALIGN_CENTER;
+            tabla.AddCell(celdaRegimen);
+
+            //--segunda fila encabezado
+            AgregarGrupo(tabla, "12Hs", fuenteEncabezado);
+            AgregarGrupo(tabla, "24Hs", fuenteEncabezado);
+
+            AgregarGrupo(tabla, "Dieta\nAstring.", fuenteEncabezado);
+            AgregarGrupo(tabla, "Dieta\nCelíaco", fuenteEncabezado);
+            AgregarGrupo(tabla, "Dieta Alta\nen Fibra", fuenteEncabezado);
+            AgregarGrupo(tabla, "Dieta Hepato\nProtectora", fuenteEncabezado);
+            AgregarGrupo(tabla, "Dieta\nS/Sal", fuenteEncabezado);
+            AgregarGrupo(tabla, "Dieta\nHIV/TBC", fuenteEncabezado);
+            AgregarGrupo(tabla, "Menores", fuenteEncabezado);
+            AgregarGrupo(tabla, "Sobre\nAlim.", fuenteEncabezado);
+
+
+            //--tercer fila encabezado
+
+            BaseColor colorBlanco = BaseColor.WHITE;
+
+            //color para celdas de solicitadas
+            BaseColor colorAlternado = new BaseColor(244, 220, 180); // parecido a SandyBrown
+            //color para celdas de elaboradas
+            if (tipo_planilla == "ELABORADAS")
+            {
+                colorAlternado = new BaseColor(230, 240, 255); // azul muy suave
+
+            }
+
+            for (int i = 0; i < 11; i++)
+            {
+                BaseColor color = (i % 2 == 0)
+                    ? colorBlanco
+                    : colorAlternado;
+
+                PdfPCell celdaA = new PdfPCell(new Phrase("Alm.", fuenteEncabezado));
+                celdaA.BackgroundColor = color;
+                celdaA.HorizontalAlignment = Element.ALIGN_CENTER;
+                tabla.AddCell(celdaA);
+
+                PdfPCell celdaC = new PdfPCell(new Phrase("Cena", fuenteEncabezado));
+                celdaC.BackgroundColor = color;
+                celdaC.HorizontalAlignment = Element.ALIGN_CENTER;
+                tabla.AddCell(celdaC);
+            }
+
+            //agregar celdas: usar listaUnidadesCantidades para agregar celdas con valores
+            if (listaSapsCantidades == null)
+            {
+                //agregar celdas
+                foreach (DUnidadMenuCantidades item in listaUnidadesCantidades)
+                {
+                    Font fuente = item.unidad == "Totales"
+                        ? fuenteTotales
+                        : fuenteCelda;
+
+                    BaseColor colorFondo = item.unidad == "Totales"
+                        ? BaseColor.LIGHT_GRAY
+                        : BaseColor.WHITE;
+
+
+                    AgregarCelda(tabla, item.unidad, fuente, item.unidad == "Totales" ? BaseColor.LIGHT_GRAY : BaseColor.WHITE,
+                        Element.ALIGN_LEFT);
+
+                    // Valores numéricos
+                    int[] valores =
+                    {
+                    item.P12_A, item.P12_C,
+                    item.P24_A, item.P24_C,
+                    item.IntN_A, item.IntN_C,
+                    item.Astr_A, item.Astr_C,
+                    item.Celi_A, item.Celi_C,
+                    item.AFib_A, item.AFib_C,
+                    item.Hep_A, item.Hep_C,
+                    item.SSal_A, item.SSal_C,
+                    item.HivTbc_A, item.HivTbc_C,
+                    item.Men_A, item.Men_C,
+                    item.SobreAl_A, item.SobreAl_C
+                };
+
+                    //color de las columnas
+                    BaseColor colorAlternado2 = new BaseColor(244, 220, 180);
+
+                    //color para celdas de elaboradas
+                    if (tipo_planilla == "ELABORADAS")
+                    {
+                        colorAlternado2 = new BaseColor(230, 240, 255); // azul muy suave
+
+                    }
+
+                    for (int grupo = 0; grupo < 11; grupo++)
+                    {
+                        BaseColor colorGrupo = (grupo % 2 == 0)
+                            ? BaseColor.WHITE
+                            : colorAlternado2;
+
+                        // Si es la fila Totales, mantener gris
+                        if (item.unidad == "Totales")
+                            colorGrupo = BaseColor.LIGHT_GRAY;
+
+                        AgregarCelda(tabla, valores[grupo * 2].ToString(), fuente, colorGrupo);
+
+                        AgregarCelda(tabla, valores[grupo * 2 + 1].ToString(), fuente, colorGrupo);
+                    }
+                }
+            }
+
+            //agregar celdas: usar listaSapsCantidades para agregar celdas con valores
+            if (listaUnidadesCantidades == null)
+            {
+                //agregar celdas
+                foreach (DSapMenuCantidades item in listaSapsCantidades)
+                {
+                    Font fuente = item.sap == "Totales"
+                        ? fuenteTotales
+                        : fuenteCelda;
+
+                    BaseColor colorFondo = item.sap == "Totales"
+                        ? BaseColor.LIGHT_GRAY
+                        : BaseColor.WHITE;
+
+
+                    AgregarCelda(tabla, item.sap, fuente, item.sap == "Totales" ? BaseColor.LIGHT_GRAY : BaseColor.WHITE,
+                        Element.ALIGN_LEFT);
+
+                    // Valores numéricos
+                    int[] valores =
+                    {
+                        item.P12_A, item.P12_C,
+                        item.P24_A, item.P24_C,
+                        item.IntN_A, item.IntN_C,
+                        item.Astr_A, item.Astr_C,
+                        item.Celi_A, item.Celi_C,
+                        item.AFib_A, item.AFib_C,
+                        item.Hep_A, item.Hep_C,
+                        item.SSal_A, item.SSal_C,
+                        item.HivTbc_A, item.HivTbc_C,
+                        item.Men_A, item.Men_C,
+                        item.SobreAl_A, item.SobreAl_C
+                    };
+
+                    //color de las columnas
+                    BaseColor colorAlternado2 = new BaseColor(244, 220, 180);
+
+                    //color para celdas de elaboradas
+                    if (tipo_planilla == "ELABORADAS")
+                    {
+                        colorAlternado2 = new BaseColor(230, 240, 255); // azul muy suave
+
+                    }
+
+                    for (int grupo = 0; grupo < 11; grupo++)
+                    {
+                        BaseColor colorGrupo = (grupo % 2 == 0)
+                            ? BaseColor.WHITE
+                            : colorAlternado2;
+
+                        // Si es la fila Totales, mantener gris
+                        if (item.sap == "Totales")
+                            colorGrupo = BaseColor.LIGHT_GRAY;
+
+                        AgregarCelda(tabla, valores[grupo * 2].ToString(), fuente, colorGrupo);
+
+                        AgregarCelda(tabla, valores[grupo * 2 + 1].ToString(), fuente, colorGrupo);
+                    }
+                }
+            }
+
+            //agregar tabla
+            doc.Add(tabla);
+
+            //doc.Close();
+
+            //ms.Position = 0;
+
+            //return ms;
+        }
+
+        //FIN METODO AGREGAR PAGINA...................................................................
+
+        //METODO AGREGAR PAGINA - tipo_planilla = SOLICITADAS o ELABORADAS
+        private static void AgregarPaginaSapCantidades(Document doc,  List<DRacionElaboradaDetalles> listaElaboradasDetalles, DateTime fecha, List<DSap> listaSap, List<DTipoMenu> listaTipoMenu)
+        {
+
+            // Fuentes
+            Font fuenteLogo = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
+            Font fuenteTitulo = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
+            Font fuenteTituloTabla = FontFactory.GetFont(FontFactory.TIMES_BOLD, 12);
+            Font fuenteEncabezado = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
+            Font fuenteCelda = FontFactory.GetFont(FontFactory.TIMES, 9);
+            Font fuenteTotales = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
+
+            // Encabezado
+            PdfPTable tablaEncabezado = new PdfPTable(2);
+            tablaEncabezado.WidthPercentage = 100;
+            tablaEncabezado.SetWidths(new float[] { 30f, 70f });
+
+            PdfPCell celdaIzq = new PdfPCell(new Phrase("SERVICIO PENITENCIARIO DE LA\nPROVINCIA DE SALTA\nDiv. Nutrición", fuenteLogo));
+
+            celdaIzq.Border = Rectangle.NO_BORDER;
+            celdaIzq.HorizontalAlignment = Element.ALIGN_CENTER;
+
+            PdfPCell celdaFecha = new PdfPCell(new Phrase("Salta, " + fecha.ToString("dddd d 'de' MMMM 'de' yyyy"), fuenteLogo));
+
+            celdaFecha.Border = Rectangle.NO_BORDER;
+            celdaFecha.HorizontalAlignment = Element.ALIGN_RIGHT;
+            celdaFecha.VerticalAlignment = Element.ALIGN_BOTTOM;
+
+            tablaEncabezado.AddCell(celdaIzq);
+            tablaEncabezado.AddCell(celdaFecha);
+
+            doc.Add(tablaEncabezado);
+                   
+            doc.Add(new Paragraph(" "));
+
+            // AQUÍ VENDRÁ LA TABLA
+            PdfPTable tabla = new PdfPTable(15);
+            tabla.WidthPercentage = 100;
+
+            tabla.SetWidths(new float[]
+            {
+                2f,      // Unidad
+
+                .7f,.7f, // P12
+                .7f,.7f, // P24
+                .7f,.7f, // IntN
+                .7f,.7f, // Astr
+                .7f,.7f, // Celi
+                .7f,.7f, // AFib
+                .7f,.7f, // Hep
+                
+            });
+
+            //ENCABEZADO tabla
+            PdfPCell celda = new PdfPCell(new Phrase("Menus Elaborados", fuenteEncabezado));
+            celda.HorizontalAlignment = Element.ALIGN_CENTER;
+            tabla.AddCell(celda);
+
+            BaseColor colorBlanco = BaseColor.WHITE;
+            BaseColor colorAlternado = new BaseColor(230, 240, 255); // azul muy suave
+
+            // Columnas dinámicas por SAP
+            for (int num_sap = 1; num_sap <= 14; num_sap++)
+            {
+                BaseColor colorCelda = (num_sap % 2 == 0)
+                       ? BaseColor.WHITE
+                       : colorAlternado;
+
+                PdfPCell celdaA = new PdfPCell(new Phrase("SAP Nº " + num_sap, fuenteEncabezado));
+                celdaA.BackgroundColor = colorCelda;
+                celdaA.HorizontalAlignment = Element.ALIGN_CENTER;
+                tabla.AddCell(celdaA);
+            }
+            //FIN Encabezado tabla
+
+            //FILAS de tabla
+            List<DRacionElaboradaDetalles> listaFiltroDetallesXMenuSap = new List<DRacionElaboradaDetalles>();
+            List<DTipoMenu> listaTipoMenusFiltro = listaTipoMenu.Where(x => x.id_tipo_menu != 11 && x.id_tipo_menu != 10).ToList();
+
+            foreach (var tipoMenu in listaTipoMenusFiltro)
+            {
+
+                //desayuno
+                PdfPCell celdaMenuDsayuno = new PdfPCell(new Phrase(tipoMenu.tipo_menu + " - Desayuno", fuenteEncabezado));
+                //celdaA.BackgroundColor = color;
+                celdaMenuDsayuno.HorizontalAlignment = Element.ALIGN_LEFT;
+                tabla.AddCell(celdaMenuDsayuno);
+
+                int numero_columna = 0;
+
+                numero_columna = 0;
+                foreach (var sap in listaSap)
+                {
+                    if(tipoMenu.id_tipo_menu == 3)
+                    {
+                        listaFiltroDetallesXMenuSap = listaElaboradasDetalles.Where(x => x.sap_id == sap.id_sap && (x.tipo_menu_id == tipoMenu.id_tipo_menu || x.tipo_menu_id == 10)).ToList();
+
+                    }
+                    else
+                    {
+                        listaFiltroDetallesXMenuSap = listaElaboradasDetalles.Where(x => x.sap_id == sap.id_sap && x.tipo_menu_id == tipoMenu.id_tipo_menu).ToList();
+
+                    }
+
+                    int desayuno = 0;
+
+                    foreach (DRacionElaboradaDetalles detalle in listaFiltroDetallesXMenuSap)
+                    {
+                        desayuno = desayuno + detalle.almuerzo;
+                    }
+
+                    numero_columna = numero_columna + 1;
+                    BaseColor colorCeldaCantidad = (numero_columna % 2 == 0)
+                       ? BaseColor.WHITE
+                       : colorAlternado;
+
+                    PdfPCell celdaDesayuno = new PdfPCell(new Phrase(desayuno.ToString(), fuenteCelda));
+                    celdaDesayuno.BackgroundColor = colorCeldaCantidad;
+                    celdaDesayuno.HorizontalAlignment = Element.ALIGN_CENTER;
+                    tabla.AddCell(celdaDesayuno);
+                       
+                }
+
+                //almuerzo
+                PdfPCell celdaMenuAlmuerzo = new PdfPCell(new Phrase(tipoMenu.tipo_menu + " - Almuerzo", fuenteEncabezado));
+                //celdaA.BackgroundColor = color;
+                celdaMenuAlmuerzo.HorizontalAlignment = Element.ALIGN_LEFT;
+                tabla.AddCell(celdaMenuAlmuerzo);
+
+                numero_columna = 0;
+                foreach (var sap in listaSap)
+                {
+                    if (tipoMenu.id_tipo_menu == 3)
+                    {
+                        listaFiltroDetallesXMenuSap = listaElaboradasDetalles.Where(x => x.sap_id == sap.id_sap && (x.tipo_menu_id == tipoMenu.id_tipo_menu || x.tipo_menu_id == 10)).ToList();
+
+                    }
+                    else
+                    {
+                        listaFiltroDetallesXMenuSap = listaElaboradasDetalles.Where(x => x.sap_id == sap.id_sap && x.tipo_menu_id == tipoMenu.id_tipo_menu).ToList();
+
+                    }
+
+                    int almuerzo = 0;
+
+                    foreach (DRacionElaboradaDetalles detalle in listaFiltroDetallesXMenuSap)
+                    {
+                        almuerzo = almuerzo + detalle.almuerzo;
+                    }
+
+                    numero_columna = numero_columna + 1;
+                    BaseColor colorCeldaCantidad = (numero_columna % 2 == 0)
+                       ? BaseColor.WHITE
+                       : colorAlternado;
+                    PdfPCell celdaAlmuerzo = new PdfPCell(new Phrase(almuerzo.ToString(), fuenteCelda));
+                    celdaAlmuerzo.BackgroundColor = colorCeldaCantidad;
+                    celdaAlmuerzo.HorizontalAlignment = Element.ALIGN_CENTER;
+                    tabla.AddCell(celdaAlmuerzo);
+
+                }
+
+                //merienda
+                PdfPCell celdaMenuMerienda = new PdfPCell(new Phrase(tipoMenu.tipo_menu + " - Merienda", fuenteEncabezado));
+                //celdaA.BackgroundColor = color;
+                celdaMenuMerienda.HorizontalAlignment = Element.ALIGN_LEFT;
+                tabla.AddCell(celdaMenuMerienda);
+
+                numero_columna = 0;
+                foreach (var sap in listaSap)
+                {
+                    if (tipoMenu.id_tipo_menu == 3)
+                    {
+                        listaFiltroDetallesXMenuSap = listaElaboradasDetalles.Where(x => x.sap_id == sap.id_sap && (x.tipo_menu_id == tipoMenu.id_tipo_menu || x.tipo_menu_id == 10)).ToList();
+
+                    }
+                    else
+                    {
+                        listaFiltroDetallesXMenuSap = listaElaboradasDetalles.Where(x => x.sap_id == sap.id_sap && x.tipo_menu_id == tipoMenu.id_tipo_menu).ToList();
+
+                    }
+
+                    int merienda = 0;
+
+                    foreach (DRacionElaboradaDetalles detalle in listaFiltroDetallesXMenuSap)
+                    {
+                        merienda = merienda + detalle.cena;
+                    }
+
+                    numero_columna = numero_columna + 1;
+                    BaseColor colorCeldaCantidad = (numero_columna % 2 == 0)
+                       ? BaseColor.WHITE
+                       : colorAlternado;
+                    PdfPCell celdaMerienda = new PdfPCell(new Phrase(merienda.ToString(), fuenteCelda));
+                    celdaMerienda.BackgroundColor = colorCeldaCantidad;
+                    celdaMerienda.HorizontalAlignment = Element.ALIGN_CENTER;
+                    tabla.AddCell(celdaMerienda);
+
+                }
+
+                //Cena
+                PdfPCell celdaMenuCena = new PdfPCell(new Phrase(tipoMenu.tipo_menu + " - Cena", fuenteEncabezado));
+                //celdaA.BackgroundColor = color;
+                celdaMenuCena.HorizontalAlignment = Element.ALIGN_LEFT;
+                tabla.AddCell(celdaMenuCena);
+
+                numero_columna = 0;
+                foreach (var sap in listaSap)
+                {
+                    if (tipoMenu.id_tipo_menu == 3)
+                    {
+                        listaFiltroDetallesXMenuSap = listaElaboradasDetalles.Where(x => x.sap_id == sap.id_sap && (x.tipo_menu_id == tipoMenu.id_tipo_menu || x.tipo_menu_id == 10)).ToList();
+
+                    }
+                    else
+                    {
+                        listaFiltroDetallesXMenuSap = listaElaboradasDetalles.Where(x => x.sap_id == sap.id_sap && x.tipo_menu_id == tipoMenu.id_tipo_menu).ToList();
+
+                    }
+
+                    int cena = 0;
+
+                    foreach (DRacionElaboradaDetalles detalle in listaFiltroDetallesXMenuSap)
+                    {
+                        cena = cena + detalle.cena;
+                    }
+
+                    numero_columna = numero_columna + 1;
+                    BaseColor colorCeldaCantidad = (numero_columna % 2 == 0)
+                       ? BaseColor.WHITE
+                       : colorAlternado;
+                    PdfPCell celdaCena = new PdfPCell(new Phrase(cena.ToString(), fuenteCelda));
+                    celdaCena.BackgroundColor = colorCeldaCantidad;
+                    celdaCena.HorizontalAlignment = Element.ALIGN_CENTER;
+                    tabla.AddCell(celdaCena);
+
+                }
+
+            }
+            //FIN FILAS de tabla
+
+            //agregar tabla
+            doc.Add(tabla);
+
+        }
+
+        //FIN METODO AGREGAR PAGINA...................................................................
+
+        //AGREGAR FILA TOTALES UNIDAD
+        private static void AgregarFilaTotales(List<DUnidadMenuCantidades> lista)
+        {
+            // Evitar duplicar la fila Totales
+            lista.RemoveAll(x => x.unidad == "Totales");
+
+            var totales = new DUnidadMenuCantidades
+            {
+                unidad = "Totales",
+
+                P12_A = lista.Sum(x => x.P12_A),
+                P12_C = lista.Sum(x => x.P12_C),
+
+                P24_A = lista.Sum(x => x.P24_A),
+                P24_C = lista.Sum(x => x.P24_C),
+
+                IntN_A = lista.Sum(x => x.IntN_A),
+                IntN_C = lista.Sum(x => x.IntN_C),
+
+                Astr_A = lista.Sum(x => x.Astr_A),
+                Astr_C = lista.Sum(x => x.Astr_C),
+
+                Celi_A = lista.Sum(x => x.Celi_A),
+                Celi_C = lista.Sum(x => x.Celi_C),
+
+                AFib_A = lista.Sum(x => x.AFib_A),
+                AFib_C = lista.Sum(x => x.AFib_C),
+
+                Hep_A = lista.Sum(x => x.Hep_A),
+                Hep_C = lista.Sum(x => x.Hep_C),
+
+                SSal_A = lista.Sum(x => x.SSal_A),
+                SSal_C = lista.Sum(x => x.SSal_C),
+
+                HivTbc_A = lista.Sum(x => x.HivTbc_A),
+                HivTbc_C = lista.Sum(x => x.HivTbc_C),
+
+                Men_A = lista.Sum(x => x.Men_A),
+                Men_C = lista.Sum(x => x.Men_C),
+
+                SobreAl_A = lista.Sum(x => x.SobreAl_A),
+                SobreAl_C = lista.Sum(x => x.SobreAl_C),
+            };
+
+            lista.Add(totales);
+
+            int totalAux = totales.P12_A + totales.P12_C + totales.P24_A + totales.P24_C + totales.IntN_A + totales.IntN_C
+                + totales.Astr_A + totales.Astr_C + totales.Celi_A + totales.Celi_C + totales.AFib_A + totales.AFib_C
+                + totales.Hep_A + totales.Hep_C + totales.SSal_A + totales.SSal_C + totales.HivTbc_A + totales.HivTbc_C
+                + totales.Men_A + totales.Men_C;
+
+            //txtTotal.Text = totalAux.ToString();
+
+        }
+        // FIN AGREGAR FILA TOTALES UNIDAD............................................................
+
+        //AGREGAR FILA TOTALES SAP
+        private static void AgregarFilaTotalesSap(List<DSapMenuCantidades> lista)
+        {
+            // Evitar duplicar la fila Totales
+            lista.RemoveAll(x => x.sap == "Totales");
+
+            var totales = new DSapMenuCantidades
+            {
+                sap = "Totales",
+
+                P12_A = lista.Sum(x => x.P12_A),
+                P12_C = lista.Sum(x => x.P12_C),
+
+                P24_A = lista.Sum(x => x.P24_A),
+                P24_C = lista.Sum(x => x.P24_C),
+
+                IntN_A = lista.Sum(x => x.IntN_A),
+                IntN_C = lista.Sum(x => x.IntN_C),
+
+                Astr_A = lista.Sum(x => x.Astr_A),
+                Astr_C = lista.Sum(x => x.Astr_C),
+
+                Celi_A = lista.Sum(x => x.Celi_A),
+                Celi_C = lista.Sum(x => x.Celi_C),
+
+                AFib_A = lista.Sum(x => x.AFib_A),
+                AFib_C = lista.Sum(x => x.AFib_C),
+
+                Hep_A = lista.Sum(x => x.Hep_A),
+                Hep_C = lista.Sum(x => x.Hep_C),
+
+                SSal_A = lista.Sum(x => x.SSal_A),
+                SSal_C = lista.Sum(x => x.SSal_C),
+
+                HivTbc_A = lista.Sum(x => x.HivTbc_A),
+                HivTbc_C = lista.Sum(x => x.HivTbc_C),
+
+                Men_A = lista.Sum(x => x.Men_A),
+                Men_C = lista.Sum(x => x.Men_C),
+
+                SobreAl_A = lista.Sum(x => x.SobreAl_A),
+                SobreAl_C = lista.Sum(x => x.SobreAl_C),
+            };
+
+            lista.Add(totales);
+
+        } 
+        // FIN AGREGAR FILA TOTALES SAP............................................................
+
+
+        //AGREGAR GRUPO PARA PLANILLA PARTE DIARIO
+        private static void AgregarGrupo(PdfPTable tabla, string texto, Font fuente)
+        {
+            PdfPCell celda = new PdfPCell(
+                new Phrase(texto, fuente));
+
+            celda.Colspan = 2;
+            celda.HorizontalAlignment = Element.ALIGN_CENTER;
+            celda.VerticalAlignment = Element.ALIGN_MIDDLE;
+
+            tabla.AddCell(celda);
+        }
+        //FIN AGREGAR GRUPO PARA PLANILLA PARTE DIARIO.........................................
+
+        //AGREGAR CELDAS PARA PLANILLA PARTE DIARIO
+        private static void AgregarCelda(PdfPTable tabla, string texto, Font fuente, BaseColor color, int alineacion = Element.ALIGN_CENTER)
+        {
+            PdfPCell celda = new PdfPCell(new Phrase(texto, fuente));
+
+            celda.HorizontalAlignment = alineacion;
+            celda.VerticalAlignment = Element.ALIGN_MIDDLE;
+            celda.BackgroundColor = color;
+
+            tabla.AddCell(celda);
+        }
+        //FIN AGREGAR CELDAS PARA PLANILLA PARTE DIARIO......................................
+
+
+    }
+}

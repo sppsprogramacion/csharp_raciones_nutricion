@@ -157,6 +157,8 @@ namespace DAOImplement
                     lista = db.RacionesSolicitadas
                      .Include(s => s.usuario)
                      .Include(s => s.raciones_solicitadas_detalles)
+                     .Include(x => x.raciones_solicitadas_detalles.Select(d => d.tipo_menu))
+                     .Include(x => x.raciones_solicitadas_detalles.Select(d => d.tipo_menu.menu))
                      .Where(s => s.fecha_solicitada >= fechaInicioX && s.fecha_solicitada <= fechaFinX)
                      .OrderByDescending(s => s.fecha_solicitada)   // Orden ascendente
                      .ToList();

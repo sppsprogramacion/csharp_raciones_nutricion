@@ -62,5 +62,11 @@ namespace CapaPresentacion
             FormObservaciones formObservaciones = new FormObservaciones("observacion_general", id);
             formObservaciones.ShowDialog();
         }
+
+        private void btnConsultas_Click(object sender, EventArgs e)
+        {
+            FormConsultas formConsultas = new FormConsultas();
+            formConsultas.ShowDialog();
+        }
     }
 }

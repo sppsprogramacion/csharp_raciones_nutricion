@@ -119,12 +119,13 @@
             this.btnConsultas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnConsultas.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConsultas.ForeColor = System.Drawing.Color.White;
-            this.btnConsultas.Location = new System.Drawing.Point(150, 124);
+            this.btnConsultas.Location = new System.Drawing.Point(276, 124);
             this.btnConsultas.Name = "btnConsultas";
             this.btnConsultas.Size = new System.Drawing.Size(120, 70);
             this.btnConsultas.TabIndex = 19;
             this.btnConsultas.Text = "CONSULTAS";
             this.btnConsultas.UseVisualStyleBackColor = false;
+            this.btnConsultas.Click += new System.EventHandler(this.btnConsultas_Click);
             // 
             // btnObservacionesGenerales
             // 
@@ -133,7 +134,7 @@
             this.btnObservacionesGenerales.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnObservacionesGenerales.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnObservacionesGenerales.ForeColor = System.Drawing.Color.White;
-            this.btnObservacionesGenerales.Location = new System.Drawing.Point(276, 124);
+            this.btnObservacionesGenerales.Location = new System.Drawing.Point(150, 124);
             this.btnObservacionesGenerales.Name = "btnObservacionesGenerales";
             this.btnObservacionesGenerales.Size = new System.Drawing.Size(120, 70);
             this.btnObservacionesGenerales.TabIndex = 20;

@@ -517,6 +517,7 @@ namespace CapaPresentacion
             {
                 // 🔴 NUEVA instancia en cada vuelta
                 var unidadCantidades = new DUnidadMenuCantidades();
+                //indicar la unidad enque se esta tomando los valores
                 unidadCantidades.unidad = unidad.unidad;
 
                 foreach (DTipoMenu tipoMenu in listaTipoMenu)

@@ -94,8 +94,6 @@ namespace CapaPresentacion
                 List<DRacionElaboradaDetalles> listaFiltroDetallesXTipoMenu = new List<DRacionElaboradaDetalles>();
                 foreach (DTipoMenu tipoMenu in listaTipoMenu)
                 {
-                    
-
                     listaFiltroDetallesXTipoMenu = listaDetalles.Where(x => x.tipo_menu_id == tipoMenu.id_tipo_menu).ToList();
                     int desayuno = 0;
                     int almuerzo = 0;
@@ -109,7 +107,6 @@ namespace CapaPresentacion
                         merienda = merienda + detalle.cena;
                         cena = cena + detalle.cena;
 
-                        
                     }
 
                     if (tipoMenu.id_tipo_menu == 1)
@@ -461,7 +458,7 @@ namespace CapaPresentacion
             // Agrega Columnas finales
             dtgRacionesCargadas.Columns.Add("Subtotal", "Subtotal");
             dtgRacionesCargadas.Columns.Add("Factor", "Factor");
-            dtgRacionesCargadas.Columns.Add("Total", "Total");
+            dtgRacionesCargadas.Columns.Add("Total", "RACION");
 
             dtgRacionesCargadas.Columns["Subtotal"].ReadOnly = true;
             dtgRacionesCargadas.Columns["Factor"].ReadOnly = true;
@@ -535,7 +532,7 @@ namespace CapaPresentacion
             {
                 encabezados.Add(columna.HeaderText);
             }
-            //obtener filas
+            //obtener filas para enviar
             List<string[]> filas = new List<string[]>();
             foreach (DataGridViewRow fila in dtgRacionesCargadas.Rows)
             {
@@ -551,10 +548,113 @@ namespace CapaPresentacion
                     filas.Add(datosFila);
                 }
             }
+            //obtener filas para enviar
 
+            //Obtener filas-lista de 2da planilla
+
+            var nRacionElaboradaDetalles = new NRacionElaboradaDetalles();
+
+            var (listaRacionElaboradasDetalles, error) = nRacionElaboradaDetalles.ListaXFechaElaborada(dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"));
+
+            if (error != null)
+            {
+                MessageBox.Show(error, "Nutricion: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (listaRacionElaboradasDetalles.Count() <= 0)
+            {
+                MessageBox.Show("No se encontraron cargas en este rango de fechas", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            listaRacionElaboradasDetalles = listaRacionElaboradasDetalles
+                .OrderBy(s => s.racion_elaborada.fecha_elaborada)
+                .ToList();
+
+            //Listar Menus
+            NMenu nMenu = new NMenu();
+            (List<DMenu> listaMenus, string errorResponseMenu) = nMenu.ListarTodos();
+
+            if (errorResponseMenu != null)
+            {
+                MessageBox.Show(errorResponseMenu, "Nutricion: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            listaMenus = listaMenus
+                .OrderBy(s => s.orden)
+                .ToList();
+            //fin Listar Menus           
+
+            //contar valores de menus en cada menu
+            List<DPlanillaLiquidacion2da> listaPlanillaLiquidacion2da = new List<DPlanillaLiquidacion2da>();
+
+            List<DRacionElaboradaDetalles> listaFiltroDetallesXMenu = new List<DRacionElaboradaDetalles>();
+
+            List<DMenu> listaMenusFiltro = listaMenus.Where(x => x.id_menu != 7).ToList();
+
+            foreach (DMenu menu in listaMenusFiltro)
+            {
+                
+                listaFiltroDetallesXMenu = listaRacionElaboradasDetalles.Where(x => x.tipo_menu.menu_id == menu.id_menu && x.tipo_menu.menu_id != 7).ToList();
+                int desayuno = 0;
+                int almuerzo = 0;
+                int merienda = 0;
+                int cena = 0;
+
+                foreach (DRacionElaboradaDetalles detalle in listaFiltroDetallesXMenu)
+                {
+                    desayuno = desayuno + detalle.almuerzo;
+                    almuerzo = almuerzo + detalle.almuerzo;
+                    merienda = merienda + detalle.cena;
+                    cena = cena + detalle.cena;
+                }
+
+                // 🔴 NUEVA instancia en cada vuelta
+                var planillaLiquidacion_1 = new DPlanillaLiquidacion2da();
+                planillaLiquidacion_1.menu = menu.menu_descripcion + " Desayuno";
+                planillaLiquidacion_1.subtotal = desayuno;
+                planillaLiquidacion_1.factor = menu.factor_desayuno;
+                planillaLiquidacion_1.racion = desayuno * menu.factor_desayuno;
+
+                listaPlanillaLiquidacion2da.Add(planillaLiquidacion_1);
+
+                var planillaLiquidacion_2 = new DPlanillaLiquidacion2da();
+                planillaLiquidacion_2.menu = menu.menu_descripcion + " Almuerzo";
+                planillaLiquidacion_2.subtotal = almuerzo;
+                planillaLiquidacion_2.factor = menu.factor_almuerzo;
+                planillaLiquidacion_2.racion = almuerzo * menu.factor_almuerzo;
+                listaPlanillaLiquidacion2da.Add(planillaLiquidacion_2);
+
+                var planillaLiquidacion_3 = new DPlanillaLiquidacion2da();
+                planillaLiquidacion_3.menu = menu.menu_descripcion + " Merienda";
+                planillaLiquidacion_3.subtotal = merienda;
+                planillaLiquidacion_3.factor = menu.factor_merienda;
+                planillaLiquidacion_3.racion = merienda * menu.factor_merienda;
+                listaPlanillaLiquidacion2da.Add(planillaLiquidacion_3);
+
+                var planillaLiquidacion_4 = new DPlanillaLiquidacion2da();
+                planillaLiquidacion_4.menu = menu.menu_descripcion + " Cena";
+                planillaLiquidacion_4.subtotal = cena;
+                planillaLiquidacion_4.factor = menu.factor_cena;
+                planillaLiquidacion_4.racion = cena * menu.factor_cena;
+                listaPlanillaLiquidacion2da.Add(planillaLiquidacion_4);
+            }
+            //fin Obtener filas-lista de 2da planilla
+
+            //
             // Generar PDF en memoria
-            MemoryStream msOriginal = ReportesElaboradasPDF.RepPdfPlanillaLiquidacion(encabezados, filas, txtTotal.Text);
+            MemoryStream msOriginal=null;
 
+            if (encabezados.Count <= 20)
+            {
+                msOriginal = ReportesElaboradasPDF.RepPdfPlanillaLiquidacionQuincenal(encabezados, filas, txtTotal.Text, listaPlanillaLiquidacion2da, Convert.ToInt32(txtNumeroRendicion.Text), dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"));
+            }
+            if (encabezados.Count > 20)
+            {
+                msOriginal = ReportesElaboradasPDF.RepPdfPlanillaLiquidacionMensual(encabezados, filas, txtTotal.Text, listaPlanillaLiquidacion2da, Convert.ToInt32(txtNumeroRendicion.Text), dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"));
+            }
             // Clonar el stream para que PdfiumViewer pueda cerrarlo sin afectar el original
             MemoryStream ms = new MemoryStream(msOriginal.ToArray());
 
