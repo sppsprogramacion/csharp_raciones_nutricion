@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dtgRacionesCargadas = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
             this.dtpFechaInicio = new System.Windows.Forms.DateTimePicker();
@@ -39,6 +39,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.txtTotal = new System.Windows.Forms.TextBox();
             this.txtNumeroRendicion = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dtgRacionesCargadas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,8 +48,8 @@
             this.dtgRacionesCargadas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgRacionesCargadas.Location = new System.Drawing.Point(12, 62);
             this.dtgRacionesCargadas.Name = "dtgRacionesCargadas";
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtgRacionesCargadas.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtgRacionesCargadas.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dtgRacionesCargadas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgRacionesCargadas.Size = new System.Drawing.Size(1150, 587);
             this.dtgRacionesCargadas.TabIndex = 113;
@@ -70,7 +71,7 @@
             this.dtpFechaInicio.Location = new System.Drawing.Point(15, 29);
             this.dtpFechaInicio.Name = "dtpFechaInicio";
             this.dtpFechaInicio.Size = new System.Drawing.Size(115, 21);
-            this.dtpFechaInicio.TabIndex = 116;
+            this.dtpFechaInicio.TabIndex = 1;
             // 
             // label21
             // 
@@ -89,7 +90,7 @@
             this.dtpFechaFin.Location = new System.Drawing.Point(152, 29);
             this.dtpFechaFin.Name = "dtpFechaFin";
             this.dtpFechaFin.Size = new System.Drawing.Size(115, 21);
-            this.dtpFechaFin.TabIndex = 114;
+            this.dtpFechaFin.TabIndex = 2;
             // 
             // btnMostrar
             // 
@@ -101,7 +102,7 @@
             this.btnMostrar.Location = new System.Drawing.Point(285, 10);
             this.btnMostrar.Name = "btnMostrar";
             this.btnMostrar.Size = new System.Drawing.Size(100, 40);
-            this.btnMostrar.TabIndex = 118;
+            this.btnMostrar.TabIndex = 3;
             this.btnMostrar.Text = "Mostrar";
             this.btnMostrar.UseVisualStyleBackColor = false;
             this.btnMostrar.Click += new System.EventHandler(this.btnMostrar_Click);
@@ -113,11 +114,11 @@
             this.btnImprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnImprimir.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnImprimir.ForeColor = System.Drawing.Color.Indigo;
-            this.btnImprimir.Location = new System.Drawing.Point(408, 10);
+            this.btnImprimir.Location = new System.Drawing.Point(822, 10);
             this.btnImprimir.Name = "btnImprimir";
-            this.btnImprimir.Size = new System.Drawing.Size(194, 40);
-            this.btnImprimir.TabIndex = 119;
-            this.btnImprimir.Text = "Imprimir";
+            this.btnImprimir.Size = new System.Drawing.Size(213, 40);
+            this.btnImprimir.TabIndex = 5;
+            this.btnImprimir.Text = "Imprimir Planilla liquidacion";
             this.btnImprimir.UseVisualStyleBackColor = false;
             this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
             // 
@@ -142,10 +143,20 @@
             // 
             // txtNumeroRendicion
             // 
-            this.txtNumeroRendicion.Location = new System.Drawing.Point(686, 22);
+            this.txtNumeroRendicion.Location = new System.Drawing.Point(687, 30);
             this.txtNumeroRendicion.Name = "txtNumeroRendicion";
             this.txtNumeroRendicion.Size = new System.Drawing.Size(100, 20);
-            this.txtNumeroRendicion.TabIndex = 122;
+            this.txtNumeroRendicion.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(684, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(93, 15);
+            this.label1.TabIndex = 122;
+            this.label1.Text = "Nº RENDICION:";
             // 
             // FormRacionesCargadas
             // 
@@ -154,6 +165,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1184, 691);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.txtNumeroRendicion);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtTotal);
@@ -186,5 +198,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtTotal;
         private System.Windows.Forms.TextBox txtNumeroRendicion;
+        private System.Windows.Forms.Label label1;
     }
 }

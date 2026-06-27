@@ -45,7 +45,7 @@
             this.dtgResultado.Location = new System.Drawing.Point(12, 124);
             this.dtgResultado.Name = "dtgResultado";
             this.dtgResultado.Size = new System.Drawing.Size(897, 546);
-            this.dtgResultado.TabIndex = 0;
+            this.dtgResultado.TabIndex = 6;
             // 
             // btnMostrar
             // 
@@ -57,7 +57,7 @@
             this.btnMostrar.Location = new System.Drawing.Point(285, 14);
             this.btnMostrar.Name = "btnMostrar";
             this.btnMostrar.Size = new System.Drawing.Size(100, 40);
-            this.btnMostrar.TabIndex = 124;
+            this.btnMostrar.TabIndex = 3;
             this.btnMostrar.Text = "Mostrar";
             this.btnMostrar.UseVisualStyleBackColor = false;
             this.btnMostrar.Click += new System.EventHandler(this.btnMostrar_Click);
@@ -79,7 +79,7 @@
             this.dtpFechaInicio.Location = new System.Drawing.Point(15, 33);
             this.dtpFechaInicio.Name = "dtpFechaInicio";
             this.dtpFechaInicio.Size = new System.Drawing.Size(115, 21);
-            this.dtpFechaInicio.TabIndex = 122;
+            this.dtpFechaInicio.TabIndex = 1;
             // 
             // label21
             // 
@@ -98,7 +98,7 @@
             this.dtpFechaFin.Location = new System.Drawing.Point(152, 33);
             this.dtpFechaFin.Name = "dtpFechaFin";
             this.dtpFechaFin.Size = new System.Drawing.Size(115, 21);
-            this.dtpFechaFin.TabIndex = 120;
+            this.dtpFechaFin.TabIndex = 2;
             // 
             // btnImrpimirParteDiario
             // 
@@ -110,7 +110,7 @@
             this.btnImrpimirParteDiario.Location = new System.Drawing.Point(619, 15);
             this.btnImrpimirParteDiario.Name = "btnImrpimirParteDiario";
             this.btnImrpimirParteDiario.Size = new System.Drawing.Size(194, 40);
-            this.btnImrpimirParteDiario.TabIndex = 126;
+            this.btnImrpimirParteDiario.TabIndex = 5;
             this.btnImrpimirParteDiario.Text = "Imprimir partes diarios";
             this.btnImrpimirParteDiario.UseVisualStyleBackColor = false;
             this.btnImrpimirParteDiario.Click += new System.EventHandler(this.btnImrpimirParteDiario_Click);
@@ -125,7 +125,7 @@
             this.btnExportar.Location = new System.Drawing.Point(391, 15);
             this.btnExportar.Name = "btnExportar";
             this.btnExportar.Size = new System.Drawing.Size(100, 40);
-            this.btnExportar.TabIndex = 127;
+            this.btnExportar.TabIndex = 4;
             this.btnExportar.Text = "Exportar";
             this.btnExportar.UseVisualStyleBackColor = false;
             this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
@@ -146,6 +146,7 @@
             this.Controls.Add(this.dtpFechaFin);
             this.Controls.Add(this.dtgResultado);
             this.Name = "FormConsultas";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CONSULTAS";
             this.Load += new System.EventHandler(this.FormConsultas_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgResultado)).EndInit();

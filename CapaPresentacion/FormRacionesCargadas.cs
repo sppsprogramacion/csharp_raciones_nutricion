@@ -520,9 +520,18 @@ namespace CapaPresentacion
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
+            int numero_rendicion;
+
+            if (!int.TryParse(txtNumeroRendicion.Text, out numero_rendicion))
+            {
+                MessageBox.Show("Debe ingresar un número entero válido en Nº RENDICION.", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                txtNumeroRendicion.Focus();
+                return;
+            }
+
             if (this.listaPlanillaLiquidacionGlobal.Count == 0)
             {
-                MessageBox.Show("No hay registros cargados en este periodo", "Nutriocion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("No hay registros cargados en este periodo", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
@@ -649,11 +658,11 @@ namespace CapaPresentacion
 
             if (encabezados.Count <= 20)
             {
-                msOriginal = ReportesElaboradasPDF.RepPdfPlanillaLiquidacionQuincenal(encabezados, filas, txtTotal.Text, listaPlanillaLiquidacion2da, Convert.ToInt32(txtNumeroRendicion.Text), dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"));
+                msOriginal = ReportesElaboradasPDF.RepPdfPlanillaLiquidacionQuincenal(encabezados, filas, txtTotal.Text, listaPlanillaLiquidacion2da, numero_rendicion, dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"));
             }
             if (encabezados.Count > 20)
             {
-                msOriginal = ReportesElaboradasPDF.RepPdfPlanillaLiquidacionMensual(encabezados, filas, txtTotal.Text, listaPlanillaLiquidacion2da, Convert.ToInt32(txtNumeroRendicion.Text), dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"));
+                msOriginal = ReportesElaboradasPDF.RepPdfPlanillaLiquidacionMensual(encabezados, filas, txtTotal.Text, listaPlanillaLiquidacion2da, numero_rendicion, dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"));
             }
             // Clonar el stream para que PdfiumViewer pueda cerrarlo sin afectar el original
             MemoryStream ms = new MemoryStream(msOriginal.ToArray());

@@ -70,9 +70,10 @@
             this.btnImprimir.Location = new System.Drawing.Point(410, 9);
             this.btnImprimir.Name = "btnImprimir";
             this.btnImprimir.Size = new System.Drawing.Size(194, 40);
-            this.btnImprimir.TabIndex = 128;
+            this.btnImprimir.TabIndex = 4;
             this.btnImprimir.Text = "Imprimir";
             this.btnImprimir.UseVisualStyleBackColor = false;
+            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
             // 
             // btnMostrar
             // 
@@ -84,7 +85,7 @@
             this.btnMostrar.Location = new System.Drawing.Point(287, 9);
             this.btnMostrar.Name = "btnMostrar";
             this.btnMostrar.Size = new System.Drawing.Size(100, 40);
-            this.btnMostrar.TabIndex = 127;
+            this.btnMostrar.TabIndex = 3;
             this.btnMostrar.Text = "Mostrar";
             this.btnMostrar.UseVisualStyleBackColor = false;
             this.btnMostrar.Click += new System.EventHandler(this.btnMostrar_Click);
@@ -106,7 +107,7 @@
             this.dtpFechaInicio.Location = new System.Drawing.Point(17, 28);
             this.dtpFechaInicio.Name = "dtpFechaInicio";
             this.dtpFechaInicio.Size = new System.Drawing.Size(115, 21);
-            this.dtpFechaInicio.TabIndex = 125;
+            this.dtpFechaInicio.TabIndex = 1;
             // 
             // label21
             // 
@@ -125,7 +126,7 @@
             this.dtpFechaFin.Location = new System.Drawing.Point(154, 28);
             this.dtpFechaFin.Name = "dtpFechaFin";
             this.dtpFechaFin.Size = new System.Drawing.Size(115, 21);
-            this.dtpFechaFin.TabIndex = 123;
+            this.dtpFechaFin.TabIndex = 2;
             // 
             // dtgRacionesCargadas
             // 
@@ -142,6 +143,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1184, 691);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtTotal);

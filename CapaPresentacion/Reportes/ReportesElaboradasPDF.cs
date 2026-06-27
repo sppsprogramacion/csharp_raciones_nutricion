@@ -158,6 +158,9 @@ namespace CapaPresentacion.Reportes
             // Agregar tabla total al documento
             doc.Add(tablaTotal);
 
+            //Agregar firmas
+            AgregarFirmasPiePagina(doc, writer);
+
             // --------------------------------- Nueva página ----------------------------------------------
             doc.NewPage();
 
@@ -218,31 +221,54 @@ namespace CapaPresentacion.Reportes
                 }
             }
 
-           
-            doc.Add(tabla);
+            //crear imagen de aclaraciones
+            System.Drawing.Image imgAclaraciones = Properties.Resources.imagen_aclaracion;
+            iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(imgAclaraciones, System.Drawing.Imaging.ImageFormat.Png);
+            // Ajustar tamaño
+            img.ScaleToFit(380f, 400f);
+
+            //Tabla que contendra tabla planilla y imagen aclaraciones
+            PdfPTable contenedor = new PdfPTable(2);
+            contenedor.WidthPercentage = 100;
+            contenedor.SetWidths(new float[] { 50f, 50f });
+
+            //columna izquierda - tabla planilla
+            PdfPCell celdaTabla = new PdfPCell(tabla);
+            celdaTabla.Border = Rectangle.NO_BORDER;
+            celdaTabla.VerticalAlignment = Element.ALIGN_TOP;
+
+            contenedor.AddCell(celdaTabla);
+
+            //columna derecha - imagen aclaraciones
+            PdfPCell celdaImagen = new PdfPCell(img);
+            celdaImagen.Border = Rectangle.NO_BORDER;
+            celdaImagen.HorizontalAlignment = Element.ALIGN_LEFT;
+            celdaImagen.VerticalAlignment = Element.ALIGN_TOP;
+            celdaImagen.PaddingLeft = 5f;   // separación desde el borde izquierdo
+
+            contenedor.AddCell(celdaImagen);
+
+            //agregar contenedor al documentp
+            doc.Add(contenedor);
+
+            //doc.Add(tabla);
 
             // Crear tabla tablaTotal2da  columna
-            PdfPTable tablaTotal2da = new PdfPTable(3);
-            tablaTotal2da.WidthPercentage = 60; // ocupa 1/5 de la página
+            PdfPTable tablaTotal2da = new PdfPTable(2);
+            tablaTotal2da.WidthPercentage = 50; // ocupa 1/5 de la página
             tablaTotal2da.HorizontalAlignment = Element.ALIGN_LEFT; // tabla a la izquierda
-            tablaTotal2da.SetWidths(new float[] { 5f, 2.0f, 1.1f });
+            tablaTotal2da.SetWidths(new float[] { 6f, 2.1f });
 
             // Centrar contenido de todas las celdas
             tablaTotal2da.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
             tablaTotal2da.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
 
             // Agregar celdas
-            PdfPCell celdaVacia = new PdfPCell(new Phrase(" ", fuenteTotal));
-            celdaVacia.PaddingTop = 3f;
-            celdaVacia.PaddingBottom = 0f;
-            celdaVacia.HorizontalAlignment = Element.ALIGN_CENTER;
-            celdaVacia.Border = Rectangle.NO_BORDER;
-            tablaTotal2da.AddCell(celdaVacia);
 
             PdfPCell celdaTextoTotal2da = new PdfPCell(new Phrase("TOTAL FINAL:", fuenteTotal));
             celdaTextoTotal2da.PaddingTop = 3f;
             celdaTextoTotal2da.PaddingBottom = 0f;
-            celdaTextoTotal2da.HorizontalAlignment = Element.ALIGN_CENTER;
+            celdaTextoTotal2da.HorizontalAlignment = Element.ALIGN_RIGHT;
             celdaTextoTotal2da.Border = Rectangle.NO_BORDER;
             tablaTotal2da.AddCell(celdaTextoTotal2da);
             //celda organismo
@@ -256,6 +282,10 @@ namespace CapaPresentacion.Reportes
 
             // Agregar tabla total al documento
             doc.Add(tablaTotal2da);
+
+            //Agregar firmas
+            AgregarFirmasPiePagina(doc, writer);
+
 
             doc.Close(); // Cierra el documento pero NO el MemoryStream
             ms.Position = 0;
@@ -450,6 +480,9 @@ namespace CapaPresentacion.Reportes
             // Agregar tabla total al documento
             doc.Add(tablaTotal);
 
+            //Agregar firmas
+            AgregarFirmasPiePagina(doc, writer);
+
             // --------------------------------- Nueva página 2 ----------------------------------------------
             doc.NewPage();
 
@@ -583,6 +616,9 @@ namespace CapaPresentacion.Reportes
             // Agregar tabla total al documento
             doc.Add(tablaTotal2);
 
+            //Agregar firmnas
+            AgregarFirmasPiePagina(doc, writer);
+
             // --------------------------------- Nueva página 4 ----------------------------------------------
             doc.NewPage();
 
@@ -683,13 +719,6 @@ namespace CapaPresentacion.Reportes
             tablaTotal2da.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
             tablaTotal2da.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
 
-            // Agregar celdas
-            //PdfPCell celdaVacia = new PdfPCell(new Phrase(" ", fuenteTotal));
-            //celdaVacia.PaddingTop = 3f;
-            //celdaVacia.PaddingBottom = 0f;
-            //celdaVacia.HorizontalAlignment = Element.ALIGN_CENTER;
-            //celdaVacia.Border = Rectangle.NO_BORDER;
-            //tablaTotal2da.AddCell(celdaVacia);
 
             PdfPCell celdaTextoTotal2da = new PdfPCell(new Phrase("TOTAL FINAL:", fuenteTotal));
             celdaTextoTotal2da.PaddingTop = 3f;
@@ -708,6 +737,12 @@ namespace CapaPresentacion.Reportes
 
             // Agregar tabla total al documento
             doc.Add(tablaTotal2da);
+
+            //tabla firmas
+            AgregarFirmasPiePagina(doc, writer);
+
+
+            //fin tabla firmas
 
             doc.Close(); // Cierra el documento pero NO el MemoryStream
             ms.Position = 0;
@@ -990,6 +1025,73 @@ namespace CapaPresentacion.Reportes
             tabla.AddCell(celda);
         }
         //FIN AGREGAR CELDAS PARA PLANILLA PARTE DIARIO......................................
+
+        //AGREGAR FIRMAS
+        private static void AgregarFirmasPiePagina(Document doc, PdfWriter writer)
+        {
+            Font fuenteFirma = FontFactory.GetFont(FontFactory.TIMES, 8);
+            Font fuenteFirmaNegrita = FontFactory.GetFont(FontFactory.TIMES_BOLD, 8);
+
+            PdfPTable tablaFirmas = new PdfPTable(3);
+            tablaFirmas.TotalWidth = doc.PageSize.Width - doc.LeftMargin - doc.RightMargin;
+
+            tablaFirmas.SetWidths(new float[] { 40f, 20f, 40f });
+
+            // Firma izquierda
+            PdfPCell firmaIzq = new PdfPCell();
+            firmaIzq.Border = Rectangle.NO_BORDER;
+
+            firmaIzq.AddElement(new Paragraph("Lic. Lorena de los Ángeles MEDINA", fuenteFirmaNegrita)
+            {
+                Alignment = Element.ALIGN_CENTER
+            });
+
+            Paragraph p2 = new Paragraph("Alcaide - Jefa de Div. Nutrición", fuenteFirma);
+            p2.Alignment = Element.ALIGN_CENTER;
+            p2.Leading = 8f; // interlineado
+            firmaIzq.AddElement(p2);
+
+            Paragraph p3 = new Paragraph("Resp. del Servicio de Alimentación - S.P.P.S.", fuenteFirma);
+            p3.Alignment = Element.ALIGN_CENTER;
+            p3.Leading = 8f; // interlineado
+            firmaIzq.AddElement(p3);
+
+            tablaFirmas.AddCell(firmaIzq);
+
+            // Centro vacío
+            PdfPCell centro = new PdfPCell();
+            centro.Border = Rectangle.NO_BORDER;
+            tablaFirmas.AddCell(centro);
+
+            // Firma derecha
+            PdfPCell firmaDer = new PdfPCell();
+            firmaDer.Border = Rectangle.NO_BORDER;
+
+            firmaDer.AddElement(new Paragraph("Renzo Ismael FLORES", fuenteFirmaNegrita)
+            {
+                Alignment = Element.ALIGN_CENTER
+            });
+
+            Paragraph p4 = new Paragraph("Lic. en Nutrición - MP 674", fuenteFirma);
+            p4.Alignment = Element.ALIGN_CENTER;
+            p4.Leading = 8f; // interlineado
+            firmaDer.AddElement(p4);
+
+            Paragraph p5 = new Paragraph("Resp. de Alim. Sano y Bueno Catering", fuenteFirma);
+            p5.Alignment = Element.ALIGN_CENTER;
+            p5.Leading = 8f; // interlineado
+            firmaDer.AddElement(p5);
+
+            tablaFirmas.AddCell(firmaDer);
+
+            tablaFirmas.CompleteRow();
+
+            // Posición fija cerca del borde inferior
+            float posY = doc.BottomMargin + 35;
+
+            tablaFirmas.WriteSelectedRows(0, -1, doc.LeftMargin, posY, writer.DirectContent);
+        }
+        //FIN AGREGAR FIRMAS
 
     }
 }

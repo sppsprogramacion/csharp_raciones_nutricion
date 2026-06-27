@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CapaNegocio;
 using System.Runtime.CompilerServices;
+using DocumentFormat.OpenXml.Bibliography;
 
 namespace CapaPresentacion.Reportes
 {
@@ -264,7 +265,7 @@ namespace CapaPresentacion.Reportes
                 // --------------------------------- Nueva página ----------------------------------------------
                 doc.NewPage();
 
-                AgregarPaginaSapCantidades(doc,listaDetallesElaboradas, racionElaborada.fecha_elaborada, listaSap, listaTipoMenu);
+                AgregarPaginaSapCantidades(doc, writer, listaDetallesElaboradas, racionElaborada.fecha_elaborada, listaSap, listaTipoMenu);
 
                 // --------------------------------- Nueva página ----------------------------------------------
                 doc.NewPage();
@@ -955,7 +956,7 @@ namespace CapaPresentacion.Reportes
         //FIN METODO AGREGAR PAGINA...................................................................
 
         //METODO AGREGAR PAGINA - tipo_planilla = SOLICITADAS o ELABORADAS
-        private static void AgregarPaginaSapCantidades(Document doc,  List<DRacionElaboradaDetalles> listaElaboradasDetalles, DateTime fecha, List<DSap> listaSap, List<DTipoMenu> listaTipoMenu)
+        private static void AgregarPaginaSapCantidades(Document doc, PdfWriter writer,  List<DRacionElaboradaDetalles> listaElaboradasDetalles, DateTime fecha, List<DSap> listaSap, List<DTipoMenu> listaTipoMenu)
         {
 
             // Fuentes
@@ -1197,6 +1198,9 @@ namespace CapaPresentacion.Reportes
             //agregar tabla
             doc.Add(tabla);
 
+            //tabla firmas
+            AgregarFirmasPiePagina(doc, writer);
+
         }
 
         //FIN METODO AGREGAR PAGINA...................................................................
@@ -1334,6 +1338,71 @@ namespace CapaPresentacion.Reportes
         }
         //FIN AGREGAR CELDAS PARA PLANILLA PARTE DIARIO......................................
 
+        //AGREGAR FIRMAS
+        private static void AgregarFirmasPiePagina(Document doc, PdfWriter writer)
+        {
+            Font fuenteFirma = FontFactory.GetFont(FontFactory.TIMES, 8);
+            Font fuenteFirmaNegrita = FontFactory.GetFont(FontFactory.TIMES_BOLD, 8);
 
+            PdfPTable tablaFirmas = new PdfPTable(3);
+            tablaFirmas.TotalWidth = doc.PageSize.Width - doc.LeftMargin - doc.RightMargin;
+
+            tablaFirmas.SetWidths(new float[] { 40f, 20f, 40f });
+
+            // Firma izquierda
+            PdfPCell firmaIzq = new PdfPCell();
+            firmaIzq.Border = Rectangle.NO_BORDER;
+
+            firmaIzq.AddElement(new Paragraph("Lic. Lorena de los Ángeles MEDINA", fuenteFirmaNegrita)
+            {
+                Alignment = Element.ALIGN_CENTER
+            });
+
+            Paragraph p2 = new Paragraph("Alcaide - Jefa de Div. Nutrición", fuenteFirma);
+            p2.Alignment = Element.ALIGN_CENTER;
+            p2.Leading = 8f; // interlineado
+            firmaIzq.AddElement(p2);
+
+            Paragraph p3 = new Paragraph("Resp. del Servicio de Alimentación - S.P.P.S.", fuenteFirma);
+            p3.Alignment = Element.ALIGN_CENTER;
+            p3.Leading = 8f; // interlineado
+            firmaIzq.AddElement(p3);
+
+            tablaFirmas.AddCell(firmaIzq);
+
+            // Centro vacío
+            PdfPCell centro = new PdfPCell();
+            centro.Border = Rectangle.NO_BORDER;
+            tablaFirmas.AddCell(centro);
+
+            // Firma derecha
+            PdfPCell firmaDer = new PdfPCell();
+            firmaDer.Border = Rectangle.NO_BORDER;
+
+            firmaDer.AddElement(new Paragraph("Renzo Ismael FLORES",fuenteFirmaNegrita)
+            {
+                Alignment = Element.ALIGN_CENTER
+            });
+
+            Paragraph p4 = new Paragraph("Lic. en Nutrición - MP 674", fuenteFirma);
+            p4.Alignment = Element.ALIGN_CENTER;
+            p4.Leading = 8f; // interlineado
+            firmaDer.AddElement(p4);
+
+            Paragraph p5 = new Paragraph("Resp. de Alim. Sano y Bueno Catering", fuenteFirma);
+            p5.Alignment = Element.ALIGN_CENTER;
+            p5.Leading = 8f; // interlineado
+            firmaDer.AddElement(p5);
+
+            tablaFirmas.AddCell(firmaDer);
+
+            tablaFirmas.CompleteRow();
+
+            // Posición fija cerca del borde inferior
+            float posY = doc.BottomMargin + 35;
+
+            tablaFirmas.WriteSelectedRows(0, -1, doc.LeftMargin, posY, writer.DirectContent);
+        }
+        //FIN AGREGAR FIRMAS
     }
 }

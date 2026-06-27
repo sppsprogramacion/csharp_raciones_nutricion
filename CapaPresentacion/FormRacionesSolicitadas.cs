@@ -207,25 +207,25 @@ namespace CapaPresentacion
 
                         // 🔴 NUEVA instanciaa
                         var dFactores1 = new DFactores();
-                        dFactores1.tipo_menu = "Int_AST_D";
+                        dFactores1.tipo_menu = "Int_ASTR_D";
                         dFactores1.factor = tipoMenu.menu.factor_desayuno;
                         listaFactores.Add(dFactores1);
 
                         // 🔴 NUEVA instancia
                         var dFactores2 = new DFactores();
-                        dFactores2.tipo_menu = "Int_AST_A";
+                        dFactores2.tipo_menu = "Int_ASTR_A";
                         dFactores2.factor = tipoMenu.menu.factor_almuerzo;
                         listaFactores.Add(dFactores2);
 
                         // 🔴 NUEVA instanciaa
                         var dFactores3 = new DFactores();
-                        dFactores3.tipo_menu = "Int_AST_M";
+                        dFactores3.tipo_menu = "Int_ASTR_M";
                         dFactores3.factor = tipoMenu.menu.factor_merienda;
                         listaFactores.Add(dFactores3);
 
                         // 🔴 NUEVA instancia
                         var dFactores4 = new DFactores();
-                        dFactores4.tipo_menu = "Int_AST_C";
+                        dFactores4.tipo_menu = "Int_ASTR_C";
                         dFactores4.factor = tipoMenu.menu.factor_cena;
                         listaFactores.Add(dFactores4);
                     }
@@ -508,6 +508,10 @@ namespace CapaPresentacion
             }
 
         }//FIN METODO PARA OBTENER ELABORADAS CARGADAS..............................................
-                
+
+        private void btnImprimir_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
