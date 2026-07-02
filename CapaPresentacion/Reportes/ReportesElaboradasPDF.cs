@@ -359,10 +359,12 @@ namespace CapaPresentacion.Reportes
             //fin fecha.............................
 
             //datos planilla
-            Paragraph titulo = new Paragraph("PLANILLA de LIQUIDACION: " + numero_rendicion + "° Rendición ‐ Periodo del " + inicio.ToString("dd/MM/yyyy") + " al " + fin.ToString("dd/MM/yyyy"), fuenteTitulo);
+            Paragraph tituloPlanilla1 = new Paragraph("PLANILLA de LIQUIDACION: " + numero_rendicion + "° Rendición ‐ Periodo del " + inicio.ToString("dd/MM/yyyy") + " al " + inicio.AddDays(14).ToString("dd/MM/yyyy"), fuenteTitulo);
+            Paragraph tituloPlanilla2 = new Paragraph("PLANILLA de LIQUIDACION: " + numero_rendicion + "° Rendición ‐ Periodo del " + inicio.AddDays(15).ToString("dd/MM/yyyy") + " al " + fin.ToString("dd/MM/yyyy"), fuenteTitulo);
+            Paragraph tituloMensual = new Paragraph("PLANILLA de LIQUIDACION: " + numero_rendicion + "° Rendición ‐ Periodo del " + inicio.ToString("dd/MM/yyyy") + " al " + fin.ToString("dd/MM/yyyy"), fuenteTitulo);
 
-            titulo.Alignment = Element.ALIGN_CENTER;
-            doc.Add(titulo);
+            tituloPlanilla1.Alignment = Element.ALIGN_CENTER;
+            doc.Add(tituloPlanilla1);
             doc.Add(new Paragraph(" "));
                        
 
@@ -497,7 +499,7 @@ namespace CapaPresentacion.Reportes
             });
             //fin fecha.............................
 
-            doc.Add(titulo);
+            doc.Add(tituloPlanilla2);
             doc.Add(new Paragraph(" "));
 
             //SEGUNDA pagina
@@ -633,7 +635,7 @@ namespace CapaPresentacion.Reportes
             });
             //fin fecha.............................
 
-            doc.Add(titulo);
+            doc.Add(tituloMensual);
             doc.Add(new Paragraph(" "));
 
             //tabla planilla 2da

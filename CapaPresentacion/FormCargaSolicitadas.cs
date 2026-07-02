@@ -736,9 +736,9 @@ namespace CapaPresentacion
 
             try
             {
-                var nRacionElaboradaDetalles = new NRacionElaboradaDetalles();
+                var nRacionSolicitadasDetalles = new NRacionSolicitadaDetalles();
 
-                nRacionElaboradaDetalles.EliminarDetalles(Convert.ToInt32(txtIdRacionSolicitada.Text));
+                nRacionSolicitadasDetalles.EliminarDetalles(Convert.ToInt32(txtIdRacionSolicitada.Text));
                 MessageBox.Show("Eliminado correctamente", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.ActualizarUnidadesCantidades();
