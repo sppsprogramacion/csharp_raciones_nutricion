@@ -102,10 +102,28 @@ namespace CapaPresentacion
 
                     foreach (DRacionElaboradaDetalles detalle in listaFiltroDetallesXTipoMenu)
                     {
-                        desayuno = desayuno + detalle.almuerzo;
-                        almuerzo = almuerzo + detalle.almuerzo;
-                        merienda = merienda + detalle.cena;
-                        cena = cena + detalle.cena;
+
+                        if ((tipoMenu.id_tipo_menu == 1 || tipoMenu.id_tipo_menu == 2) && (detalle.unidad_id == 14 || detalle.unidad_id == 13))
+                        {
+                            planillaLiquidacion.Int_NORM_D = planillaLiquidacion.Int_NORM_D + detalle.almuerzo;
+                            planillaLiquidacion.Int_NORM_A = planillaLiquidacion.Int_NORM_A + detalle.almuerzo;
+                            planillaLiquidacion.Int_NORM_M = planillaLiquidacion.Int_NORM_M + detalle.cena;
+                            planillaLiquidacion.Int_NORM_C = planillaLiquidacion.Int_NORM_C + detalle.cena;
+                        }
+                        else
+                        {
+                            desayuno = desayuno + detalle.almuerzo;
+                            almuerzo = almuerzo + detalle.almuerzo;
+                            merienda = merienda + detalle.cena;
+                            cena = cena + detalle.cena;
+                        }
+
+                        //desayuno = desayuno + detalle.almuerzo;
+                        //almuerzo = almuerzo + detalle.almuerzo;
+                        //merienda = merienda + detalle.cena;
+                        //cena = cena + detalle.cena;
+
+
 
                     }
 
@@ -174,10 +192,16 @@ namespace CapaPresentacion
                     }
                     if (tipoMenu.id_tipo_menu == 3)
                     {
-                        planillaLiquidacion.Int_NORM_D = desayuno;
-                        planillaLiquidacion.Int_NORM_A = almuerzo;
-                        planillaLiquidacion.Int_NORM_M = merienda;
-                        planillaLiquidacion.Int_NORM_C = cena;
+                        //planillaLiquidacion.Int_NORM_D = desayuno;
+                        //planillaLiquidacion.Int_NORM_A = almuerzo;
+                        //planillaLiquidacion.Int_NORM_M = merienda;
+                        //planillaLiquidacion.Int_NORM_C = cena;
+
+                        //los hijos menores son contados como racion de internos normal
+                        planillaLiquidacion.Int_NORM_D = planillaLiquidacion.Int_NORM_D + desayuno;
+                        planillaLiquidacion.Int_NORM_A = planillaLiquidacion.Int_NORM_A + almuerzo;
+                        planillaLiquidacion.Int_NORM_M = planillaLiquidacion.Int_NORM_M + merienda;
+                        planillaLiquidacion.Int_NORM_C = planillaLiquidacion.Int_NORM_C + cena;
 
                         // 🔴 NUEVA instanciaa
                         var dFactores1 = new DFactores();
