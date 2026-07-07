@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -123,6 +124,77 @@ namespace CapaPresentacion
 
             try
             {
+                //CONTROLAR CON RACIONES SOLICITADAS CARGADAS CON LA MISMA FECHA DE ELABORADA EN SOLICITADA Y UNIDAD
+                var nRacionSolicitadaDetalles = new NRacionSolicitadaDetalles();
+
+                int idUnidad = idUnidadGlobal;
+
+                // Suponiendo que tu TextBox se llama txtFecha
+                string textoFecha = txtFechaElaborada.Text;
+                DateTime fecha_solicitada = new DateTime();
+                CultureInfo cultura = new CultureInfo("es-ES"); // Define el idioma español para procesar la fecha
+
+                if (DateTime.TryParseExact(textoFecha, "dd/MM/yyyy", cultura, DateTimeStyles.None, out DateTime fechaConvertida))
+                {
+                    fecha_solicitada = fechaConvertida;
+                    // La conversión fue exitosa. 'fechaConvertida' ya es de tipo DateTime
+                    MessageBox.Show("Fecha válida: " + fechaConvertida.ToShortDateString());
+                }
+                else
+                {
+                    // La fecha ingresada no tiene el formato dd/mm/aaaa
+                    MessageBox.Show("Formato de fecha incorrecto.");
+                }
+
+                var (listaRacionSolicitadaDetalles, error) = nRacionSolicitadaDetalles.ListaXFechaSolicitadaXUnidad(fecha_solicitada.ToString("yyyy-MM-dd"), idUnidad);
+
+                if (error != null)
+                {
+                    MessageBox.Show(error, "Nutricion: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (listaRacionSolicitadaDetalles.Count() <= 0)
+                {
+                    MessageBox.Show("No se encontraron cargas de menus de solictada para esta fecha y unidad", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                string menusNoconciden = "No coinciden estos menus:";
+                bool alertaCoincideMenu = false;
+                foreach (var elaborada in lista)
+                {
+                    var solicitada = listaRacionSolicitadaDetalles
+                        .FirstOrDefault(x => x.tipo_menu_id == elaborada.tipo_menu_id);
+
+                    if (solicitada != null)
+                    {
+                        // acciones
+                        if (elaborada.almuerzo != solicitada.almuerzo)
+                        {
+                            alertaCoincideMenu = true;
+                            menusNoconciden = menusNoconciden + Environment.NewLine
+                                + solicitada.tipo_menu.tipo_menu + " (elaborada almuerzo= " + elaborada.almuerzo
+                                + " - solicitada almuerzo= " + solicitada.almuerzo + ")";
+                        }
+                        if (elaborada.cena != solicitada.cena)
+                        {
+                            alertaCoincideMenu = true;
+                            menusNoconciden = menusNoconciden + Environment.NewLine
+                                + solicitada.tipo_menu.tipo_menu + " (elaborada cena= " + elaborada.cena
+                                + " - solicitada cena= " + solicitada.cena + ")";
+                        }
+                    }
+
+                }
+
+                if (alertaCoincideMenu)
+                {
+                    MessageBox.Show(menusNoconciden, "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                //fin control
+
                 var nRacionElaboradaDetalle = new NRacionElaboradaDetalles();
 
                 var detalle = new DRacionElaboradaDetalles
