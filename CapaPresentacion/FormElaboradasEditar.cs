@@ -134,17 +134,21 @@ namespace CapaPresentacion
                 DateTime fecha_solicitada = new DateTime();
                 CultureInfo cultura = new CultureInfo("es-ES"); // Define el idioma español para procesar la fecha
 
+                MessageBox.Show("Antes de convertir");
                 if (DateTime.TryParseExact(textoFecha, "dd/MM/yyyy", cultura, DateTimeStyles.None, out DateTime fechaConvertida))
                 {
-                    fecha_solicitada = fechaConvertida;
+                    MessageBox.Show("En if si: " + fechaConvertida.ToShortDateString());
                     // La conversión fue exitosa. 'fechaConvertida' ya es de tipo DateTime
-                    MessageBox.Show("Fecha válida: " + fechaConvertida.ToShortDateString());
+                    fecha_solicitada = fechaConvertida;
                 }
                 else
                 {
                     // La fecha ingresada no tiene el formato dd/mm/aaaa
-                    MessageBox.Show("Formato de fecha incorrecto.");
+                    MessageBox.Show("Formato de fecha incorrecto.", "Nutricion: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
+
+                MessageBox.Show("despues de if");
 
                 var (listaRacionSolicitadaDetalles, error) = nRacionSolicitadaDetalles.ListaXFechaSolicitadaXUnidad(fecha_solicitada.ToString("yyyy-MM-dd"), idUnidad);
 
@@ -162,31 +166,35 @@ namespace CapaPresentacion
 
                 string menusNoconciden = "No coinciden estos menus:";
                 bool alertaCoincideMenu = false;
-                foreach (var elaborada in lista)
+
+
+                
+                var solicitada = listaRacionSolicitadaDetalles
+                    .FirstOrDefault(x => x.tipo_menu.tipo_menu.Trim() == txtMenu.Text.Trim());
+
+                
+                if (solicitada != null)
                 {
-                    var solicitada = listaRacionSolicitadaDetalles
-                        .FirstOrDefault(x => x.tipo_menu_id == elaborada.tipo_menu_id);
-
-                    if (solicitada != null)
+                    MessageBox.Show("encontrado solicitada: " + solicitada.almuerzo);
+                    // acciones
+                    if (Convert.ToInt32(txtAlmuerzo.Text) != solicitada.almuerzo)
                     {
-                        // acciones
-                        if (elaborada.almuerzo != solicitada.almuerzo)
-                        {
-                            alertaCoincideMenu = true;
-                            menusNoconciden = menusNoconciden + Environment.NewLine
-                                + solicitada.tipo_menu.tipo_menu + " (elaborada almuerzo= " + elaborada.almuerzo
-                                + " - solicitada almuerzo= " + solicitada.almuerzo + ")";
-                        }
-                        if (elaborada.cena != solicitada.cena)
-                        {
-                            alertaCoincideMenu = true;
-                            menusNoconciden = menusNoconciden + Environment.NewLine
-                                + solicitada.tipo_menu.tipo_menu + " (elaborada cena= " + elaborada.cena
-                                + " - solicitada cena= " + solicitada.cena + ")";
-                        }
+                        MessageBox.Show("almuerzo solciitada: " + solicitada.almuerzo);
+                        alertaCoincideMenu = true;
+                        menusNoconciden = menusNoconciden + Environment.NewLine
+                            + solicitada.tipo_menu.tipo_menu + " (elaborada almuerzo= " + txtAlmuerzo.Text
+                            + " - solicitada almuerzo= " + solicitada.almuerzo + ")";
                     }
-
+                    if (Convert.ToInt32(txtCena.Text) != solicitada.cena)
+                    {
+                        alertaCoincideMenu = true;
+                        menusNoconciden = menusNoconciden + Environment.NewLine
+                            + solicitada.tipo_menu.tipo_menu + " (elaborada cena= " + txtCena.Text
+                            + " - solicitada cena= " + solicitada.cena + ")";
+                    }
                 }
+
+                
 
                 if (alertaCoincideMenu)
                 {
