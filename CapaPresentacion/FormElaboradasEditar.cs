@@ -137,7 +137,6 @@ namespace CapaPresentacion
                 MessageBox.Show("Antes de convertir");
                 if (DateTime.TryParseExact(textoFecha, "dd/MM/yyyy", cultura, DateTimeStyles.None, out DateTime fechaConvertida))
                 {
-                    MessageBox.Show("En if si: " + fechaConvertida.ToShortDateString());
                     // La conversión fue exitosa. 'fechaConvertida' ya es de tipo DateTime
                     fecha_solicitada = fechaConvertida;
                 }
@@ -147,8 +146,6 @@ namespace CapaPresentacion
                     MessageBox.Show("Formato de fecha incorrecto.", "Nutricion: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
-                MessageBox.Show("despues de if");
 
                 var (listaRacionSolicitadaDetalles, error) = nRacionSolicitadaDetalles.ListaXFechaSolicitadaXUnidad(fecha_solicitada.ToString("yyyy-MM-dd"), idUnidad);
 
