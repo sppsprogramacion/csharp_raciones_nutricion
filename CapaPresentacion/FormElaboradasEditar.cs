@@ -134,7 +134,6 @@ namespace CapaPresentacion
                 DateTime fecha_solicitada = new DateTime();
                 CultureInfo cultura = new CultureInfo("es-ES"); // Define el idioma español para procesar la fecha
 
-                MessageBox.Show("Antes de convertir");
                 if (DateTime.TryParseExact(textoFecha, "dd/MM/yyyy", cultura, DateTimeStyles.None, out DateTime fechaConvertida))
                 {
                     // La conversión fue exitosa. 'fechaConvertida' ya es de tipo DateTime
@@ -172,11 +171,9 @@ namespace CapaPresentacion
                 
                 if (solicitada != null)
                 {
-                    MessageBox.Show("encontrado solicitada: " + solicitada.almuerzo);
                     // acciones
                     if (Convert.ToInt32(txtAlmuerzo.Text) != solicitada.almuerzo)
                     {
-                        MessageBox.Show("almuerzo solciitada: " + solicitada.almuerzo);
                         alertaCoincideMenu = true;
                         menusNoconciden = menusNoconciden + Environment.NewLine
                             + solicitada.tipo_menu.tipo_menu + " (elaborada almuerzo= " + txtAlmuerzo.Text
