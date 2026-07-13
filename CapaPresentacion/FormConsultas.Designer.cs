@@ -36,6 +36,8 @@
             this.dtpFechaFin = new System.Windows.Forms.DateTimePicker();
             this.btnImrpimirParteDiario = new System.Windows.Forms.Button();
             this.btnExportar = new System.Windows.Forms.Button();
+            this.btnImprimirEstadistico = new System.Windows.Forms.Button();
+            this.btnImprimirParteDiarioNovedades = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtgResultado)).BeginInit();
             this.SuspendLayout();
             // 
@@ -105,11 +107,11 @@
             this.btnImrpimirParteDiario.BackColor = System.Drawing.Color.White;
             this.btnImrpimirParteDiario.FlatAppearance.BorderColor = System.Drawing.Color.Indigo;
             this.btnImrpimirParteDiario.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnImrpimirParteDiario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnImrpimirParteDiario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnImrpimirParteDiario.ForeColor = System.Drawing.Color.Indigo;
             this.btnImrpimirParteDiario.Location = new System.Drawing.Point(619, 15);
             this.btnImrpimirParteDiario.Name = "btnImrpimirParteDiario";
-            this.btnImrpimirParteDiario.Size = new System.Drawing.Size(194, 40);
+            this.btnImrpimirParteDiario.Size = new System.Drawing.Size(128, 40);
             this.btnImrpimirParteDiario.TabIndex = 5;
             this.btnImrpimirParteDiario.Text = "Imprimir partes diarios";
             this.btnImrpimirParteDiario.UseVisualStyleBackColor = false;
@@ -122,13 +124,42 @@
             this.btnExportar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExportar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExportar.ForeColor = System.Drawing.Color.SteelBlue;
-            this.btnExportar.Location = new System.Drawing.Point(391, 15);
+            this.btnExportar.Location = new System.Drawing.Point(285, 60);
             this.btnExportar.Name = "btnExportar";
             this.btnExportar.Size = new System.Drawing.Size(100, 40);
             this.btnExportar.TabIndex = 4;
-            this.btnExportar.Text = "Exportar";
+            this.btnExportar.Text = "Exportar excel";
             this.btnExportar.UseVisualStyleBackColor = false;
             this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
+            // 
+            // btnImprimirEstadistico
+            // 
+            this.btnImprimirEstadistico.BackColor = System.Drawing.Color.White;
+            this.btnImprimirEstadistico.FlatAppearance.BorderColor = System.Drawing.Color.Indigo;
+            this.btnImprimirEstadistico.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImprimirEstadistico.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnImprimirEstadistico.ForeColor = System.Drawing.Color.Indigo;
+            this.btnImprimirEstadistico.Location = new System.Drawing.Point(619, 60);
+            this.btnImprimirEstadistico.Name = "btnImprimirEstadistico";
+            this.btnImprimirEstadistico.Size = new System.Drawing.Size(128, 40);
+            this.btnImprimirEstadistico.TabIndex = 124;
+            this.btnImprimirEstadistico.Text = "Imprimir estadistico";
+            this.btnImprimirEstadistico.UseVisualStyleBackColor = false;
+            this.btnImprimirEstadistico.Click += new System.EventHandler(this.btnImprimirEstadistico_Click);
+            // 
+            // btnImprimirParteDiarioNovedades
+            // 
+            this.btnImprimirParteDiarioNovedades.BackColor = System.Drawing.Color.White;
+            this.btnImprimirParteDiarioNovedades.FlatAppearance.BorderColor = System.Drawing.Color.Indigo;
+            this.btnImprimirParteDiarioNovedades.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImprimirParteDiarioNovedades.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnImprimirParteDiarioNovedades.ForeColor = System.Drawing.Color.Indigo;
+            this.btnImprimirParteDiarioNovedades.Location = new System.Drawing.Point(753, 14);
+            this.btnImprimirParteDiarioNovedades.Name = "btnImprimirParteDiarioNovedades";
+            this.btnImprimirParteDiarioNovedades.Size = new System.Drawing.Size(128, 40);
+            this.btnImprimirParteDiarioNovedades.TabIndex = 125;
+            this.btnImprimirParteDiarioNovedades.Text = "Imprimir parte diario novedades";
+            this.btnImprimirParteDiarioNovedades.UseVisualStyleBackColor = false;
             // 
             // FormConsultas
             // 
@@ -137,6 +168,8 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1084, 691);
+            this.Controls.Add(this.btnImprimirParteDiarioNovedades);
+            this.Controls.Add(this.btnImprimirEstadistico);
             this.Controls.Add(this.btnExportar);
             this.Controls.Add(this.btnImrpimirParteDiario);
             this.Controls.Add(this.btnMostrar);
@@ -165,5 +198,7 @@
         private System.Windows.Forms.DateTimePicker dtpFechaFin;
         private System.Windows.Forms.Button btnImrpimirParteDiario;
         private System.Windows.Forms.Button btnExportar;
+        private System.Windows.Forms.Button btnImprimirEstadistico;
+        private System.Windows.Forms.Button btnImprimirParteDiarioNovedades;
     }
 }
