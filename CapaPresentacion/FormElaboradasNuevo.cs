@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -90,6 +91,15 @@ namespace CapaPresentacion
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            // controlar que fecha de elaborada no sea mayopr a la fecha actual
+            DateTime fecha_actual = DateTime.Now;
+            if(dtpFechaSolicitada.Value > fecha_actual.Date)
+            {
+                MessageBox.Show("La fecha elaborada no puede ser posterior a la fecha actual", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+
             try
             {
                 var nRacionElaborada = new NRacionElaborada();

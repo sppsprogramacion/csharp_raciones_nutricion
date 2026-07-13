@@ -717,6 +717,7 @@ namespace CapaPresentacion
         private void btnEditarEncabezado_Click(object sender, EventArgs e)
         {
             dtpFechaElaborada.Enabled = true;
+            txtConvenio.ReadOnly = false;
             txtDetalles.Enabled = true;
             GuardarEditarEncabezado.Enabled = true;
             btnCancelarEditarEncabezado.Enabled = true;
@@ -739,6 +740,7 @@ namespace CapaPresentacion
                 {
                     id_racion_elaborada = Convert.ToInt32(txtIdRacionElaborada.Text),
                     fecha_elaborada = dtpFechaElaborada.Value,
+                    convenio = txtConvenio.Text,
                     detalles = txtDetalles.Text
                 };
 
@@ -746,6 +748,7 @@ namespace CapaPresentacion
                 MessageBox.Show("Editado correctamente", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 dtpFechaElaborada.Enabled = false;
+                txtConvenio.ReadOnly = true;
                 txtDetalles.Enabled = false;
 
             }
@@ -758,6 +761,7 @@ namespace CapaPresentacion
         private void btnCancelarEditarEncabezado_Click(object sender, EventArgs e)
         {
             dtpFechaElaborada.Enabled = false;
+            txtConvenio.ReadOnly = true;
             txtDetalles.Enabled = false;
             GuardarEditarEncabezado.Enabled = false;
             btnCancelarEditarEncabezado.Enabled = false;

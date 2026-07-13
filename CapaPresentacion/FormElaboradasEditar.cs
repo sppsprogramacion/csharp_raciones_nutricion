@@ -129,7 +129,7 @@ namespace CapaPresentacion
 
                 int idUnidad = idUnidadGlobal;
 
-                // Suponiendo que tu TextBox se llama txtFecha
+                // tomar fecha de txtFecha
                 string textoFecha = txtFechaElaborada.Text;
                 DateTime fecha_solicitada = new DateTime();
                 CultureInfo cultura = new CultureInfo("es-ES"); // Define el idioma español para procesar la fecha

@@ -73,6 +73,14 @@ namespace CapaPresentacion
             //        return;
             //    }
 
+            // controlar que fecha de soliocitada no sea mayopr a la fecha actual
+            DateTime fecha_actual = DateTime.Now;
+            if (dtpFechaSolicitada.Value > fecha_actual.Date)
+            {
+                MessageBox.Show("La fecha elaborada no puede ser posterior a la fecha actual", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             try
             {
                 var nRacionSolicitada = new NRacionSolicitada();

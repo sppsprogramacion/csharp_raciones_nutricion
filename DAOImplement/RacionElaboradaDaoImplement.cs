@@ -65,6 +65,7 @@ namespace DAOImplement
         }
         //FIN NUEVO.................................................
 
+        //EDITAR
         public void Editar(DRacionElaborada racionElaborada)
         {
             try
@@ -79,6 +80,7 @@ namespace DAOImplement
                     // Actualizar manualmente los campos
                     existente.fecha_elaborada = racionElaborada.fecha_elaborada;
                     existente.detalles = racionElaborada.detalles;
+                    existente.convenio = racionElaborada.convenio;
                     // Agregar acá todos los campos que quieras actualizar
 
                     db.SaveChanges();
@@ -93,6 +95,8 @@ namespace DAOImplement
                 throw new Exception("Error al actualizar el registro: " + mensaje);
             }
         }
+        //FIN EDITAR......................................................
+
         public DRacionElaborada ObtenerPorId(int id)
         {
             throw new NotImplementedException();

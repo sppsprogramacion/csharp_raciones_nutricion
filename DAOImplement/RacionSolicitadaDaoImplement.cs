@@ -80,6 +80,7 @@ namespace DAOImplement
 
                     // Actualizar manualmente los campos
                     existente.fecha_solicitada = racionSolicitada.fecha_solicitada;
+                    existente.convenio = racionSolicitada.convenio;
                     existente.detalles = racionSolicitada.detalles;
                     // Agregar acá todos los campos que quieras actualizar
 
