@@ -123,6 +123,7 @@
     <Compile Include="DSap.cs" />
     <Compile Include="DSapMenu.cs" />
     <Compile Include="DSapMenuCantidades.cs" />
+    <Compile Include="DSapMenuEstadistico.cs" />
     <Compile Include="DTipoMenu.cs" />
     <Compile Include="DUnidad.cs" />
     <Compile Include="DUnidadMenuCantidades.cs" />

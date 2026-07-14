@@ -697,7 +697,7 @@ namespace CapaPresentacion
             // Generar PDF en memoria
             MemoryStream msOriginal = null;
 
-            msOriginal = ReportesParteDiarioPDF.RepPdfEstadistico(listaRacionElaboradas, listaRacionSolicitada, listaUnidades, listaSap, listaTipoMenu, dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"));
+            msOriginal = ReportesParteDiarioPDF.RepPdfEstadistico(listaRacionElaboradas, listaSap, listaTipoMenu, dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"));
 
             // Clonar el stream para que PdfiumViewer pueda cerrarlo sin afectar el original
             MemoryStream ms = new MemoryStream(msOriginal.ToArray());
