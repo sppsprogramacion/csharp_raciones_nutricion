@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dtgRacionesCargadas = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
             this.dtpFechaInicio = new System.Windows.Forms.DateTimePicker();
@@ -40,6 +40,8 @@
             this.txtTotal = new System.Windows.Forms.TextBox();
             this.txtNumeroRendicion = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dtpFechaRendicion = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dtgRacionesCargadas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,8 +50,8 @@
             this.dtgRacionesCargadas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgRacionesCargadas.Location = new System.Drawing.Point(12, 62);
             this.dtgRacionesCargadas.Name = "dtgRacionesCargadas";
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtgRacionesCargadas.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtgRacionesCargadas.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dtgRacionesCargadas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgRacionesCargadas.Size = new System.Drawing.Size(1150, 587);
             this.dtgRacionesCargadas.TabIndex = 113;
@@ -143,7 +145,7 @@
             // 
             // txtNumeroRendicion
             // 
-            this.txtNumeroRendicion.Location = new System.Drawing.Point(687, 30);
+            this.txtNumeroRendicion.Location = new System.Drawing.Point(582, 30);
             this.txtNumeroRendicion.Name = "txtNumeroRendicion";
             this.txtNumeroRendicion.Size = new System.Drawing.Size(100, 20);
             this.txtNumeroRendicion.TabIndex = 4;
@@ -152,11 +154,30 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(684, 9);
+            this.label1.Location = new System.Drawing.Point(579, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(93, 15);
             this.label1.TabIndex = 122;
             this.label1.Text = "Nº RENDICION:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(688, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(119, 15);
+            this.label2.TabIndex = 124;
+            this.label2.Text = "FECHA RENDICION:";
+            // 
+            // dtpFechaRendicion
+            // 
+            this.dtpFechaRendicion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpFechaRendicion.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaRendicion.Location = new System.Drawing.Point(691, 29);
+            this.dtpFechaRendicion.Name = "dtpFechaRendicion";
+            this.dtpFechaRendicion.Size = new System.Drawing.Size(115, 21);
+            this.dtpFechaRendicion.TabIndex = 123;
             // 
             // FormRacionesCargadas
             // 
@@ -165,6 +186,8 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1184, 691);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.dtpFechaRendicion);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtNumeroRendicion);
             this.Controls.Add(this.label7);
@@ -199,5 +222,7 @@
         private System.Windows.Forms.TextBox txtTotal;
         private System.Windows.Forms.TextBox txtNumeroRendicion;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DateTimePicker dtpFechaRendicion;
     }
 }

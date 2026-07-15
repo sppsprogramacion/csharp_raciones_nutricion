@@ -682,11 +682,11 @@ namespace CapaPresentacion
 
             if (encabezados.Count <= 20)
             {
-                msOriginal = ReportesElaboradasPDF.RepPdfPlanillaLiquidacionQuincenal(encabezados, filas, txtTotal.Text, listaPlanillaLiquidacion2da, numero_rendicion, dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"));
+                msOriginal = ReportesElaboradasPDF.RepPdfPlanillaLiquidacionQuincenal(encabezados, filas, txtTotal.Text, listaPlanillaLiquidacion2da, numero_rendicion, dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"), dtpFechaRendicion.Value.ToString("yyyy-MM-dd"));
             }
             if (encabezados.Count > 20)
             {
-                msOriginal = ReportesElaboradasPDF.RepPdfPlanillaLiquidacionMensual(encabezados, filas, txtTotal.Text, listaPlanillaLiquidacion2da, numero_rendicion, dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"));
+                msOriginal = ReportesElaboradasPDF.RepPdfPlanillaLiquidacionMensual(encabezados, filas, txtTotal.Text, listaPlanillaLiquidacion2da, numero_rendicion, dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"), dtpFechaRendicion.Value.ToString("yyyy-MM-dd"));
             }
             // Clonar el stream para que PdfiumViewer pueda cerrarlo sin afectar el original
             MemoryStream ms = new MemoryStream(msOriginal.ToArray());

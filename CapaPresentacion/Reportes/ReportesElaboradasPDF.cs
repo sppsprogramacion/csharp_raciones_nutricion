@@ -15,7 +15,7 @@ namespace CapaPresentacion.Reportes
     public class ReportesElaboradasPDF
     {
         //PLANILLA RENDICION         
-        public static MemoryStream RepPdfPlanillaLiquidacionQuincenal(List<string>encabezadoPlanilla, List<string[]> filasPlanilla, string total, List<DPlanillaLiquidacion2da>filasPlanilla2da, int numero_rendicion, string fechaInicio, string fechaFin)
+        public static MemoryStream RepPdfPlanillaLiquidacionQuincenal(List<string>encabezadoPlanilla, List<string[]> filasPlanilla, string total, List<DPlanillaLiquidacion2da>filasPlanilla2da, int numero_rendicion, string fechaInicio, string fechaFin, string fechaRendicion)
         {
             MemoryStream ms = new MemoryStream();
             Document doc = new Document(PageSize.A4.Rotate(), 5, 5, 5, 5);
@@ -295,7 +295,7 @@ namespace CapaPresentacion.Reportes
         //FIN PLANILLA RENDICION QUINCENAL................................................................
 
         //PLANILLA RENDICION MENDUAL     
-        public static MemoryStream RepPdfPlanillaLiquidacionMensual(List<string> encabezadoPlanilla, List<string[]> filasPlanilla, string total, List<DPlanillaLiquidacion2da> filasPlanilla2da, int numero_rendicion, string fechaInicio, string fechaFin)
+        public static MemoryStream RepPdfPlanillaLiquidacionMensual(List<string> encabezadoPlanilla, List<string[]> filasPlanilla, string total, List<DPlanillaLiquidacion2da> filasPlanilla2da, int numero_rendicion, string fechaInicio, string fechaFin, string fechaRendicion)
         {
             MemoryStream ms = new MemoryStream();
             Document doc = new Document(PageSize.A4.Rotate(), 5, 5, 5, 5);
@@ -317,6 +317,7 @@ namespace CapaPresentacion.Reportes
 
             DateTime inicio = Convert.ToDateTime(fechaInicio);
             DateTime fin = Convert.ToDateTime(fechaFin);
+            DateTime fechaPlanillaRendicion = Convert.ToDateTime(fechaRendicion);
 
             // Crear tabla 1 columna
             PdfPTable tablaEncabezado = new PdfPTable(1);
@@ -349,7 +350,7 @@ namespace CapaPresentacion.Reportes
             CultureInfo cultura = new CultureInfo("es-ES");
 
             // "d 'de' MMMM 'de' yyyy" → ejemplo: "9 de septiembre de 2025"
-            string fechaCompleta = "Salta, " + fechaHoy.ToString("d 'de' MMMM 'de' yyyy", cultura);
+            string fechaCompleta = "Salta, " + fechaPlanillaRendicion.ToString("d 'de' MMMM 'de' yyyy", cultura);
 
             //doc.Add(new Paragraph(" "));
             doc.Add(new Paragraph(fechaCompleta, fuenteNormal)
