@@ -65,11 +65,12 @@ namespace CapaPresentacion.Reportes
             //fin logo encabezado.....................................
 
             //fecha
-            DateTime fechaHoy = DateTime.Now;
+            //DateTime fechaHoy = DateTime.Now;
+            DateTime fechaPlanillaRendicion = Convert.ToDateTime(fechaRendicion);
             CultureInfo cultura = new CultureInfo("es-ES");
 
             // "d 'de' MMMM 'de' yyyy" → ejemplo: "9 de septiembre de 2025"
-            string fechaCompleta = "Salta, " + fechaHoy.ToString("d 'de' MMMM 'de' yyyy", cultura);
+            string fechaCompleta = "Salta, " + fechaPlanillaRendicion.ToString("d 'de' MMMM 'de' yyyy", cultura);
 
             //doc.Add(new Paragraph(" "));
             doc.Add(new Paragraph(fechaCompleta, fuenteNormal)
