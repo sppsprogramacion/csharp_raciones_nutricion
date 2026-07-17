@@ -2,6 +2,7 @@
 using DAO;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace DAOImplement
                 using (var db = new MiDbContext())
                 {
                     lista = db.Unidades
+                     .Include(s => s.unidad_grupo)
                      .OrderBy(u => u.orden)   // Orden ascendente
                      .ToList();
 

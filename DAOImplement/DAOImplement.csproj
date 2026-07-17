@@ -121,6 +121,7 @@
     <Compile Include="SapMenuDaoImplement.cs" />
     <Compile Include="TipoMenuDaoImplement.cs" />
     <Compile Include="UnidadDaoImplement.cs" />
+    <Compile Include="UnidadGrupoDaoImplement.cs" />
     <Compile Include="UsuarioDAOImplement .cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

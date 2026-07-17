@@ -16,5 +16,11 @@ namespace CapaDatos
         public string unidad { get; set; }
         public int orden { get; set; }
         public bool vigente { get; set; }
+
+        [Required]
+        public int unidad_grupo_id { get; set; }
+
+        // Propiedad de navegación        
+        public virtual DUnidadGrupo unidad_grupo { get; set; }
     }
 }

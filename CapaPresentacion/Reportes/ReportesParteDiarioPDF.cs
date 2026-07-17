@@ -329,8 +329,8 @@ namespace CapaPresentacion.Reportes
 
         //FIN PARTE ESTADISTICO...................................................................
 
-
-        public static MemoryStream RepPdfEstadisticoCopia(List<DRacionElaborada> listaRacionElaboradas, List<DRacionSolicitada> listaRacionSolicitadas, List<DUnidad> listaUnidades, List<DSap> listaSap, List<DTipoMenu> listaTipoMenu, string fechaInicio, string fechaFin)
+        // PARTE NOVEDADES DIARIO
+        public static MemoryStream RepPdfParteNovedadesDiario(List<DRacionElaborada> listaRacionElaboradas, List<DUnidadGrupo> listaUnidadesGrupo, List<DUnidad> listaUnidades, List<DTipoMenu> listaTipoMenu, string fechaInicio, string fechaFin)
         {
             MemoryStream ms = new MemoryStream();
 
@@ -345,24 +345,21 @@ namespace CapaPresentacion.Reportes
             DateTime inicio = Convert.ToDateTime(fechaInicio);
             DateTime fin = Convert.ToDateTime(fechaFin);
 
-            for (DateTime fecha = inicio; fecha <= fin; fecha = fecha.AddDays(1))
+            foreach (DUnidadGrupo unidadGrupo in listaUnidadesGrupo)
             {
 
                 //GENERAR paginas de elaboradas: unidad y sap
-                DRacionElaborada racionElaborada = listaRacionElaboradas.Where(x => x.fecha_elaborada == fecha).First();
-                List<DRacionElaboradaDetalles> listaDetallesElaboradas = racionElaborada.raciones_elaboradas_detalles.ToList();
 
-                List<DUnidadMenuCantidades> listaUnidadesCantidades = new List<DUnidadMenuCantidades>();
-                List<DSapMenuCantidades> listaSapCantidades = new List<DSapMenuCantidades>();
 
-                listaUnidadesCantidades = GenerarListaUnidadesCantidadesElaboradas(listaDetallesElaboradas, listaUnidades, listaTipoMenu);
-                listaSapCantidades = GenerarListaSapCantidadesElaboradas(listaDetallesElaboradas, listaSap, listaTipoMenu);
-                //agregar una pagina al documento : Elaborada unidades
-                AgregarPagina(doc, listaUnidadesCantidades, null, racionElaborada.fecha_elaborada, "ELABORADAS", "Unidades\nCarcelarias");
-                // --------------------------------- Nueva página ----------------------------------------------
-                doc.NewPage();
+                List<DSapMenuEstadistico> listaSapCantidades = new List<DSapMenuEstadistico>();
+
+
+                //listaSapCantidades = GenerarListaSapCantidadesElaboradas(listaDetallesElaboradas, listaSap, listaTipoMenu);
+                listaSapCantidades = GenerarListaSapEstadisticoElaboradas(listaRacionElaboradas, sap, listaTipoMenu, inicio, fin);
+
+
                 //agregar una pagina al documento : Elaborada sap
-                AgregarPagina(doc, null, listaSapCantidades, racionElaborada.fecha_elaborada, "ELABORADAS", "Servicios de\nAlimentación");
+                AgregarPaginaEstadistico(doc, listaSapCantidades, sap, "ELABORADAS");
 
                 // --------------------------------- Nueva página ----------------------------------------------
                 doc.NewPage();
@@ -377,8 +374,7 @@ namespace CapaPresentacion.Reportes
             return ms;
         }
 
-
-
+        //FIN PARTE NOVEDADES DIARIO...................................................................
 
         //METODO GENERAR LISTA UNIDAD CANTIDADES ELABORADAS
         private static List<DUnidadMenuCantidades> GenerarListaUnidadesCantidadesElaboradas(List<DRacionElaboradaDetalles> listaDetalles, List<DUnidad> listaUnidades, List<DTipoMenu> listaTipoMenu)

@@ -126,6 +126,7 @@
     <Compile Include="DSapMenuEstadistico.cs" />
     <Compile Include="DTipoMenu.cs" />
     <Compile Include="DUnidad.cs" />
+    <Compile Include="DUnidadGrupo.cs" />
     <Compile Include="DUnidadMenuCantidades.cs" />
     <Compile Include="DUsuario.cs" />
     <Compile Include="MiDbContext.cs" />

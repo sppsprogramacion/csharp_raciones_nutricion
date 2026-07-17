@@ -53,6 +53,7 @@
     <Compile Include="NSapMenu.cs" />
     <Compile Include="NTipoMenu.cs" />
     <Compile Include="NUnidad.cs" />
+    <Compile Include="NUnidadGrupo.cs" />
     <Compile Include="NUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

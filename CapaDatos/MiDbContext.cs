@@ -27,6 +27,7 @@ namespace CapaDatos
         public DbSet<DSapMenu> SapMenu { get; set; }
         public DbSet<DTipoMenu> TiposMenu { get; set; }
         public DbSet<DUnidad> Unidades { get; set; }
+        public DbSet<DUnidadGrupo> UnidadesGrupo { get; set; }
         public DbSet<DUsuario> Usuarios { get; set; }
         
 
@@ -63,6 +64,13 @@ namespace CapaDatos
                 .HasRequired(u => u.unidad)
                 .WithMany() // sin propiedad de navegación en DUnidad
                 .HasForeignKey(u => u.unidad_id)
+                .WillCascadeOnDelete(false);
+
+            //relaciones unidades
+            modelBuilder.Entity<DUnidad>()
+                .HasRequired(t => t.unidad_grupo)
+                .WithMany()     //sin propiedad de navegación en DMenu
+                .HasForeignKey(t => t.unidad_grupo_id)
                 .WillCascadeOnDelete(false);
 
             //relaciones raciones elaboradas

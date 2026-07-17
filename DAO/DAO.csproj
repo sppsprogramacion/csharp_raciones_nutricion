@@ -55,6 +55,7 @@
     <Compile Include="ISapMenuDAO.cs" />
     <Compile Include="ITipoMenuDao.cs" />
     <Compile Include="IUnidadDAO.cs" />
+    <Compile Include="IUnidadGrupoDAO.cs" />
     <Compile Include="IUsuarioDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
