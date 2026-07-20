@@ -742,5 +742,125 @@ namespace CapaPresentacion
                 pdfDocument?.Dispose();
             }
         }
+
+        private void btnImprimirParteDiarioNovedades_Click(object sender, EventArgs e)
+        {
+            //obtener lista elaborada por fecha
+            var nRacionElaborada = new NRacionElaborada();
+
+            var (listaRacionElaboradas, error) = nRacionElaborada.ListaXFecha(dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"));
+
+            if (error != null)
+            {
+                MessageBox.Show(error, "Nutricion: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (listaRacionElaboradas.Count() <= 0)
+            {
+                MessageBox.Show("No se encontraron cargas en este rango de fechas", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            listaRacionElaboradas = listaRacionElaboradas
+                .OrderBy(s => s.fecha_elaborada)
+                .ToList();
+            //fin obtener lista elaboradas
+
+            //Listar Unidades
+            NUnidad nUnidad = new NUnidad();
+            (List<DUnidad> listaUnidades, string errorResponseUnidad) = nUnidad.ListarTodos();
+
+            if (errorResponseUnidad != null)
+            {
+                MessageBox.Show(errorResponseUnidad, "Nutricion: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            listaUnidades = listaUnidades
+                .OrderBy(s => s.orden)
+                .ToList();
+            //fin Listar Unidades
+
+            //Listar Unidades grupo
+            NUnidadGrupo nUnidadGrupo = new NUnidadGrupo();
+            (List<DUnidadGrupo> listaUnidadesGrupo, string errorResponseUnidadGrupo) = nUnidadGrupo.ListarTodos();
+
+            if (errorResponseUnidadGrupo != null)
+            {
+                MessageBox.Show(errorResponseUnidadGrupo, "Nutricion: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            listaUnidadesGrupo = listaUnidadesGrupo
+                .OrderBy(s => s.orden)
+                .ToList();
+            //fin Listar Unidades grupo
+
+
+            //Listar TipoMenu
+            NTipoMenu nTipoMenu = new NTipoMenu();
+            (List<DTipoMenu> listaTipoMenu, string errorResponseTipoMenu) = nTipoMenu.ListarTodos();
+
+            if (errorResponseTipoMenu != null)
+            {
+                MessageBox.Show(errorResponseTipoMenu, "Nutricion: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            listaTipoMenu = listaTipoMenu
+                .OrderBy(s => s.orden)
+                .ToList();
+            //fin Listar TipoMenu
+
+
+            // Generar PDF en memoria
+            MemoryStream msOriginal = null;
+
+            msOriginal = ReportesParteDiarioPDF.RepPdfParteNovedadesDiario(listaRacionElaboradas, listaUnidadesGrupo, listaUnidades, listaTipoMenu, dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"));
+
+            // Clonar el stream para que PdfiumViewer pueda cerrarlo sin afectar el original
+            MemoryStream ms = new MemoryStream(msOriginal.ToArray());
+
+            PdfDocument pdfDocument = null;
+
+            try
+            {
+                pdfDocument = PdfDocument.Load(ms);
+
+                Form formVisor = new Form
+                {
+                    Text = "Vista previa PDF",
+                    Width = 800,
+                    Height = 600
+                };
+
+                PdfViewer pdfViewer = new PdfViewer
+                {
+                    Dock = DockStyle.Fill,
+                    Document = pdfDocument
+                };
+
+                formVisor.Controls.Add(pdfViewer);
+
+                formVisor.FormClosed += (s, args) =>
+                {
+                    // Liberar recursos al cerrar el visor
+                    pdfViewer.Document.Dispose();
+                    pdfViewer.Dispose();
+                    formVisor.Dispose();
+                    ms.Dispose();
+                    pdfDocument = null;
+                };
+
+                formVisor.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al mostrar PDF: " + ex.Message);
+                ms.Dispose();
+                pdfDocument?.Dispose();
+            }
+        }
     }
 }

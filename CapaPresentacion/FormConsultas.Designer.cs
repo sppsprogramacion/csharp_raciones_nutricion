@@ -160,6 +160,7 @@
             this.btnImprimirParteDiarioNovedades.TabIndex = 125;
             this.btnImprimirParteDiarioNovedades.Text = "Imprimir parte diario novedades";
             this.btnImprimirParteDiarioNovedades.UseVisualStyleBackColor = false;
+            this.btnImprimirParteDiarioNovedades.Click += new System.EventHandler(this.btnImprimirParteDiarioNovedades_Click);
             // 
             // FormConsultas
             // 

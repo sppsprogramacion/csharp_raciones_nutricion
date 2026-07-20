@@ -351,17 +351,55 @@ namespace CapaPresentacion.Reportes
                 //GENERAR paginas de elaboradas: unidad y sap
 
 
-                List<DSapMenuEstadistico> listaSapCantidades = new List<DSapMenuEstadistico>();
+                List<DUnidadMenuCantidades> listaUnidadCantidades = new List<DUnidadMenuCantidades>();
+
+                List<DUnidad> listafiltroUnidades = listaUnidades.Where(x => x.unidad_grupo_id == unidadGrupo.id_unidad_grupo).ToList();
+                int contadorTablas = 0;
+                int cantidadTablas = 0;
+
+                if (listafiltroUnidades.Count == 1)
+                    cantidadTablas = 6;
+
+                if (listafiltroUnidades.Count == 2 || listafiltroUnidades.Count == 3)
+                    cantidadTablas = 5;
+
+                if (listafiltroUnidades.Count == 4 || listafiltroUnidades.Count == 5)
+                    cantidadTablas = 4;
+
+                if (listafiltroUnidades.Count == 6 || listafiltroUnidades.Count == 7)
+                    cantidadTablas = 3;
 
 
-                //listaSapCantidades = GenerarListaSapCantidadesElaboradas(listaDetallesElaboradas, listaSap, listaTipoMenu);
-                listaSapCantidades = GenerarListaSapEstadisticoElaboradas(listaRacionElaboradas, sap, listaTipoMenu, inicio, fin);
+                for (DateTime fecha = inicio; fecha <= fin; fecha = fecha.AddDays(1))
+                {
 
 
-                //agregar una pagina al documento : Elaborada sap
-                AgregarPaginaEstadistico(doc, listaSapCantidades, sap, "ELABORADAS");
+                    //listaSapCantidades = GenerarListaSapCantidadesElaboradas(listaDetallesElaboradas, listaSap, listaTipoMenu);
+                    listaUnidadCantidades = GenerarListaCantidadesParteNovedadesDiario(listaRacionElaboradas, listafiltroUnidades, listaTipoMenu, fecha);
 
-                // --------------------------------- Nueva página ----------------------------------------------
+
+                    //agregar una pagina al documento : Elaborada sap
+                    AgregarPaginaParteNovedades(doc, listaUnidadCantidades, unidadGrupo, "ELABORADAS", fecha.ToShortDateString());
+                    
+                    contadorTablas++;
+
+                    if(contadorTablas < cantidadTablas)
+                    {                        
+                        doc.Add(new Paragraph(" "));
+                    }
+                    else
+                    {
+                        contadorTablas = 0;
+
+                        doc.NewPage();
+
+
+                        // --------------------------------- Nueva página ----------------------------------------------
+                        //doc.NewPage();
+                    }
+
+                }
+
                 doc.NewPage();
             }
 
@@ -885,8 +923,8 @@ namespace CapaPresentacion.Reportes
         //FIN METODO GENERAR LISTA SAP CANTIDADES SOLICITADAS..................................
 
 
-        //METODO GENERAR LISTA SAP ESTADISTICO
-        private static List<DSapMenuCantidades> GenerarListaCantidadesParteNovedadesDiario(List<DRacionElaborada> listaElaboradas, DSap sap, List<DTipoMenu> listaTipoMenu, DateTime fechaIni, DateTime fechaFin)
+        //METODO GENERAR LISTA UNIDADES PARTE NOVEDADES
+        private static List<DUnidadMenuCantidades> GenerarListaCantidadesParteNovedadesDiario(List<DRacionElaborada> listaElaboradas, List<DUnidad> listaUnidades, List<DTipoMenu> listaTipoMenu, DateTime fechaElaborada)
         {
             //ordenar Listar elaboradas
             listaElaboradas = listaElaboradas
@@ -894,27 +932,28 @@ namespace CapaPresentacion.Reportes
                 .ToList();
 
             //contar valores de menus en cada sap
-            List<DSapMenuEstadistico> listaSapCantidades = new List<DSapMenuEstadistico>();
+            List<DUnidadMenuCantidades> listaUnidadCantidades = new List<DUnidadMenuCantidades>();
             List<DRacionElaborada> listaFiltroElaboradaXFecha = new List<DRacionElaborada>();
-            List<DRacionElaboradaDetalles> listaFiltroDetallesXSap = new List<DRacionElaboradaDetalles>();
+            List<DRacionElaboradaDetalles> listaFiltroDetallesXUnidad= new List<DRacionElaboradaDetalles>();
 
-            for (DateTime fecha = fechaIni; fecha <= fechaFin; fecha = fecha.AddDays(1))
+            DRacionElaborada racionElaborada = listaElaboradas.Where(x => x.fecha_elaborada == fechaElaborada).First();
+            List<DRacionElaboradaDetalles> listaDetallesElaboradas = racionElaborada.raciones_elaboradas_detalles.ToList();
+
+            //for (DateTime fecha = fechaIni; fecha <= fechaFin; fecha = fecha.AddDays(1))
+            foreach (DUnidad unidad in listaUnidades)
             {
-                DRacionElaborada racionElaborada = listaElaboradas.Where(x => x.fecha_elaborada == fecha).First();
-                List<DRacionElaboradaDetalles> listaDetallesElaboradas = racionElaborada.raciones_elaboradas_detalles.ToList();
-
                 // 🔴 NUEVA instancia en cada vuelta
-                var sapCantidades = new DSapMenuEstadistico();
-                sapCantidades.fecha = fecha.ToShortDateString();
+                var unidadCantidades = new DUnidadMenuCantidades();
+                unidadCantidades.unidad = unidad.unidad;
 
                 foreach (DTipoMenu tipoMenu in listaTipoMenu)
                 {
-                    listaFiltroDetallesXSap = listaDetallesElaboradas.Where(x => x.sap_id == sap.id_sap && x.tipo_menu_id == tipoMenu.id_tipo_menu).ToList();
+                    listaFiltroDetallesXUnidad = listaDetallesElaboradas.Where(x => x.unidad_id == unidad.id_unidad && x.tipo_menu_id == tipoMenu.id_tipo_menu).ToList();
 
                     int almuerzo = 0;
                     int cena = 0;
 
-                    foreach (DRacionElaboradaDetalles detalle in listaFiltroDetallesXSap)
+                    foreach (DRacionElaboradaDetalles detalle in listaFiltroDetallesXUnidad)
                     {
                         almuerzo = almuerzo + detalle.almuerzo;
                         cena = cena + detalle.cena;
@@ -922,73 +961,73 @@ namespace CapaPresentacion.Reportes
 
                     if (tipoMenu.id_tipo_menu == 1)
                     {
-                        sapCantidades.P12_A = almuerzo;
-                        sapCantidades.P12_C = cena;
+                        unidadCantidades.P12_A = almuerzo;
+                        unidadCantidades.P12_C = cena;
                     }
                     if (tipoMenu.id_tipo_menu == 2)
                     {
-                        sapCantidades.P24_A = almuerzo;
-                        sapCantidades.P24_C = cena;
+                        unidadCantidades.P24_A = almuerzo;
+                        unidadCantidades.P24_C = cena;
                     }
                     if (tipoMenu.id_tipo_menu == 3)
                     {
-                        sapCantidades.IntN_A = almuerzo;
-                        sapCantidades.IntN_C = cena;
+                        unidadCantidades.IntN_A = almuerzo;
+                        unidadCantidades.IntN_C = cena;
                     }
                     if (tipoMenu.id_tipo_menu == 4)
                     {
-                        sapCantidades.Astr_A = almuerzo;
-                        sapCantidades.Astr_C = cena;
+                        unidadCantidades.Astr_A = almuerzo;
+                        unidadCantidades.Astr_C = cena;
                     }
                     if (tipoMenu.id_tipo_menu == 5)
                     {
-                        sapCantidades.Celi_A = almuerzo;
-                        sapCantidades.Celi_C = cena;
+                        unidadCantidades.Celi_A = almuerzo;
+                        unidadCantidades.Celi_C = cena;
                     }
                     if (tipoMenu.id_tipo_menu == 6)
                     {
-                        sapCantidades.AFib_A = almuerzo;
-                        sapCantidades.AFib_C = cena;
+                        unidadCantidades.AFib_A = almuerzo;
+                        unidadCantidades.AFib_C = cena;
                     }
                     if (tipoMenu.id_tipo_menu == 7)
                     {
-                        sapCantidades.Hep_A = almuerzo;
-                        sapCantidades.Hep_C = cena;
+                        unidadCantidades.Hep_A = almuerzo;
+                        unidadCantidades.Hep_C = cena;
                     }
                     if (tipoMenu.id_tipo_menu == 8)
                     {
-                        sapCantidades.SSal_A = almuerzo;
-                        sapCantidades.SSal_C = cena;
+                        unidadCantidades.SSal_A = almuerzo;
+                        unidadCantidades.SSal_C = cena;
                     }
                     if (tipoMenu.id_tipo_menu == 9)
                     {
-                        sapCantidades.HivTbc_A = almuerzo;
-                        sapCantidades.HivTbc_C = cena;
+                        unidadCantidades.HivTbc_A = almuerzo;
+                        unidadCantidades.HivTbc_C = cena;
                     }
                     if (tipoMenu.id_tipo_menu == 10)
                     {
-                        sapCantidades.Men_A = almuerzo;
-                        sapCantidades.Men_C = cena;
+                        unidadCantidades.Men_A = almuerzo;
+                        unidadCantidades.Men_C = cena;
                     }
                     if (tipoMenu.id_tipo_menu == 11)
                     {
-                        sapCantidades.SobreAl_A = almuerzo;
-                        sapCantidades.SobreAl_C = cena;
+                        unidadCantidades.SobreAl_A = almuerzo;
+                        unidadCantidades.SobreAl_C = cena;
                     }
 
                 }
 
-                listaSapCantidades.Add(sapCantidades);
+                listaUnidadCantidades.Add(unidadCantidades);
             }
 
             //fin contar valores de menus en cada sap
 
-            AgregarFilaTotalesSapEstadistico(listaSapCantidades);
+            AgregarFilaTotalesUnidadParteNovedades(listaUnidadCantidades);
 
 
-            return listaSapCantidades;
+            return listaUnidadCantidades;
         }
-        //FIN METODO GENERAR LISTA SAP ESTADISTICO..................................
+        //FIN METODO GENERAR LISTA UNIDADES PARTE NOVEDADES..................................
 
 
         //METODO AGREGAR PAGINA - tipo_planilla = SOLICITADAS o ELABORADAS
@@ -1702,6 +1741,178 @@ namespace CapaPresentacion.Reportes
 
         //FIN METODO AGREGAR PAGINA...................................................................
 
+        //METODO AGREGAR PAGINA - tipo_planilla = SOLICITADAS o ELABORADAS
+        private static void AgregarPaginaParteNovedades(Document doc, List<DUnidadMenuCantidades> listaUnidadesCantidades, DUnidadGrupo unidadGrupo, string tipo_planilla, string fechaElaborada)
+        {
+
+            // Fuentes
+            Font fuenteLogo = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
+            Font fuenteTitulo = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
+            Font fuenteTituloTabla = FontFactory.GetFont(FontFactory.TIMES_BOLD, 10);
+            Font fuenteEncabezado = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
+            Font fuenteCelda = FontFactory.GetFont(FontFactory.TIMES, 9);
+            Font fuenteTotales = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
+                        
+
+            // AQUÍ VENDRÁ LA TABLA
+            PdfPTable tabla = new PdfPTable(23);
+            tabla.WidthPercentage = 100;
+
+            tabla.SetWidths(new float[]
+            {
+                3f,      // Unidad
+
+                .7f,.7f, // P12
+                .7f,.7f, // P24
+                .7f,.7f, // IntN
+                .7f,.7f, // Astr
+                .7f,.7f, // Celi
+                .7f,.7f, // AFib
+                .7f,.7f, // Hep
+                .7f,.7f, // SSal
+                .7f,.7f, // HivTbc
+                .7f,.7f, // Men
+                .7f,.7f  // SobreAl
+            });
+
+            //agregar filas de encabezados
+            // UNIDADES
+            string titulo_tabla = unidadGrupo.unidad_grupo + "\n\n" + fechaElaborada;
+            PdfPCell celdaUnidad = new PdfPCell(new Phrase(titulo_tabla, fuenteTituloTabla));
+            celdaUnidad.Rowspan = 3;
+            celdaUnidad.HorizontalAlignment = Element.ALIGN_CENTER;
+            celdaUnidad.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tabla.AddCell(celdaUnidad);
+
+            // PERSONAL (12Hs + 24Hs = 4 columnas)
+            PdfPCell celdaPersonal = new PdfPCell(new Phrase("PERSONAL", fuenteEncabezado));
+
+            celdaPersonal.Colspan = 4;
+            celdaPersonal.HorizontalAlignment = Element.ALIGN_CENTER;
+            tabla.AddCell(celdaPersonal);
+
+            // INTERNOS NORMAL (2 columnas)
+            PdfPCell celdaInternos = new PdfPCell(new Phrase("Internos\n(Normal)", fuenteEncabezado));
+            celdaInternos.Colspan = 2;
+            celdaInternos.Rowspan = 2;
+            celdaInternos.HorizontalAlignment = Element.ALIGN_CENTER;
+            celdaInternos.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tabla.AddCell(celdaInternos);
+
+            // REGIMEN DIETOTERAPICO (16 columnas)
+            PdfPCell celdaRegimen = new PdfPCell(new Phrase("Régimen DIETOTERÁPICO: Personal/Internos", fuenteEncabezado));
+            celdaRegimen.Colspan = 16;
+            celdaRegimen.HorizontalAlignment = Element.ALIGN_CENTER;
+            tabla.AddCell(celdaRegimen);
+
+            //--segunda fila encabezado
+            AgregarGrupo(tabla, "12Hs", fuenteEncabezado);
+            AgregarGrupo(tabla, "24Hs", fuenteEncabezado);
+
+            AgregarGrupo(tabla, "Dieta\nAstring.", fuenteEncabezado);
+            AgregarGrupo(tabla, "Dieta\nCelíaco", fuenteEncabezado);
+            AgregarGrupo(tabla, "Dieta Alta\nen Fibra", fuenteEncabezado);
+            AgregarGrupo(tabla, "Dieta Hepato\nProtectora", fuenteEncabezado);
+            AgregarGrupo(tabla, "Dieta\nS/Sal", fuenteEncabezado);
+            AgregarGrupo(tabla, "Dieta\nHIV/TBC", fuenteEncabezado);
+            AgregarGrupo(tabla, "Menores", fuenteEncabezado);
+            AgregarGrupo(tabla, "Sobre\nAlim.", fuenteEncabezado);
+
+
+            //--tercer fila encabezado
+
+            BaseColor colorBlanco = BaseColor.WHITE;
+
+            //color para celdas de solicitadas
+            BaseColor colorAlternado = new BaseColor(244, 220, 180); // parecido a SandyBrown
+            //color para celdas de elaboradas
+            if (tipo_planilla == "ELABORADAS")
+            {
+                colorAlternado = new BaseColor(230, 240, 255); // azul muy suave
+
+            }
+
+            for (int i = 0; i < 11; i++)
+            {
+                BaseColor color = (i % 2 == 0)
+                    ? colorBlanco
+                    : colorAlternado;
+
+                PdfPCell celdaA = new PdfPCell(new Phrase("Alm.", fuenteEncabezado));
+                celdaA.BackgroundColor = color;
+                celdaA.HorizontalAlignment = Element.ALIGN_CENTER;
+                tabla.AddCell(celdaA);
+
+                PdfPCell celdaC = new PdfPCell(new Phrase("Cena", fuenteEncabezado));
+                celdaC.BackgroundColor = color;
+                celdaC.HorizontalAlignment = Element.ALIGN_CENTER;
+                tabla.AddCell(celdaC);
+            }
+
+            //agregar celdas
+            foreach (DUnidadMenuCantidades item in listaUnidadesCantidades)
+            {
+                Font fuente = item.unidad == "Totales"
+                    ? fuenteTotales
+                    : fuenteCelda;
+
+                BaseColor colorFondo = item.unidad == "Totales"
+                    ? BaseColor.LIGHT_GRAY
+                    : BaseColor.WHITE;
+
+
+                AgregarCelda(tabla, item.unidad, fuente, item.unidad == "Totales" ? BaseColor.LIGHT_GRAY : BaseColor.WHITE,
+                    Element.ALIGN_LEFT);
+
+                // Valores numéricos
+                int[] valores =
+                {
+                    item.P12_A, item.P12_C,
+                    item.P24_A, item.P24_C,
+                    item.IntN_A, item.IntN_C,
+                    item.Astr_A, item.Astr_C,
+                    item.Celi_A, item.Celi_C,
+                    item.AFib_A, item.AFib_C,
+                    item.Hep_A, item.Hep_C,
+                    item.SSal_A, item.SSal_C,
+                    item.HivTbc_A, item.HivTbc_C,
+                    item.Men_A, item.Men_C,
+                    item.SobreAl_A, item.SobreAl_C
+                };
+
+                //color de las columnas
+                BaseColor colorAlternado2 = new BaseColor(244, 220, 180);
+
+                //color para celdas de elaboradas
+                if (tipo_planilla == "ELABORADAS")
+                {
+                    colorAlternado2 = new BaseColor(230, 240, 255); // azul muy suave
+
+                }
+
+                for (int grupo = 0; grupo < 11; grupo++)
+                {
+                    BaseColor colorGrupo = (grupo % 2 == 0)
+                        ? BaseColor.WHITE
+                        : colorAlternado2;
+
+                    // Si es la fila Totales, mantener gris
+                    if (item.unidad == "Totales")
+                        colorGrupo = BaseColor.LIGHT_GRAY;
+
+                    AgregarCelda(tabla, valores[grupo * 2].ToString(), fuente, colorGrupo);
+
+                    AgregarCelda(tabla, valores[grupo * 2 + 1].ToString(), fuente, colorGrupo);
+                }
+            }
+
+
+            //agregar tabla
+            doc.Add(tabla);
+        }
+
+        //FIN METODO AGREGAR PAGINA...................................................................
+
         //AGREGAR FILA TOTALES UNIDAD
         private static void AgregarFilaTotales(List<DUnidadMenuCantidades> lista)
         {
@@ -1855,6 +2066,55 @@ namespace CapaPresentacion.Reportes
 
         }
         // FIN AGREGAR FILA TOTALES SAP ESTADISTICO............................................................
+
+        //AGREGAR FILA TOTALES UNIDAD PARTE NOVEDADES DIARIO
+        private static void AgregarFilaTotalesUnidadParteNovedades(List<DUnidadMenuCantidades> lista)
+        {
+            // Evitar duplicar la fila Totales
+            lista.RemoveAll(x => x.unidad == "Totales");
+
+            var totales = new DUnidadMenuCantidades
+            {
+                unidad = "Totales",
+
+                P12_A = lista.Sum(x => x.P12_A),
+                P12_C = lista.Sum(x => x.P12_C),
+
+                P24_A = lista.Sum(x => x.P24_A),
+                P24_C = lista.Sum(x => x.P24_C),
+
+                IntN_A = lista.Sum(x => x.IntN_A),
+                IntN_C = lista.Sum(x => x.IntN_C),
+
+                Astr_A = lista.Sum(x => x.Astr_A),
+                Astr_C = lista.Sum(x => x.Astr_C),
+
+                Celi_A = lista.Sum(x => x.Celi_A),
+                Celi_C = lista.Sum(x => x.Celi_C),
+
+                AFib_A = lista.Sum(x => x.AFib_A),
+                AFib_C = lista.Sum(x => x.AFib_C),
+
+                Hep_A = lista.Sum(x => x.Hep_A),
+                Hep_C = lista.Sum(x => x.Hep_C),
+
+                SSal_A = lista.Sum(x => x.SSal_A),
+                SSal_C = lista.Sum(x => x.SSal_C),
+
+                HivTbc_A = lista.Sum(x => x.HivTbc_A),
+                HivTbc_C = lista.Sum(x => x.HivTbc_C),
+
+                Men_A = lista.Sum(x => x.Men_A),
+                Men_C = lista.Sum(x => x.Men_C),
+
+                SobreAl_A = lista.Sum(x => x.SobreAl_A),
+                SobreAl_C = lista.Sum(x => x.SobreAl_C),
+            };
+
+            lista.Add(totales);
+
+        }
+        // FIN AGREGAR FILA TOTALES UNIDAD PARTE NOVEDADES DIARIO............................................................
 
 
         //AGREGAR GRUPO PARA PLANILLA PARTE DIARIO
