@@ -682,6 +682,7 @@ namespace CapaPresentacion.Reportes
         }
         //FIN METODO GENERAR LISTA SAP ESTADISTICO..................................
 
+
         //METODO GENERAR LISTA UNIDAD CANTIDADES SOLICITADAS
         private static List<DUnidadMenuCantidades> GenerarListaUnidadesCantidadesSolicitadas(List<DRacionesSolicitadasDetalles> listaDetalles, List<DUnidad> listaUnidades, List<DTipoMenu> listaTipoMenu)
         {
@@ -883,6 +884,111 @@ namespace CapaPresentacion.Reportes
         }
         //FIN METODO GENERAR LISTA SAP CANTIDADES SOLICITADAS..................................
 
+
+        //METODO GENERAR LISTA SAP ESTADISTICO
+        private static List<DSapMenuCantidades> GenerarListaCantidadesParteNovedadesDiario(List<DRacionElaborada> listaElaboradas, DSap sap, List<DTipoMenu> listaTipoMenu, DateTime fechaIni, DateTime fechaFin)
+        {
+            //ordenar Listar elaboradas
+            listaElaboradas = listaElaboradas
+                .OrderBy(s => s.fecha_elaborada)
+                .ToList();
+
+            //contar valores de menus en cada sap
+            List<DSapMenuEstadistico> listaSapCantidades = new List<DSapMenuEstadistico>();
+            List<DRacionElaborada> listaFiltroElaboradaXFecha = new List<DRacionElaborada>();
+            List<DRacionElaboradaDetalles> listaFiltroDetallesXSap = new List<DRacionElaboradaDetalles>();
+
+            for (DateTime fecha = fechaIni; fecha <= fechaFin; fecha = fecha.AddDays(1))
+            {
+                DRacionElaborada racionElaborada = listaElaboradas.Where(x => x.fecha_elaborada == fecha).First();
+                List<DRacionElaboradaDetalles> listaDetallesElaboradas = racionElaborada.raciones_elaboradas_detalles.ToList();
+
+                // 🔴 NUEVA instancia en cada vuelta
+                var sapCantidades = new DSapMenuEstadistico();
+                sapCantidades.fecha = fecha.ToShortDateString();
+
+                foreach (DTipoMenu tipoMenu in listaTipoMenu)
+                {
+                    listaFiltroDetallesXSap = listaDetallesElaboradas.Where(x => x.sap_id == sap.id_sap && x.tipo_menu_id == tipoMenu.id_tipo_menu).ToList();
+
+                    int almuerzo = 0;
+                    int cena = 0;
+
+                    foreach (DRacionElaboradaDetalles detalle in listaFiltroDetallesXSap)
+                    {
+                        almuerzo = almuerzo + detalle.almuerzo;
+                        cena = cena + detalle.cena;
+                    }
+
+                    if (tipoMenu.id_tipo_menu == 1)
+                    {
+                        sapCantidades.P12_A = almuerzo;
+                        sapCantidades.P12_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 2)
+                    {
+                        sapCantidades.P24_A = almuerzo;
+                        sapCantidades.P24_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 3)
+                    {
+                        sapCantidades.IntN_A = almuerzo;
+                        sapCantidades.IntN_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 4)
+                    {
+                        sapCantidades.Astr_A = almuerzo;
+                        sapCantidades.Astr_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 5)
+                    {
+                        sapCantidades.Celi_A = almuerzo;
+                        sapCantidades.Celi_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 6)
+                    {
+                        sapCantidades.AFib_A = almuerzo;
+                        sapCantidades.AFib_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 7)
+                    {
+                        sapCantidades.Hep_A = almuerzo;
+                        sapCantidades.Hep_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 8)
+                    {
+                        sapCantidades.SSal_A = almuerzo;
+                        sapCantidades.SSal_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 9)
+                    {
+                        sapCantidades.HivTbc_A = almuerzo;
+                        sapCantidades.HivTbc_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 10)
+                    {
+                        sapCantidades.Men_A = almuerzo;
+                        sapCantidades.Men_C = cena;
+                    }
+                    if (tipoMenu.id_tipo_menu == 11)
+                    {
+                        sapCantidades.SobreAl_A = almuerzo;
+                        sapCantidades.SobreAl_C = cena;
+                    }
+
+                }
+
+                listaSapCantidades.Add(sapCantidades);
+            }
+
+            //fin contar valores de menus en cada sap
+
+            AgregarFilaTotalesSapEstadistico(listaSapCantidades);
+
+
+            return listaSapCantidades;
+        }
+        //FIN METODO GENERAR LISTA SAP ESTADISTICO..................................
 
 
         //METODO AGREGAR PAGINA - tipo_planilla = SOLICITADAS o ELABORADAS
