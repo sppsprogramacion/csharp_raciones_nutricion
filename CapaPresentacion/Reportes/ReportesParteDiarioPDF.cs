@@ -232,17 +232,19 @@ namespace CapaPresentacion.Reportes
                 //GENERAR paginas de solicitadas: unidad y sap
                 DRacionSolicitada racionSolicitada = listaRacionSolicitadas.Where(x => x.fecha_solicitada == fecha).First();
                 List<DRacionesSolicitadasDetalles> listaDetallesSolicitada = racionSolicitada.raciones_solicitadas_detalles.ToList();
+                List<DObservacionSolicitada> listaObservacionesSolicitadas = racionSolicitada.observaciones_solicitada.ToList();
+
 
                 List<DUnidadMenuCantidades> listaUnidadesCantidadesSolicitadas = new List<DUnidadMenuCantidades>();
                 List<DSapMenuCantidades> listaSapCantidadesSolicitadas = new List<DSapMenuCantidades>();
                 listaUnidadesCantidadesSolicitadas = GenerarListaUnidadesCantidadesSolicitadas(listaDetallesSolicitada, listaUnidades, listaTipoMenu);
                 listaSapCantidadesSolicitadas = GenerarListaSapCantidadesSolicitadas(listaDetallesSolicitada, listaSap, listaTipoMenu);
-                //agregar una pagina al documento : Elaborada unidades
-                AgregarPagina(doc, listaUnidadesCantidadesSolicitadas, null, racionSolicitada.fecha_solicitada, "SOLICITADAS", "Unidades\nCarcelarias");
+                //agregar una pagina al documento : Solicitadas unidades
+                AgregarPagina(doc, listaUnidadesCantidadesSolicitadas, null, null, null, racionSolicitada.fecha_solicitada, "SOLICITADAS", "Unidades\nCarcelarias");
                 // --------------------------------- Nueva página ----------------------------------------------
                 doc.NewPage();
-                //agregar una pagina al documento : Elaborada sap
-                AgregarPagina(doc, null, listaSapCantidadesSolicitadas, racionSolicitada.fecha_solicitada, "SOLICITADAS", "Servicios de\nAlimentación");
+                //agregar una pagina al documento : Solicitas sap
+                AgregarPagina(doc, null, listaSapCantidadesSolicitadas, null, listaObservacionesSolicitadas,  racionSolicitada.fecha_solicitada, "SOLICITADAS", "Servicios de\nAlimentación");
                 // --------------------------------- Nueva página ----------------------------------------------
                 doc.NewPage();
 
@@ -250,6 +252,7 @@ namespace CapaPresentacion.Reportes
                 //GENERAR paginas de elaboradas: unidad y sap
                 DRacionElaborada racionElaborada = listaRacionElaboradas.Where(x => x.fecha_elaborada == fecha).First();
                 List<DRacionElaboradaDetalles> listaDetallesElaboradas = racionElaborada.raciones_elaboradas_detalles.ToList();
+                List<DObservacionElaborada> listaObservacionesElaboradas = racionElaborada.observaciones_elaborada.ToList();
 
                 List<DUnidadMenuCantidades> listaUnidadesCantidades = new List<DUnidadMenuCantidades>();
                 List<DSapMenuCantidades> listaSapCantidades = new List<DSapMenuCantidades>();
@@ -257,11 +260,11 @@ namespace CapaPresentacion.Reportes
                 listaUnidadesCantidades = GenerarListaUnidadesCantidadesElaboradas(listaDetallesElaboradas, listaUnidades, listaTipoMenu);
                 listaSapCantidades = GenerarListaSapCantidadesElaboradas(listaDetallesElaboradas, listaSap, listaTipoMenu);
                 //agregar una pagina al documento : Elaborada unidades
-                AgregarPagina(doc, listaUnidadesCantidades, null, racionElaborada.fecha_elaborada, "ELABORADAS", "Unidades\nCarcelarias");
+                AgregarPagina(doc, listaUnidadesCantidades, null, null, null, racionElaborada.fecha_elaborada, "ELABORADAS", "Unidades\nCarcelarias");
                 // --------------------------------- Nueva página ----------------------------------------------
                 doc.NewPage();
                 //agregar una pagina al documento : Elaborada sap
-                AgregarPagina(doc, null, listaSapCantidades, racionElaborada.fecha_elaborada, "ELABORADAS", "Servicios de\nAlimentación");
+                AgregarPagina(doc, null, listaSapCantidades, listaObservacionesElaboradas, null, racionElaborada.fecha_elaborada, "ELABORADAS", "Servicios de\nAlimentación");
                 // --------------------------------- Nueva página ----------------------------------------------
                 doc.NewPage();
 
@@ -1031,7 +1034,7 @@ namespace CapaPresentacion.Reportes
 
 
         //METODO AGREGAR PAGINA - tipo_planilla = SOLICITADAS o ELABORADAS
-        private static void AgregarPagina(Document doc, List<DUnidadMenuCantidades> listaUnidadesCantidades, List<DSapMenuCantidades> listaSapsCantidades, DateTime fecha, string tipo_planilla, string titulo_tabla)
+        private static void AgregarPagina(Document doc, List<DUnidadMenuCantidades> listaUnidadesCantidades, List<DSapMenuCantidades> listaSapsCantidades, List<DObservacionElaborada> listaObservacionesElaboradas, List<DObservacionSolicitada> listaObservacionesSolicitadas, DateTime fecha, string tipo_planilla, string titulo_tabla)
         {
 
             // Fuentes
@@ -1041,6 +1044,7 @@ namespace CapaPresentacion.Reportes
             Font fuenteEncabezado = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
             Font fuenteCelda = FontFactory.GetFont(FontFactory.TIMES, 9);
             Font fuenteTotales = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
+            Font fuenteObservaciones = FontFactory.GetFont(FontFactory.TIMES, 10);
 
             // Encabezado
             PdfPTable tablaEncabezado = new PdfPTable(2);
@@ -1290,11 +1294,81 @@ namespace CapaPresentacion.Reportes
             //agregar tabla
             doc.Add(tabla);
 
-            //doc.Close();
+            //agregar observaciones: luego de tabla sap solicitadas
+            if (listaUnidadesCantidades == null && tipo_planilla == "SOLICITADAS")
+            {
+                //string todasObservaciones = "";
+                //foreach (DObservacionSolicitada observacion in listaObservacionesSolicitadas)
+                //{
+                //    todasObservaciones = todasObservaciones + "\nObs: " + observacion.observacion.ToString();
 
-            //ms.Position = 0;
+                //}
+                //doc.Add(new Paragraph(todasObservaciones, fuenteObservaciones));
 
-            //return ms;
+                // 1. Crear las dos fuentes que necesitas (basadas en tu fuente original)
+                // Cambia 'fuenteObservaciones.Size' si tu variable tiene otro nombre para el tamaño
+                Font fuenteNegrita = new Font(fuenteObservaciones.BaseFont, fuenteObservaciones.Size, Font.BOLD, fuenteObservaciones.Color);
+                Font fuenteNormal = fuenteObservaciones; // Mantiene tu fuente original para el texto
+
+                // 2. Crear un único párrafo contenedor
+                Paragraph parrafoContenedor = new Paragraph();
+
+                foreach (DObservacionSolicitada observacion in listaObservacionesSolicitadas)
+                {
+                    // 3. Si no es la primera observación, agregar un salto de línea físico antes de la nueva
+                    if (parrafoContenedor.Chunks.Count > 0)
+                    {
+                        parrafoContenedor.Add(new Chunk("\n", fuenteNormal));
+                    }
+
+                    // 4. Agregar "Obs: " con la fuente en negrita (se queda en la misma línea)
+                    parrafoContenedor.Add(new Chunk("Obs: ", fuenteNegrita));
+
+                    // 5. Agregar el texto de la observación con la fuente normal (en la misma línea)
+                    parrafoContenedor.Add(new Chunk(observacion.observacion.ToString(), fuenteNormal));
+                }
+
+                // 6. Agregar el párrafo completo al documento de una sola vez
+                doc.Add(parrafoContenedor);
+            }
+
+            //agregar observaciones: luego de tabla sap elaboradas
+            if (listaUnidadesCantidades == null && tipo_planilla == "ELABORADAS")
+            {
+                //string todasObservaciones = "";
+                //foreach(DObservacionElaborada observacion in listaObservacionesElaboradas)
+                //{
+                //    todasObservaciones = todasObservaciones + "\nObs: " + observacion.observacion.ToString();
+
+                //}
+                //doc.Add(new Paragraph("Obs: " + todasObservaciones, fuenteObservaciones));
+
+                // 1. Crear las dos fuentes que necesitas (basadas en tu fuente original)
+                // Cambia 'fuenteObservaciones.Size' si tu variable tiene otro nombre para el tamaño
+                Font fuenteNegrita = new Font(fuenteObservaciones.BaseFont, fuenteObservaciones.Size, Font.BOLD, fuenteObservaciones.Color);
+                Font fuenteNormal = fuenteObservaciones; // Mantiene tu fuente original para el texto
+
+                // 2. Crear un único párrafo contenedor
+                Paragraph parrafoContenedor = new Paragraph();
+
+                foreach (DObservacionElaborada observacion in listaObservacionesElaboradas)
+                {
+                    // 3. Si no es la primera observación, agregar un salto de línea físico antes de la nueva
+                    if (parrafoContenedor.Chunks.Count > 0)
+                    {
+                        parrafoContenedor.Add(new Chunk("\n", fuenteNormal));
+                    }
+
+                    // 4. Agregar "Obs: " con la fuente en negrita (se queda en la misma línea)
+                    parrafoContenedor.Add(new Chunk("Obs: ", fuenteNegrita));
+
+                    // 5. Agregar el texto de la observación con la fuente normal (en la misma línea)
+                    parrafoContenedor.Add(new Chunk(observacion.observacion.ToString(), fuenteNormal));
+                }
+
+                // 6. Agregar el párrafo completo al documento de una sola vez
+                doc.Add(parrafoContenedor);
+            }
         }
 
         //FIN METODO AGREGAR PAGINA...................................................................

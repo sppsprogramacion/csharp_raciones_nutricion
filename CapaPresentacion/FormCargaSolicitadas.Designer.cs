@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label5 = new System.Windows.Forms.Label();
             this.cmbUnidades = new System.Windows.Forms.ComboBox();
             this.dtgSapMenus = new System.Windows.Forms.DataGridView();
@@ -99,8 +99,8 @@
             this.dtgUnidadesCantidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgUnidadesCantidades.Location = new System.Drawing.Point(11, 324);
             this.dtgUnidadesCantidades.Name = "dtgUnidadesCantidades";
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtgUnidadesCantidades.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtgUnidadesCantidades.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dtgUnidadesCantidades.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgUnidadesCantidades.Size = new System.Drawing.Size(1231, 378);
             this.dtgUnidadesCantidades.TabIndex = 84;
@@ -240,7 +240,7 @@
             this.btnNuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNuevo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNuevo.ForeColor = System.Drawing.Color.Indigo;
-            this.btnNuevo.Location = new System.Drawing.Point(404, 51);
+            this.btnNuevo.Location = new System.Drawing.Point(404, 58);
             this.btnNuevo.Name = "btnNuevo";
             this.btnNuevo.Size = new System.Drawing.Size(85, 28);
             this.btnNuevo.TabIndex = 102;
@@ -363,7 +363,7 @@
             this.GuardarEditarEncabezado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.GuardarEditarEncabezado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GuardarEditarEncabezado.ForeColor = System.Drawing.Color.Green;
-            this.GuardarEditarEncabezado.Location = new System.Drawing.Point(404, 118);
+            this.GuardarEditarEncabezado.Location = new System.Drawing.Point(404, 125);
             this.GuardarEditarEncabezado.Name = "GuardarEditarEncabezado";
             this.GuardarEditarEncabezado.Size = new System.Drawing.Size(85, 28);
             this.GuardarEditarEncabezado.TabIndex = 148;
@@ -378,7 +378,7 @@
             this.btnEditarEncabezado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditarEncabezado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEditarEncabezado.ForeColor = System.Drawing.Color.Indigo;
-            this.btnEditarEncabezado.Location = new System.Drawing.Point(404, 84);
+            this.btnEditarEncabezado.Location = new System.Drawing.Point(404, 91);
             this.btnEditarEncabezado.Name = "btnEditarEncabezado";
             this.btnEditarEncabezado.Size = new System.Drawing.Size(85, 28);
             this.btnEditarEncabezado.TabIndex = 147;
@@ -393,11 +393,11 @@
             this.btnEliminarRacionesCargadas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminarRacionesCargadas.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminarRacionesCargadas.ForeColor = System.Drawing.Color.Red;
-            this.btnEliminarRacionesCargadas.Location = new System.Drawing.Point(311, 166);
+            this.btnEliminarRacionesCargadas.Location = new System.Drawing.Point(458, 293);
             this.btnEliminarRacionesCargadas.Name = "btnEliminarRacionesCargadas";
-            this.btnEliminarRacionesCargadas.Size = new System.Drawing.Size(85, 28);
+            this.btnEliminarRacionesCargadas.Size = new System.Drawing.Size(196, 28);
             this.btnEliminarRacionesCargadas.TabIndex = 149;
-            this.btnEliminarRacionesCargadas.Text = "Eliminar";
+            this.btnEliminarRacionesCargadas.Text = "Eliminar raciones cargadas";
             this.btnEliminarRacionesCargadas.UseVisualStyleBackColor = false;
             this.btnEliminarRacionesCargadas.Click += new System.EventHandler(this.btnEliminarRacionesCargadas_Click);
             // 
@@ -409,7 +409,7 @@
             this.btnCancelarEditarEncabezado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancelarEditarEncabezado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelarEditarEncabezado.ForeColor = System.Drawing.Color.Orange;
-            this.btnCancelarEditarEncabezado.Location = new System.Drawing.Point(404, 150);
+            this.btnCancelarEditarEncabezado.Location = new System.Drawing.Point(404, 157);
             this.btnCancelarEditarEncabezado.Name = "btnCancelarEditarEncabezado";
             this.btnCancelarEditarEncabezado.Size = new System.Drawing.Size(85, 28);
             this.btnCancelarEditarEncabezado.TabIndex = 150;

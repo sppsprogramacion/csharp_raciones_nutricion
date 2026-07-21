@@ -161,6 +161,8 @@ namespace DAOImplement
                      .Include(x => x.raciones_elaboradas_detalles.Select(d => d.tipo_menu.menu))
                      .Include(x => x.raciones_elaboradas_detalles.Select(d => d.sap))
                      .Include(x => x.raciones_elaboradas_detalles.Select(d => d.unidad))
+                     .Include(s => s.observaciones_elaborada)
+                     .Include(t => t.observaciones_elaborada.Select(d => d.usuario))
                      .Where(s => s.fecha_elaborada >= fechaInicioX && s.fecha_elaborada <= fechaFinX)
                      .OrderByDescending(s => s.fecha_elaborada)   // Orden ascendente
                      .ToList();
