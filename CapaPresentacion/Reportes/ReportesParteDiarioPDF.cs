@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using CapaNegocio;
 using System.Runtime.CompilerServices;
 using DocumentFormat.OpenXml.Bibliography;
+using System.Windows.Forms;
 
 namespace CapaPresentacion.Reportes
 {
@@ -211,7 +212,7 @@ namespace CapaPresentacion.Reportes
         //FIN PLANILLA PARTE DIARIO
 
         // PARTE DIARIO NUEVO
-        public static MemoryStream RepPdfParteDiario(List<DRacionElaborada> listaRacionElaboradas, List<DRacionSolicitada> listaRacionSolicitadas, List<DUnidad> listaUnidades, List<DSap> listaSap, List<DTipoMenu> listaTipoMenu,  string fechaInicio, string fechaFin)
+        public static MemoryStream RepPdfParteDiario(List<DRacionElaborada> listaRacionElaboradas, List<DRacionSolicitada> listaRacionSolicitadas, List<DUnidad> listaUnidades, List<DSap> listaSap, List<DTipoMenu> listaTipoMenu,List<DObservacionGeneral> listaObservacionesGenerales, string fechaInicio, string fechaFin)
         {
             MemoryStream ms = new MemoryStream();
 
@@ -222,10 +223,15 @@ namespace CapaPresentacion.Reportes
 
             doc.Open();
 
-
             DateTime inicio = Convert.ToDateTime(fechaInicio);
             DateTime fin = Convert.ToDateTime(fechaFin);
 
+            //AGREGAR OBSERVACIONES GENERALES 
+            AgregarPaginaObsGeneralesParteDiario(doc, listaObservacionesGenerales, inicio, fin );
+            // --------------------------------- Nueva página ----------------------------------------------
+            doc.NewPage();
+
+            //INICIO DE CREACION DE PAGINAS DE RACIONES CARGADAS
             for (DateTime fecha = inicio; fecha <= fin; fecha = fecha.AddDays(1))
             {
 
@@ -1033,6 +1039,64 @@ namespace CapaPresentacion.Reportes
         //FIN METODO GENERAR LISTA UNIDADES PARTE NOVEDADES..................................
 
 
+        //METODO AGREGAR PAGINA OBSERVACIONES GENERALES PARTE DIARIO
+        private static void AgregarPaginaObsGeneralesParteDiario(Document doc, List<DObservacionGeneral> listaObservacionesGenerales, DateTime fechaInicio, DateTime fechaFin)
+        {
+            // Fuentes
+            Font fuenteLogo = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
+            Font fuenteTitulo = FontFactory.GetFont(FontFactory.TIMES_BOLD, 11);            
+            Font fuenteObservaciones = FontFactory.GetFont(FontFactory.TIMES, 10);
+
+            // Encabezado
+            PdfPTable tablaEncabezado = new PdfPTable(2);
+            tablaEncabezado.WidthPercentage = 100;
+            tablaEncabezado.SetWidths(new float[] { 30f, 70f });
+
+            PdfPCell celdaIzq = new PdfPCell(new Phrase("SERVICIO PENITENCIARIO DE LA\nPROVINCIA DE SALTA\nDiv. Nutrición", fuenteLogo));
+
+            celdaIzq.Border = Rectangle.NO_BORDER;
+            celdaIzq.HorizontalAlignment = Element.ALIGN_CENTER;
+
+            tablaEncabezado.AddCell(celdaIzq);
+
+            doc.Add(tablaEncabezado);
+
+            Paragraph titulo = new Paragraph("Observaciones generales de Rendicion desde " + fechaInicio.ToString("dddd d 'de' MMMM 'de' yyyy") + " hasta " + fechaFin.ToString("dddd d 'de' MMMM 'de' yyyy"), fuenteTitulo);
+
+            titulo.Alignment = Element.ALIGN_CENTER;
+
+            doc.Add(titulo);
+
+            doc.Add(new Paragraph(" "));
+
+            //OBSERVACIONES
+            Font fuenteNegrita = new Font(fuenteObservaciones.BaseFont, fuenteObservaciones.Size, Font.BOLD, fuenteObservaciones.Color);
+            Font fuenteNormal = fuenteObservaciones; // Mantiene tu fuente original para el texto
+
+            // 2. Crear un único párrafo contenedor
+            Paragraph parrafoContenedor = new Paragraph();
+
+            foreach (DObservacionGeneral observacion in listaObservacionesGenerales)
+            {
+                // 3. Si no es la primera observación, agregar un salto de línea físico antes de la nueva
+                if (parrafoContenedor.Chunks.Count > 0)
+                {
+                    parrafoContenedor.Add(new Chunk("\n", fuenteNormal));
+                }
+
+                // 4. Agregar "Obs: " con la fuente en negrita (se queda en la misma línea)
+                parrafoContenedor.Add(new Chunk("Obs: ", fuenteNegrita));
+
+                // 5. Agregar el texto de la observación con la fuente normal (en la misma línea)
+                parrafoContenedor.Add(new Chunk(observacion.observacion.ToString(), fuenteNormal));
+            }
+
+            // 6. Agregar el párrafo completo al documento de una sola vez
+            doc.Add(parrafoContenedor);
+            
+        }
+        //FIN METODO AGREGAR PAGINA OBSERVACIONES GENERALES...................................................................
+
         //METODO AGREGAR PAGINA - tipo_planilla = SOLICITADAS o ELABORADAS
         private static void AgregarPagina(Document doc, List<DUnidadMenuCantidades> listaUnidadesCantidades, List<DSapMenuCantidades> listaSapsCantidades, List<DObservacionElaborada> listaObservacionesElaboradas, List<DObservacionSolicitada> listaObservacionesSolicitadas, DateTime fecha, string tipo_planilla, string titulo_tabla)
         {
@@ -1372,6 +1436,8 @@ namespace CapaPresentacion.Reportes
         }
 
         //FIN METODO AGREGAR PAGINA...................................................................
+
+
 
         //METODO AGREGAR PAGINA - tipo_planilla = SOLICITADAS o ELABORADAS
         private static void AgregarPaginaSapCantidades(Document doc, PdfWriter writer,  List<DRacionElaboradaDetalles> listaElaboradasDetalles, DateTime fecha, List<DSap> listaSap, List<DTipoMenu> listaTipoMenu)

@@ -364,11 +364,25 @@ namespace CapaPresentacion
                 .ToList();
             //fin Listar TipoMenu
 
+            //Listar OBSERVACIONES
+            NObservaciones nObservaciones = new NObservaciones();
+            (List<DObservacionGeneral> listaObservacionesGenerales, string errorResponseObservaciones) = nObservaciones.ListarTodosGeneral();
+
+            if (errorResponseObservaciones != null)
+            {
+                MessageBox.Show(errorResponseObservaciones, "Nutricion: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            listaObservacionesGenerales = listaObservacionesGenerales
+                .OrderBy(s => s.id_observacion_general)
+                .ToList();
+            //fin Listar OBSERVACIONES
 
             // Generar PDF en memoria
             MemoryStream msOriginal = null;
 
-            msOriginal = ReportesParteDiarioPDF.RepPdfParteDiario(listaRacionElaboradas, listaRacionSolicitada, listaUnidades, listaSap, listaTipoMenu, dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"));
+            msOriginal = ReportesParteDiarioPDF.RepPdfParteDiario(listaRacionElaboradas, listaRacionSolicitada, listaUnidades, listaSap, listaTipoMenu, listaObservacionesGenerales, dtpFechaInicio.Value.ToString("yyyy-MM-dd"), dtpFechaFin.Value.ToString("yyyy-MM-dd"));
 
             // Clonar el stream para que PdfiumViewer pueda cerrarlo sin afectar el original
             MemoryStream ms = new MemoryStream(msOriginal.ToArray());
