@@ -13,7 +13,6 @@ namespace DAO
         void InsertarUno(DRacionElaboradaDetalles racionElaborada);
         void Editar(DRacionElaboradaDetalles racionElaborada);
         DRacionElaboradaDetalles ObtenerPorId(int id);
-
         (List<DRacionElaboradaDetalles> lista, string error) ListaXIdRacionELaborada(int idRacionElaborada);
         (List<DRacionElaboradaDetalles> lista, string error) ListaXIdRacionELaboradaXUnidad(int idRacionElaborada, int idUnidad);
         (List<DRacionElaboradaDetalles> lista, string error) ListaXFechaRacionElaborada(string fechaInicio, string fechaFin);

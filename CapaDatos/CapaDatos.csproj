@@ -108,6 +108,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DAnexo.cs" />
+    <Compile Include="DAnexoDetalle.cs" />
+    <Compile Include="DAnexoMenu.cs" />
+    <Compile Include="DAnexoMenuTipo.cs" />
+    <Compile Include="DAnexoObservacion.cs" />
     <Compile Include="DFactores.cs" />
     <Compile Include="DLogin.cs" />
     <Compile Include="DMenu.cs" />

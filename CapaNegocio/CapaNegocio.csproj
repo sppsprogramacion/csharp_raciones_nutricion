@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NAnexo.cs" />
+    <Compile Include="NAnexoDetalles.cs" />
+    <Compile Include="NAnexoMenu.cs" />
+    <Compile Include="NAnexoMenuTipo.cs" />
     <Compile Include="NAuth.cs" />
     <Compile Include="NMenu.cs" />
     <Compile Include="NObservaciones.cs" />

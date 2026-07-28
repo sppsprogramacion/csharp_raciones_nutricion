@@ -137,6 +137,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnexoNuevo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AnexoNuevo.Designer.cs">
+      <DependentUpon>AnexoNuevo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormAnexos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAnexos.Designer.cs">
+      <DependentUpon>FormAnexos.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormCargarElaboradasCantidadesSap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -250,6 +262,12 @@
     <Compile Include="Validaciones\Usuarios\ValidacionesUsuarios\UsuarioEditarContraseniaValidator.cs" />
     <Compile Include="Validaciones\Usuarios\ValidacionesUsuarios\UsuarioEditarValidator.cs" />
     <Compile Include="Validaciones\Usuarios\ValidacionesUsuarios\UsuarioNuevoValidator.cs" />
+    <EmbeddedResource Include="AnexoNuevo.resx">
+      <DependentUpon>AnexoNuevo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAnexos.resx">
+      <DependentUpon>FormAnexos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormCargarElaboradas.resx">
       <DependentUpon>FormCargarElaboradas.cs</DependentUpon>
     </EmbeddedResource>

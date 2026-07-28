@@ -106,6 +106,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnexoDaoImplement.cs" />
+    <Compile Include="AnexoDetallesDaoImplement.cs" />
+    <Compile Include="AnexoMenuDaoImplement.cs" />
+    <Compile Include="AnexoMenuTipoDaoImplement.cs" />
     <Compile Include="AuthDaoImpl.cs" />
     <Compile Include="ErrorHelper.cs" />
     <Compile Include="MenuDaoImplement.cs" />

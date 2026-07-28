@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAnexoDAO.cs" />
+    <Compile Include="IAnexoDetallesDAO.cs" />
+    <Compile Include="IAnexoMenuDAO.cs" />
+    <Compile Include="IAnexoMenuTipoDAO.cs" />
     <Compile Include="IAuthDao.cs" />
     <Compile Include="IMenuDao.cs" />
     <Compile Include="IObservacionElaboradaDAO.cs" />
