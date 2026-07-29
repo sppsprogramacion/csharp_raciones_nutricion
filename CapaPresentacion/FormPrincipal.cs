@@ -68,5 +68,11 @@ namespace CapaPresentacion
             FormConsultas formConsultas = new FormConsultas();
             formConsultas.ShowDialog();
         }
+
+        private void btnAnexos_Click(object sender, EventArgs e)
+        {
+            FormAnexos formAnexos = new FormAnexos();
+            formAnexos.ShowDialog();
+        }
     }
 }

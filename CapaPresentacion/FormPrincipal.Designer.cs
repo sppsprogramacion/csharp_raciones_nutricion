@@ -156,6 +156,7 @@
             this.btnAnexos.TabIndex = 21;
             this.btnAnexos.Text = "ANEXOS";
             this.btnAnexos.UseVisualStyleBackColor = false;
+            this.btnAnexos.Click += new System.EventHandler(this.btnAnexos_Click);
             // 
             // FormPrincipal
             // 

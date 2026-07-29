@@ -1,6 +1,6 @@
 ﻿namespace CapaPresentacion
 {
-    partial class AnexoNuevo
+    partial class FormAnexosNuevo
     {
         /// <summary>
         /// Required designer variable.
