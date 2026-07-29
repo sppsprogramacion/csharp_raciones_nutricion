@@ -42,7 +42,7 @@
             // 
             this.dtpFechaInicio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpFechaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaInicio.Location = new System.Drawing.Point(12, 28);
+            this.dtpFechaInicio.Location = new System.Drawing.Point(12, 27);
             this.dtpFechaInicio.Name = "dtpFechaInicio";
             this.dtpFechaInicio.Size = new System.Drawing.Size(118, 21);
             this.dtpFechaInicio.TabIndex = 130;
@@ -51,7 +51,7 @@
             // 
             this.label34.AutoSize = true;
             this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label34.Location = new System.Drawing.Point(10, 9);
+            this.label34.Location = new System.Drawing.Point(10, 8);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(87, 15);
             this.label34.TabIndex = 131;
@@ -60,18 +60,18 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 53);
+            this.label3.Location = new System.Drawing.Point(11, 54);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(62, 13);
+            this.label3.Size = new System.Drawing.Size(80, 13);
             this.label3.TabIndex = 129;
-            this.label3.Text = "DETALLES";
+            this.label3.Text = "DESCRIPCION";
             // 
             // txtDescripcion
             // 
-            this.txtDescripcion.Location = new System.Drawing.Point(13, 68);
+            this.txtDescripcion.Location = new System.Drawing.Point(13, 69);
             this.txtDescripcion.Multiline = true;
             this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(609, 99);
+            this.txtDescripcion.Size = new System.Drawing.Size(375, 95);
             this.txtDescripcion.TabIndex = 124;
             // 
             // btnGuardar
@@ -81,12 +81,13 @@
             this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuardar.ForeColor = System.Drawing.Color.Green;
-            this.btnGuardar.Location = new System.Drawing.Point(686, 67);
+            this.btnGuardar.Location = new System.Drawing.Point(404, 68);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(98, 40);
             this.btnGuardar.TabIndex = 125;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = false;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // btnCancelar
             // 
@@ -95,7 +96,7 @@
             this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelar.ForeColor = System.Drawing.Color.DarkOrange;
-            this.btnCancelar.Location = new System.Drawing.Point(687, 110);
+            this.btnCancelar.Location = new System.Drawing.Point(405, 111);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(98, 40);
             this.btnCancelar.TabIndex = 126;
@@ -105,17 +106,19 @@
             // dtgAnexos
             // 
             this.dtgAnexos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgAnexos.Location = new System.Drawing.Point(8, 188);
+            this.dtgAnexos.Location = new System.Drawing.Point(12, 188);
             this.dtgAnexos.Name = "dtgAnexos";
             this.dtgAnexos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dtgAnexos.Size = new System.Drawing.Size(776, 203);
+            this.dtgAnexos.Size = new System.Drawing.Size(614, 203);
             this.dtgAnexos.TabIndex = 127;
+            this.dtgAnexos.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dtgAnexos_KeyDown);
             // 
-            // AnexoNuevo
+            // FormAnexosNuevo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 426);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(738, 426);
             this.Controls.Add(this.dtpFechaInicio);
             this.Controls.Add(this.label34);
             this.Controls.Add(this.label3);
@@ -123,8 +126,10 @@
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.dtgAnexos);
-            this.Name = "AnexoNuevo";
+            this.Name = "FormAnexosNuevo";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NUEVO ANEXO";
+            this.Load += new System.EventHandler(this.FormAnexosNuevo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgAnexos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

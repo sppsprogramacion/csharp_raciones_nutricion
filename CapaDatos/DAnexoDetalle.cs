@@ -19,9 +19,9 @@ namespace CapaDatos
 
         [Required]
         public int anexo_menu_id { get; set; }        
+        public string detalle { get; set; }
         public int cantidad { get; set; }
         public decimal factor { get; set; }
-        public string detalle { get; set; }
         public DateTime? fecha_carga { get; set; }
         public TimeSpan? hora_carga { get; set; }
 

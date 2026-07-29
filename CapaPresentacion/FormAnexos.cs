@@ -15,6 +15,7 @@ namespace CapaPresentacion
 {
     public partial class FormAnexos : Form
     {
+        
         public FormAnexos()
         {
             InitializeComponent();
@@ -41,5 +42,108 @@ namespace CapaPresentacion
             cmbMenus.DataSource = listaMenus;
             //fin cargar menus
         }
+
+        private void btnNuevo_Click(object sender, EventArgs e)
+        {
+            using (FormAnexosNuevo formulario = new FormAnexosNuevo())
+            {
+                // Aquí se abre el FormularioB
+                if (formulario.ShowDialog() == DialogResult.OK)
+                {
+                    // Recién después de cerrar FormularioB, puedo leer el dato
+                    txtIdAnexo.Text = formulario.IdAnexo;
+                    dtpFechaInicio.Text = formulario.FechaInicio;
+                    txtDescripcion.Text = formulario.Descripcion;
+                    txtFechaCarga.Text = formulario.FechaCarga;
+                }
+            }
+        }
+
+        private void btnGuardarCantidad_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var nAnexoDetalles = new NAnexoDetalles();
+
+                var anexoDetalle = new DAnexoDetalle
+                {
+                    anexo_id = Convert.ToInt32(txtIdAnexo.Text),
+                    anexo_menu_id = Convert.ToInt32(cmbMenus.SelectedValue.ToString()),
+                    detalle = txtDetalle.Text,
+                    cantidad = Convert.ToInt32(txtCantidad.Text),
+                    factor = Convert.ToDecimal(txtFactor.Text),
+                    usuario_id = 1
+                };
+
+                nAnexoDetalles.InsertarUnDetalle(anexoDetalle);
+                MessageBox.Show("Creado correctamente", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                this.CargarDataAnexosDetalles();
+
+                //this.LimpiarControles();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+
+        private void btnActualizarAnexo_Click(object sender, EventArgs e)
+        {
+            this.CargarDataAnexosDetalles();
+        }
+
+
+
+        //METODO PARA OBTENER LA LISTA DE ANEXOS
+        private void CargarDataAnexosDetalles()
+        {
+            if (string.IsNullOrEmpty(txtIdAnexo.Text))
+            {
+                MessageBox.Show("No hay un anexo seleccionado", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var nAnexosDetalles = new NAnexoDetalles();
+
+            var (listaDetallesResponse, error) = nAnexosDetalles.ListarXIdAnexo(Convert.ToInt32(txtIdAnexo.Text));
+
+
+            if (error != null)
+            {
+                MessageBox.Show(error, "Nutricion: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var datosfiltrados = listaDetallesResponse
+                .Select(c => new
+                {
+                    Id = c.id_anexo_detalle,
+                    Menu = c.anexo_menu.menu,
+                    Detalle = c.detalle,
+                    Cantidad = c.cantidad,
+                    Factor = c.factor,
+                    Racion = c.cantidad * c.factor
+
+                })
+                .ToList();
+
+            dtgAnexoDetalles.DataSource = datosfiltrados;
+
+            if (listaDetallesResponse.Count == 0)
+            {
+                MessageBox.Show("No se encontraron registros", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            else
+            {
+                dtgAnexoDetalles.Columns[1].Width = 180;
+                dtgAnexoDetalles.Columns[2].Width = 120;
+            }
+        }
+
+        //FIN METODO PARA OBTENER LA LISTA DE ANEXOS..............................................
+
     }
 }

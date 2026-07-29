@@ -112,6 +112,8 @@ namespace DAOImplement
                 {
                     lista = db.RacionesElaboradas
                      .Include(s => s.usuario)
+                     .Include(s => s.raciones_elaboradas_detalles)
+                     .Include(s => s.observaciones_elaborada)
                      .OrderByDescending(s => s.fecha_elaborada)   // Orden ascendente
                      .ToList();
 

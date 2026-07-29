@@ -41,7 +41,7 @@
             this.txtFechaCarga = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.txtIdRacionElaborada = new System.Windows.Forms.TextBox();
+            this.txtIdAnexo = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -54,8 +54,8 @@
             this.txtFactor = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtDetalle = new System.Windows.Forms.TextBox();
-            this.GuardarEditarEncabezado = new System.Windows.Forms.Button();
-            this.btnCancelarEditarEncabezado = new System.Windows.Forms.Button();
+            this.btnGuardarCantidad = new System.Windows.Forms.Button();
+            this.btnCancelarGuardarCantidad = new System.Windows.Forms.Button();
             this.gboxCargaDetalle = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dtgAnexoDetalles)).BeginInit();
             this.gboxCargaDetalle.SuspendLayout();
@@ -140,6 +140,7 @@
             this.btnActualizarAnexo.TabIndex = 172;
             this.btnActualizarAnexo.Text = "Actualizar";
             this.btnActualizarAnexo.UseVisualStyleBackColor = false;
+            this.btnActualizarAnexo.Click += new System.EventHandler(this.btnActualizarAnexo_Click);
             // 
             // btnBuscar
             // 
@@ -168,6 +169,7 @@
             this.btnNuevo.TabIndex = 170;
             this.btnNuevo.Text = "Nuevo";
             this.btnNuevo.UseVisualStyleBackColor = false;
+            this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
             // 
             // label6
             // 
@@ -205,14 +207,14 @@
             this.label11.TabIndex = 166;
             this.label11.Text = "ID ANEXO:";
             // 
-            // txtIdRacionElaborada
+            // txtIdAnexo
             // 
-            this.txtIdRacionElaborada.Enabled = false;
-            this.txtIdRacionElaborada.Location = new System.Drawing.Point(10, 21);
-            this.txtIdRacionElaborada.Name = "txtIdRacionElaborada";
-            this.txtIdRacionElaborada.ReadOnly = true;
-            this.txtIdRacionElaborada.Size = new System.Drawing.Size(108, 20);
-            this.txtIdRacionElaborada.TabIndex = 161;
+            this.txtIdAnexo.Enabled = false;
+            this.txtIdAnexo.Location = new System.Drawing.Point(10, 21);
+            this.txtIdAnexo.Name = "txtIdAnexo";
+            this.txtIdAnexo.ReadOnly = true;
+            this.txtIdAnexo.Size = new System.Drawing.Size(108, 20);
+            this.txtIdAnexo.TabIndex = 161;
             // 
             // label4
             // 
@@ -229,7 +231,7 @@
             this.txtDescripcion.Location = new System.Drawing.Point(10, 60);
             this.txtDescripcion.Multiline = true;
             this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(374, 95);
+            this.txtDescripcion.Size = new System.Drawing.Size(375, 95);
             this.txtDescripcion.TabIndex = 162;
             // 
             // label2
@@ -318,44 +320,43 @@
             this.txtDetalle.Size = new System.Drawing.Size(284, 20);
             this.txtDetalle.TabIndex = 185;
             // 
-            // GuardarEditarEncabezado
+            // btnGuardarCantidad
             // 
-            this.GuardarEditarEncabezado.BackColor = System.Drawing.Color.White;
-            this.GuardarEditarEncabezado.Enabled = false;
-            this.GuardarEditarEncabezado.FlatAppearance.BorderColor = System.Drawing.Color.Green;
-            this.GuardarEditarEncabezado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.GuardarEditarEncabezado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GuardarEditarEncabezado.ForeColor = System.Drawing.Color.Green;
-            this.GuardarEditarEncabezado.Location = new System.Drawing.Point(227, 149);
-            this.GuardarEditarEncabezado.Name = "GuardarEditarEncabezado";
-            this.GuardarEditarEncabezado.Size = new System.Drawing.Size(85, 28);
-            this.GuardarEditarEncabezado.TabIndex = 177;
-            this.GuardarEditarEncabezado.Text = "Guardar";
-            this.GuardarEditarEncabezado.UseVisualStyleBackColor = false;
+            this.btnGuardarCantidad.BackColor = System.Drawing.Color.White;
+            this.btnGuardarCantidad.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            this.btnGuardarCantidad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGuardarCantidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGuardarCantidad.ForeColor = System.Drawing.Color.Green;
+            this.btnGuardarCantidad.Location = new System.Drawing.Point(227, 149);
+            this.btnGuardarCantidad.Name = "btnGuardarCantidad";
+            this.btnGuardarCantidad.Size = new System.Drawing.Size(85, 28);
+            this.btnGuardarCantidad.TabIndex = 177;
+            this.btnGuardarCantidad.Text = "Guardar";
+            this.btnGuardarCantidad.UseVisualStyleBackColor = false;
+            this.btnGuardarCantidad.Click += new System.EventHandler(this.btnGuardarCantidad_Click);
             // 
-            // btnCancelarEditarEncabezado
+            // btnCancelarGuardarCantidad
             // 
-            this.btnCancelarEditarEncabezado.BackColor = System.Drawing.Color.White;
-            this.btnCancelarEditarEncabezado.Enabled = false;
-            this.btnCancelarEditarEncabezado.FlatAppearance.BorderColor = System.Drawing.Color.Orange;
-            this.btnCancelarEditarEncabezado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancelarEditarEncabezado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelarEditarEncabezado.ForeColor = System.Drawing.Color.Orange;
-            this.btnCancelarEditarEncabezado.Location = new System.Drawing.Point(322, 149);
-            this.btnCancelarEditarEncabezado.Name = "btnCancelarEditarEncabezado";
-            this.btnCancelarEditarEncabezado.Size = new System.Drawing.Size(85, 28);
-            this.btnCancelarEditarEncabezado.TabIndex = 179;
-            this.btnCancelarEditarEncabezado.Text = "Cancelar";
-            this.btnCancelarEditarEncabezado.UseVisualStyleBackColor = false;
+            this.btnCancelarGuardarCantidad.BackColor = System.Drawing.Color.White;
+            this.btnCancelarGuardarCantidad.FlatAppearance.BorderColor = System.Drawing.Color.Orange;
+            this.btnCancelarGuardarCantidad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelarGuardarCantidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelarGuardarCantidad.ForeColor = System.Drawing.Color.Orange;
+            this.btnCancelarGuardarCantidad.Location = new System.Drawing.Point(322, 149);
+            this.btnCancelarGuardarCantidad.Name = "btnCancelarGuardarCantidad";
+            this.btnCancelarGuardarCantidad.Size = new System.Drawing.Size(85, 28);
+            this.btnCancelarGuardarCantidad.TabIndex = 179;
+            this.btnCancelarGuardarCantidad.Text = "Cancelar";
+            this.btnCancelarGuardarCantidad.UseVisualStyleBackColor = false;
             // 
             // gboxCargaDetalle
             // 
             this.gboxCargaDetalle.Controls.Add(this.label5);
             this.gboxCargaDetalle.Controls.Add(this.label8);
-            this.gboxCargaDetalle.Controls.Add(this.btnCancelarEditarEncabezado);
+            this.gboxCargaDetalle.Controls.Add(this.btnCancelarGuardarCantidad);
             this.gboxCargaDetalle.Controls.Add(this.cmbMenus);
             this.gboxCargaDetalle.Controls.Add(this.txtDetalle);
-            this.gboxCargaDetalle.Controls.Add(this.GuardarEditarEncabezado);
+            this.gboxCargaDetalle.Controls.Add(this.btnGuardarCantidad);
             this.gboxCargaDetalle.Controls.Add(this.btnEditar);
             this.gboxCargaDetalle.Controls.Add(this.txtCantidad);
             this.gboxCargaDetalle.Controls.Add(this.txtFactor);
@@ -363,7 +364,7 @@
             this.gboxCargaDetalle.Controls.Add(this.label7);
             this.gboxCargaDetalle.Location = new System.Drawing.Point(508, 13);
             this.gboxCargaDetalle.Name = "gboxCargaDetalle";
-            this.gboxCargaDetalle.Size = new System.Drawing.Size(420, 185);
+            this.gboxCargaDetalle.Size = new System.Drawing.Size(420, 195);
             this.gboxCargaDetalle.TabIndex = 187;
             this.gboxCargaDetalle.TabStop = false;
             this.gboxCargaDetalle.Text = "Carga cantidad";
@@ -386,12 +387,13 @@
             this.Controls.Add(this.txtFechaCarga);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.txtIdRacionElaborada);
+            this.Controls.Add(this.txtIdAnexo);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtDescripcion);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dtgAnexoDetalles);
             this.Name = "FormAnexos";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ANEXOS";
             this.Load += new System.EventHandler(this.FormAnexos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgAnexoDetalles)).EndInit();
@@ -416,7 +418,7 @@
         private System.Windows.Forms.TextBox txtFechaCarga;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txtIdRacionElaborada;
+        private System.Windows.Forms.TextBox txtIdAnexo;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.Label label2;
@@ -429,8 +431,8 @@
         private System.Windows.Forms.TextBox txtFactor;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtDetalle;
-        private System.Windows.Forms.Button GuardarEditarEncabezado;
-        private System.Windows.Forms.Button btnCancelarEditarEncabezado;
+        private System.Windows.Forms.Button btnGuardarCantidad;
+        private System.Windows.Forms.Button btnCancelarGuardarCantidad;
         private System.Windows.Forms.GroupBox gboxCargaDetalle;
     }
 }

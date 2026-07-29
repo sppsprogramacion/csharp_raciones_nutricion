@@ -230,7 +230,7 @@ namespace CapaDatos
                .HasForeignKey(u => u.anexo_menu_id)
                .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<DRacionesSolicitadasDetalles>()
+            modelBuilder.Entity<DAnexoDetalle>()
                 .HasRequired(u => u.usuario)
                 .WithMany() // sin propiedad de navegación en DUsuario
                 .HasForeignKey(u => u.usuario_id)
