@@ -1,6 +1,8 @@
 ﻿using CapaDatos;
 using CapaNegocio;
 using CapaPresentacion.FuncionesGenerales;
+using CapaPresentacion.Validaciones.Anexos.Datos;
+using CapaPresentacion.Validaciones.Anexos.Validaciones;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +17,8 @@ namespace CapaPresentacion
 {
     public partial class FormAnexos : Form
     {
-        
+        private ErrorProvider errorProvider = new ErrorProvider();
+
         public FormAnexos()
         {
             InitializeComponent();
@@ -64,6 +67,33 @@ namespace CapaPresentacion
             try
             {
                 var nAnexoDetalles = new NAnexoDetalles();
+                //limpiar errores de provider
+                errorProvider.Clear();
+
+                //validacion de formulario
+                var datosFormulario = new AnexoDetalleDatos
+                {
+                    cmbMenus = cmbMenus.SelectedValue?.ToString() ?? string.Empty,
+                    txtDetalle = txtDetalle.Text,
+                    txtCantidad = txtCantidad.Text,
+                    txtFactor = txtFactor.Text
+                };
+
+                var validator = new CrearAnexoDetalleValidation();
+                var result = validator.Validate(datosFormulario);
+
+                if (!result.IsValid)
+                {
+                    MessageBox.Show("Complete correctamente los campos del formulario", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    foreach (var failure in result.Errors)
+                    {
+
+                        Control control = Controls.Find(failure.PropertyName, true)[0];
+                        errorProvider.SetError(control, failure.ErrorMessage);
+                    }
+                    return;
+                }
+                //fin validar formulario
 
                 var anexoDetalle = new DAnexoDetalle
                 {

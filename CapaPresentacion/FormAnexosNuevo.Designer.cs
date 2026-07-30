@@ -102,6 +102,7 @@
             this.btnCancelar.TabIndex = 126;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = false;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // dtgAnexos
             // 
@@ -109,8 +110,9 @@
             this.dtgAnexos.Location = new System.Drawing.Point(12, 188);
             this.dtgAnexos.Name = "dtgAnexos";
             this.dtgAnexos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dtgAnexos.Size = new System.Drawing.Size(614, 203);
+            this.dtgAnexos.Size = new System.Drawing.Size(747, 203);
             this.dtgAnexos.TabIndex = 127;
+            this.dtgAnexos.DoubleClick += new System.EventHandler(this.dtgAnexos_DoubleClick);
             this.dtgAnexos.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dtgAnexos_KeyDown);
             // 
             // FormAnexosNuevo
@@ -118,7 +120,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(738, 426);
+            this.ClientSize = new System.Drawing.Size(776, 426);
             this.Controls.Add(this.dtpFechaInicio);
             this.Controls.Add(this.label34);
             this.Controls.Add(this.label3);

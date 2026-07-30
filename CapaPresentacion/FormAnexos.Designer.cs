@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnObservaciones = new System.Windows.Forms.Button();
             this.dtpFechaInicio = new System.Windows.Forms.DateTimePicker();
             this.btnEliminarRegistrosCargados = new System.Windows.Forms.Button();
             this.btnEditarEncabezado = new System.Windows.Forms.Button();
-            this.btnEditar = new System.Windows.Forms.Button();
             this.btnActualizarAnexo = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.btnNuevo = new System.Windows.Forms.Button();
@@ -106,26 +105,12 @@
             this.btnEditarEncabezado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditarEncabezado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEditarEncabezado.ForeColor = System.Drawing.Color.Indigo;
-            this.btnEditarEncabezado.Location = new System.Drawing.Point(393, 58);
+            this.btnEditarEncabezado.Location = new System.Drawing.Point(393, 96);
             this.btnEditarEncabezado.Name = "btnEditarEncabezado";
             this.btnEditarEncabezado.Size = new System.Drawing.Size(85, 28);
             this.btnEditarEncabezado.TabIndex = 175;
             this.btnEditarEncabezado.Text = "Editar";
             this.btnEditarEncabezado.UseVisualStyleBackColor = false;
-            // 
-            // btnEditar
-            // 
-            this.btnEditar.BackColor = System.Drawing.Color.White;
-            this.btnEditar.FlatAppearance.BorderColor = System.Drawing.Color.Indigo;
-            this.btnEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEditar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEditar.ForeColor = System.Drawing.Color.Indigo;
-            this.btnEditar.Location = new System.Drawing.Point(310, 32);
-            this.btnEditar.Name = "btnEditar";
-            this.btnEditar.Size = new System.Drawing.Size(85, 28);
-            this.btnEditar.TabIndex = 173;
-            this.btnEditar.Text = "Editar";
-            this.btnEditar.UseVisualStyleBackColor = false;
             // 
             // btnActualizarAnexo
             // 
@@ -149,7 +134,7 @@
             this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBuscar.ForeColor = System.Drawing.Color.Indigo;
-            this.btnBuscar.Location = new System.Drawing.Point(298, 22);
+            this.btnBuscar.Location = new System.Drawing.Point(393, 23);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(85, 28);
             this.btnBuscar.TabIndex = 171;
@@ -163,7 +148,7 @@
             this.btnNuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNuevo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNuevo.ForeColor = System.Drawing.Color.Indigo;
-            this.btnNuevo.Location = new System.Drawing.Point(393, 23);
+            this.btnNuevo.Location = new System.Drawing.Point(393, 61);
             this.btnNuevo.Name = "btnNuevo";
             this.btnNuevo.Size = new System.Drawing.Size(85, 28);
             this.btnNuevo.TabIndex = 170;
@@ -227,10 +212,10 @@
             // 
             // txtDescripcion
             // 
-            this.txtDescripcion.Enabled = false;
             this.txtDescripcion.Location = new System.Drawing.Point(10, 60);
             this.txtDescripcion.Multiline = true;
             this.txtDescripcion.Name = "txtDescripcion";
+            this.txtDescripcion.ReadOnly = true;
             this.txtDescripcion.Size = new System.Drawing.Size(375, 95);
             this.txtDescripcion.TabIndex = 162;
             // 
@@ -248,10 +233,10 @@
             this.dtgAnexoDetalles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgAnexoDetalles.Location = new System.Drawing.Point(10, 253);
             this.dtgAnexoDetalles.Name = "dtgAnexoDetalles";
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtgAnexoDetalles.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtgAnexoDetalles.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dtgAnexoDetalles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dtgAnexoDetalles.Size = new System.Drawing.Size(988, 300);
+            this.dtgAnexoDetalles.Size = new System.Drawing.Size(918, 300);
             this.dtgAnexoDetalles.TabIndex = 157;
             // 
             // label5
@@ -317,7 +302,7 @@
             // 
             this.txtDetalle.Location = new System.Drawing.Point(9, 79);
             this.txtDetalle.Name = "txtDetalle";
-            this.txtDetalle.Size = new System.Drawing.Size(284, 20);
+            this.txtDetalle.Size = new System.Drawing.Size(398, 20);
             this.txtDetalle.TabIndex = 185;
             // 
             // btnGuardarCantidad
@@ -357,7 +342,6 @@
             this.gboxCargaDetalle.Controls.Add(this.cmbMenus);
             this.gboxCargaDetalle.Controls.Add(this.txtDetalle);
             this.gboxCargaDetalle.Controls.Add(this.btnGuardarCantidad);
-            this.gboxCargaDetalle.Controls.Add(this.btnEditar);
             this.gboxCargaDetalle.Controls.Add(this.txtCantidad);
             this.gboxCargaDetalle.Controls.Add(this.txtFactor);
             this.gboxCargaDetalle.Controls.Add(this.label1);
@@ -374,7 +358,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1012, 571);
+            this.ClientSize = new System.Drawing.Size(946, 571);
             this.Controls.Add(this.gboxCargaDetalle);
             this.Controls.Add(this.btnObservaciones);
             this.Controls.Add(this.dtpFechaInicio);
@@ -410,7 +394,6 @@
         private System.Windows.Forms.DateTimePicker dtpFechaInicio;
         private System.Windows.Forms.Button btnEliminarRegistrosCargados;
         private System.Windows.Forms.Button btnEditarEncabezado;
-        private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnActualizarAnexo;
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.Button btnNuevo;

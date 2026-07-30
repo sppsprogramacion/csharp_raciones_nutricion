@@ -1,6 +1,7 @@
 ﻿using CapaDatos;
 using CapaNegocio;
 using CapaPresentacion.FuncionesGenerales;
+using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Office2013.Excel;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace CapaPresentacion
 {
     public partial class FormAnexosNuevo : Form
     {
+        private ErrorProvider errorProvider = new ErrorProvider();
+
         public string IdAnexo { get; private set; }
         public string FechaInicio { get; private set; }
         public string Descripcion { get; private set; }
@@ -37,7 +40,28 @@ namespace CapaPresentacion
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            
+            //limpiar errores de provider
+            errorProvider.Clear();
+            bool tieneErrores = false;
+            if (string.IsNullOrEmpty(txtDescripcion.Text))
+            {
+                
+                errorProvider.SetError(txtDescripcion, "Debe completar el campo DESCRIPCION");
+                tieneErrores =true;
+            }
+
+            if (txtDescripcion.Text.Length > 1000)
+            {                
+                errorProvider.SetError(txtDescripcion, "Debe tener maximo 1000 caracteres.");
+                tieneErrores = true;
+            }
+
+            if(tieneErrores)
+            { 
+                MessageBox.Show("Complete correctamente los campos marcados", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
                 var nAnexo = new NAnexo();
@@ -81,10 +105,34 @@ namespace CapaPresentacion
                 }//fin if
                 else
                 {
-                    MessageBox.Show("Debe seleccionar un interno.");
+                    MessageBox.Show("Debe seleccionar un registro.");
                 }
 
             }
+        }
+
+        private void dtgAnexos_DoubleClick(object sender, EventArgs e)
+        {
+            if (dtgAnexos.SelectedRows.Count > 0)
+            {
+                IdAnexo = Convert.ToString(this.dtgAnexos.CurrentRow.Cells["Id"].Value);
+                FechaInicio = Convert.ToString(this.dtgAnexos.CurrentRow.Cells["FechaInicio"].Value);
+                Descripcion = Convert.ToString(this.dtgAnexos.CurrentRow.Cells["Descripcion"].Value);
+                FechaCarga = Convert.ToString(this.dtgAnexos.CurrentRow.Cells["FechaCarga"].Value);
+
+                this.DialogResult = DialogResult.OK; // Para indicar que cerró bien
+                this.Close();
+
+            }//fin if
+            else
+            {
+                MessageBox.Show("Debe seleccionar un registro.");
+            }
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.LimpiarControles();
         }
 
         //METODO PARA OBTENER LA LISTA DE ANEXOS
@@ -125,16 +173,16 @@ namespace CapaPresentacion
                 dtgAnexos.Columns[2].Width = 180;
             }
         }
-
         //FIN METODO PARA OBTENER LA LISTA DE ANEXOS..............................................
 
         //LIMPIAR CONTROLES
         private void LimpiarControles()
         {
+            this.errorProvider.Clear();
             dtpFechaInicio.Text = string.Empty;
             txtDescripcion.Text = string.Empty;
 
-        }        
+        }
         //FIN LIMPIAR CONTROLES...................................................................
     }
 }
