@@ -137,6 +137,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormAnexoObservaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAnexoObservaciones.Designer.cs">
+      <DependentUpon>FormAnexoObservaciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormAnexosBuscar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAnexosBuscar.Designer.cs">
+      <DependentUpon>FormAnexosBuscar.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormAnexosNuevo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -264,6 +276,12 @@
     <Compile Include="Validaciones\Usuarios\ValidacionesUsuarios\UsuarioEditarContraseniaValidator.cs" />
     <Compile Include="Validaciones\Usuarios\ValidacionesUsuarios\UsuarioEditarValidator.cs" />
     <Compile Include="Validaciones\Usuarios\ValidacionesUsuarios\UsuarioNuevoValidator.cs" />
+    <EmbeddedResource Include="FormAnexoObservaciones.resx">
+      <DependentUpon>FormAnexoObservaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAnexosBuscar.resx">
+      <DependentUpon>FormAnexosBuscar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormAnexosNuevo.resx">
       <DependentUpon>FormAnexosNuevo.cs</DependentUpon>
     </EmbeddedResource>

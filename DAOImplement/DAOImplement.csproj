@@ -110,6 +110,7 @@
     <Compile Include="AnexoDetallesDaoImplement.cs" />
     <Compile Include="AnexoMenuDaoImplement.cs" />
     <Compile Include="AnexoMenuTipoDaoImplement.cs" />
+    <Compile Include="AnexoObservacionesDaoImplement.cs" />
     <Compile Include="AuthDaoImpl.cs" />
     <Compile Include="ErrorHelper.cs" />
     <Compile Include="MenuDaoImplement.cs" />

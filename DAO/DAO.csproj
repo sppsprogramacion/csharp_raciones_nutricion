@@ -45,6 +45,7 @@
     <Compile Include="IAnexoDetallesDAO.cs" />
     <Compile Include="IAnexoMenuDAO.cs" />
     <Compile Include="IAnexoMenuTipoDAO.cs" />
+    <Compile Include="IAnexoObservacionesDAO.cs" />
     <Compile Include="IAuthDao.cs" />
     <Compile Include="IMenuDao.cs" />
     <Compile Include="IObservacionElaboradaDAO.cs" />

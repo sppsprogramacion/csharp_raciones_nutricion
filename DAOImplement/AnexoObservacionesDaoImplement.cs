@@ -1,6 +1,5 @@
 ﻿using CapaDatos;
 using DAO;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,19 +10,20 @@ using System.Threading.Tasks;
 
 namespace DAOImplement
 {
-    public class AnexoDetallesDaoImplement : IAnexoDetallesDAO
+    public class AnexoObservacionesDaoImplement : IAnexoObservacionesDAO
     {
-        //INSERTAR UNO
-        public void InsertarUno(DAnexoDetalle anexoDetalle)
+        //INSERTAR
+        public void Insertar(DAnexoObservacion observacion)
         {
-            
+            observacion.usuario_id = 1;
+            observacion.vigente = true;
             try
             {
 
                 using (var db = new MiDbContext())
                 using (var tran = db.Database.BeginTransaction())
                 {
-                    db.AnexosDetalles.Add(anexoDetalle);
+                    db.AnexosObservaciones.Add(observacion);
                     db.SaveChanges();
                     tran.Commit();
                 }
@@ -64,24 +64,23 @@ namespace DAOImplement
                 throw new Exception("Error al insertar: " + mensaje);
             }
         }
-        //FIN INSERTAR UNO...............................................
-
+        //FIN INSERTAR..................................................................
 
         //EDITAR
-        public void Editar(DAnexoDetalle anexoDetalle)
+        public void Editar(DAnexoObservacion observacion)
         {
             try
             {
                 using (var db = new MiDbContext())
                 {
                     // Verificar si existe
-                    var existente = db.AnexosDetalles.Find(anexoDetalle.id_anexo_detalle);
+                    var existente = db.ObservacionesElaborada.Find(observacion.id_anexo_observacion);
                     if (existente == null)
-                        throw new Exception("El detalle que intenta editar no existe.");
+                        throw new Exception("La observacion que intenta editar no existe.");
 
                     // Actualizar manualmente los campos
-                    existente.cantidad = anexoDetalle.cantidad;
-                    existente.factor = anexoDetalle.factor;
+                    existente.observacion = observacion.observacion;                    
+                    existente.vigente = observacion.vigente;
                     // Agregar acá todos los campos que quieras actualizar
 
                     db.SaveChanges();
@@ -95,44 +94,24 @@ namespace DAOImplement
 
                 throw new Exception("Error al actualizar el registro: " + mensaje);
             }
-        }       
-        //FIN EDITAR..........................................................
-        
-
-        public (List<DAnexoDetalle> lista, string error) ListaTodos()
-        {
-            throw new NotImplementedException();
         }
+        //FIN EDITAR........................................................................
 
-        //LISTA X FECHA ANEXO
-        public (List<DAnexoDetalle> lista, string error) ListaXFechaAnexo(string fechaInicio, string fechaFin)
+        //LISTA OBSERVACIONES X ID_ANEXO
+        public (List<DAnexoObservacion> lista, string error) ListaTodosXIdAnexo(int idAnexo)
         {
-            List<DAnexoDetalle> lista = new List<DAnexoDetalle>();
-
-            DateTime fechaInicioX;
-            DateTime fechaFinX;
-
-            if (!DateTime.TryParse(fechaInicio, out fechaInicioX))
-            {
-                return (null, "Fecha inicio inválida");
-            }
-
-            if (!DateTime.TryParse(fechaFin, out fechaFinX))
-            {
-                return (null, "Fecha fin inválida");
-            }
+            List<DAnexoObservacion> lista = new List<DAnexoObservacion>();
 
             try
             {
                 using (var db = new MiDbContext())
                 {
-
-                    lista = db.AnexosDetalles
-                    .Include(s => s.anexo)
-                    .Include(s => s.anexo_menu)
-                    .Include(s => s.usuario)
-                    .Where(s => s.anexo.fecha_inicio >= fechaInicioX && s.anexo.fecha_inicio <= fechaFinX)
-                    .ToList();
+                    lista = db.AnexosObservaciones
+                     .Include(s => s.anexo)
+                     .Include(s => s.usuario)
+                     .Where(s => s.anexo_id == idAnexo && s.vigente == true)
+                     .OrderBy(s => s.id_anexo_observacion)   // Orden ascendente
+                     .ToList();
 
                     return (lista, null);
                 }
@@ -146,30 +125,28 @@ namespace DAOImplement
                 }
 
                 // Si no es mysqlEx → error inesperado
-                Console.WriteLine(ex);
                 return (null, "Error inesperado: " + ex.Message);
             }
         }
-        //FIN LISTA X FECHA ANEXO
+        //FIN LISTA OBSERVACIONES X ID_ANEXO.........................................................
 
-        //LISTA X ID_ANEXO
-        public (List<DAnexoDetalle> lista, string error) ListaXIdAnexo(int idAnexo)
+        //BUSCAR X ID_ANEXO_OBSERVACION
+        public (DAnexoObservacion observacion, string error) ObtenerPorId(int idObservacion)
         {
-            List<DAnexoDetalle> lista = new List<DAnexoDetalle>();
+            DAnexoObservacion observacion = new DAnexoObservacion();
+
             try
             {
                 using (var db = new MiDbContext())
                 {
+                    observacion = db.AnexosObservaciones
+                     .Include(s => s.anexo)
+                     .Include(s => s.usuario)
+                     .Where(s => s.id_anexo_observacion == idObservacion)
+                     .OrderBy(s => s.id_anexo_observacion)   // Orden ascendente
+                     .FirstOrDefault();
 
-                    lista = db.AnexosDetalles
-                    .Include(s => s.anexo)
-                    .Include(s => s.anexo_menu)
-                    .Include(s => s.usuario)
-                    .Where(s => s.anexo_id == idAnexo)
-                    .ToList();
-
-
-                    return (lista, null);
+                    return (observacion, null);
                 }
             }
             catch (Exception ex)
@@ -181,34 +158,8 @@ namespace DAOImplement
                 }
 
                 // Si no es mysqlEx → error inesperado
-                Console.WriteLine(ex);
                 return (null, "Error inesperado: " + ex.Message);
             }
         }
-        //FIN LISTA X ID_ANEXO
-
-        public DAnexoDetalle ObtenerPorId(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void EliminarAnexosCargados(int idAnexo)
-        {
-            try
-            {
-                using (var db = new MiDbContext())
-                {
-                    db.Database.ExecuteSqlCommand(
-                        "DELETE FROM anexos_detalles WHERE anexo_id = @id",
-                        new MySqlParameter("@id", idAnexo)
-                    );
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al eliminar los registros: " + ex.Message);
-            }
-        }
-
     }
 }

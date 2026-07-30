@@ -28,7 +28,7 @@ namespace CapaPresentacion.Validaciones.Anexos.Validaciones
             RuleFor(x => x.txtFactor)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Debe ingresar un valor para FACTOR.")
-                .Must(BeADecimal).WithMessage("FACTOR debe ser un numero decimal con hasta 2 decimales.");
+                .Must(BeADecimal).WithMessage("FACTOR debe ser un numero decimal: \nel punto (.) como separador decimal \nhasta 2 decimales.");
         }
 
 
@@ -50,10 +50,10 @@ namespace CapaPresentacion.Validaciones.Anexos.Validaciones
         private bool BeADecimal(string value)
         {
             // Reemplaza coma por punto por si el usuario escribe coma
-            value = value.Replace('.', ',');
+            //value = value.Replace(',', '.');
 
             // Validar formato: número entero o decimal con 1 o 2 decimales
-            return Regex.IsMatch(value, @"^\d+(\,\d{1,2})?$");
+            return Regex.IsMatch(value, @"^\d+(\.\d{1,2})?$");
         }
     }
 }

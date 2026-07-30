@@ -97,6 +97,7 @@
             this.btnEliminarRegistrosCargados.TabIndex = 176;
             this.btnEliminarRegistrosCargados.Text = "Eliminar registros cargadas";
             this.btnEliminarRegistrosCargados.UseVisualStyleBackColor = false;
+            this.btnEliminarRegistrosCargados.Click += new System.EventHandler(this.btnEliminarRegistrosCargados_Click);
             // 
             // btnEditarEncabezado
             // 
@@ -140,6 +141,7 @@
             this.btnBuscar.TabIndex = 171;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = false;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // btnNuevo
             // 
@@ -276,7 +278,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(105, 107);
+            this.label7.Location = new System.Drawing.Point(113, 107);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(50, 13);
             this.label7.TabIndex = 184;
@@ -284,7 +286,7 @@
             // 
             // txtFactor
             // 
-            this.txtFactor.Location = new System.Drawing.Point(108, 121);
+            this.txtFactor.Location = new System.Drawing.Point(116, 121);
             this.txtFactor.Name = "txtFactor";
             this.txtFactor.Size = new System.Drawing.Size(90, 20);
             this.txtFactor.TabIndex = 183;
@@ -333,6 +335,7 @@
             this.btnCancelarGuardarCantidad.TabIndex = 179;
             this.btnCancelarGuardarCantidad.Text = "Cancelar";
             this.btnCancelarGuardarCantidad.UseVisualStyleBackColor = false;
+            this.btnCancelarGuardarCantidad.Click += new System.EventHandler(this.btnCancelarGuardarCantidad_Click);
             // 
             // gboxCargaDetalle
             // 

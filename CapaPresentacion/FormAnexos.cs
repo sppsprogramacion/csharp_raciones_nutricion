@@ -62,8 +62,30 @@ namespace CapaPresentacion
             }
         }
 
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            using (FormAnexosBuscar formulario = new FormAnexosBuscar())
+            {
+                // Aquí se abre el FormularioB
+                if (formulario.ShowDialog() == DialogResult.OK)
+                {
+                    // Recién después de cerrar FormularioB, puedo leer el dato
+                    txtIdAnexo.Text = formulario.IdAnexo;
+                    dtpFechaInicio.Text = formulario.FechaInicio;
+                    txtDescripcion.Text = formulario.Descripcion;
+                    txtFechaCarga.Text = formulario.FechaCarga;
+                }
+            }
+        }
+
         private void btnGuardarCantidad_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtIdAnexo.Text))
+            {
+                MessageBox.Show("No hay un anexo seleccionado", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
                 var nAnexoDetalles = new NAnexoDetalles();
@@ -118,6 +140,11 @@ namespace CapaPresentacion
             }
         }
 
+        private void btnCancelarGuardarCantidad_Click(object sender, EventArgs e)
+        {
+            this.LimpiarControles();
+        }
+
 
         private void btnActualizarAnexo_Click(object sender, EventArgs e)
         {
@@ -169,11 +196,60 @@ namespace CapaPresentacion
             else
             {
                 dtgAnexoDetalles.Columns[1].Width = 180;
-                dtgAnexoDetalles.Columns[2].Width = 120;
+                dtgAnexoDetalles.Columns[2].Width = 150;
             }
         }
 
+        
         //FIN METODO PARA OBTENER LA LISTA DE ANEXOS..............................................
+
+        //LIMPIAR CONTROLES
+        private void LimpiarControles()
+        {
+            this.errorProvider.Clear();
+            txtDetalle.Text = string.Empty;
+            txtCantidad.Text = string.Empty;
+            txtFactor.Text = string.Empty;
+
+
+        }
+
+        private void btnEliminarRegistrosCargados_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtIdAnexo.Text))
+            {
+                MessageBox.Show("Debe seleccionar un Anexo", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            //advertencia al usuario
+            DialogResult resultado = MessageBox.Show(
+                "⚠️ Esta acción eliminará todos los resgistros cargados para este anexo.\n\n¿Desea continuar?",
+                "Confirmar eliminación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (resultado == DialogResult.No)
+                return;
+
+
+            try
+            {
+                var nAnexoDetalles = new NAnexoDetalles();
+
+                nAnexoDetalles.EliminarDetalles(Convert.ToInt32(txtIdAnexo.Text));
+                MessageBox.Show("Eliminado correctamente", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                this.CargarDataAnexosDetalles();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+        //FIN LIMPIAR CONTROLES...................................................................
 
     }
 }
