@@ -1,4 +1,5 @@
-﻿using CapaNegocio;
+﻿using CapaDatos;
+using CapaNegocio;
 using CapaPresentacion.FuncionesGenerales;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace CapaPresentacion
 {
     public partial class FormAnexoObservaciones : Form
     {
+        private ErrorProvider errorProvider = new ErrorProvider();
+
         string accion_global = "";
         int id_anexo_global = 0;
 
@@ -33,17 +36,77 @@ namespace CapaPresentacion
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
+            this.accion_global = "nuevo";
+            this.LimpiarControles();
+            this.HabilitarControles(true);
+        }
 
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtIdObservacion.Text))
+            {
+                MessageBox.Show("Debe seleccionar una observacion para editar", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            this.accion_global = "editar";
+            this.HabilitarControles(true);
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.accion_global = "";
+            this.LimpiarControles();
+            this.HabilitarControles(false);
+        }
+
+        private void dtgObservaciones_KeyDown(object sender, KeyEventArgs e)
+        {
+            //AL PRESIONAR ENTER MOSTRAR
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+
+                if (dtgObservaciones.SelectedRows.Count > 0)
+                {
+                    txtIdObservacion.Text = Convert.ToString(dtgObservaciones.CurrentRow.Cells["Id"].Value);
+                    txtObservacion.Text = Convert.ToString(dtgObservaciones.CurrentRow.Cells["Observacion"].Value);
+                    chkVigente.Checked = Convert.ToBoolean(dtgObservaciones.CurrentRow.Cells["Vigente"].Value.ToString());
+
+
+
+                }//fin if
+                else
+                {
+                    MessageBox.Show("Debe seleccionar un regisrto.");
+                }
+            }
+        }
+
+        private void dtgObservaciones_DoubleClick(object sender, EventArgs e)
+        {
+            if (dtgObservaciones.SelectedRows.Count > 0)
+            {
+                txtIdObservacion.Text = Convert.ToString(dtgObservaciones.CurrentRow.Cells["Id"].Value);
+                txtObservacion.Text = Convert.ToString(dtgObservaciones.CurrentRow.Cells["Observacion"].Value);
+                chkVigente.Checked = Convert.ToBoolean(dtgObservaciones.CurrentRow.Cells["Vigente"].Value.ToString());
+
+
+
+            }//fin if
+            else
+            {
+                MessageBox.Show("Debe seleccionar un regisrto.");
+            }
         }
 
 
-
-        //METODO PARA OBTENER LA LISTA OBSERVACIONES GENERAL
+        //METODO PARA OBTENER LA LISTA OBSERVACIONES
         private void CargarDataObservaciones()
         {
-            var nObservaciones = new ();
+            var nObservaciones = new NAnexoObservacion();
 
-            var (listaObservacionesElaborada, error) = nObservacionesElaborada.ListarTodosXIdElaborada(this.id_observacion_global);
+            var (listaObservaciones, error) = nObservaciones.ListarTodosXIdAnexo(this.id_anexo_global);
 
 
 
@@ -53,10 +116,10 @@ namespace CapaPresentacion
                 return;
             }
 
-            var datosfiltrados = listaObservacionesElaborada
+            var datosfiltrados = listaObservaciones
                 .Select(c => new
                 {
-                    Id = c.id_observacion_elaborada,
+                    Id = c.id_anexo_observacion,
                     Observacion = c.observacion,
                     Vigente = c.vigente
 
@@ -65,7 +128,7 @@ namespace CapaPresentacion
 
             dtgObservaciones.DataSource = datosfiltrados;
 
-            if (listaObservacionesElaborada.Count == 0)
+            if (listaObservaciones.Count == 0)
             {
                 MessageBox.Show("No se encontraron registros", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -110,6 +173,120 @@ namespace CapaPresentacion
 
         }//FIN LIMPIAR CONTROLES..........................................
 
-       
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            //NUEVO
+            if (this.accion_global == "nuevo")
+            {
+                //limpiar errores de provider
+                errorProvider.Clear();
+                bool tieneErrores = false;
+                
+
+                if (string.IsNullOrEmpty(txtObservacion.Text))
+                {
+                    errorProvider.SetError(txtObservacion, "Debe completar el campo OBSERVACION");
+                    tieneErrores = true;
+                    
+                }
+
+                if (txtIdObservacion.Text.Length > 500)
+                {
+                    errorProvider.SetError(txtObservacion, "Debe tener maximo 500 caracteres.");
+                    tieneErrores = true;
+                }
+
+
+                if (tieneErrores)
+                {
+                    MessageBox.Show("Complete correctamente los campos marcados", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+
+                try
+                {
+                    var nObservaciones = new NAnexoObservacion();
+
+                    var observacion = new DAnexoObservacion
+                    {
+                        observacion = txtObservacion.Text,
+                        anexo_id = this.id_anexo_global
+                    };
+
+                    nObservaciones.CrearObservacion(observacion);
+                    MessageBox.Show("Creado correctamente", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.CargarDataObservaciones();
+                    
+                    this.LimpiarControles();
+                    this.accion_global = "";
+                    this.HabilitarControles(false);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            //FIN NUEVO
+
+            //EDITAR
+            if (this.accion_global == "editar")
+            {
+                //limpiar errores de provider
+                errorProvider.Clear();
+                bool tieneErrores = false;
+
+
+                if (string.IsNullOrEmpty(txtObservacion.Text))
+                {
+                    errorProvider.SetError(txtObservacion, "Debe completar el campo OBSERVACION");
+                    tieneErrores = true;
+
+                }
+
+                if (txtIdObservacion.Text.Length > 500)
+                {
+                    errorProvider.SetError(txtObservacion, "Debe tener maximo 500 caracteres.");
+                    tieneErrores = true;
+                }
+
+
+                if (tieneErrores)
+                {
+                    MessageBox.Show("Complete correctamente los campos marcados", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                try
+                {
+                    var nAnexoObservaciones = new NAnexoObservacion();
+
+                    
+                    var anexoObservacion = new DAnexoObservacion
+                    {
+                        id_anexo_observacion = Convert.ToInt32(txtIdObservacion.Text),
+                        observacion = txtObservacion.Text,
+                        vigente = chkVigente.Checked
+
+                    };
+
+                    nAnexoObservaciones.EditarObservacion(anexoObservacion);
+                    MessageBox.Show("Editado correctamente", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.CargarDataObservaciones();
+                    
+
+                    
+
+                    this.LimpiarControles();
+                    this.accion_global = "";
+                    this.HabilitarControles(false);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            //FIN EDITAR
+        }
     }
 }

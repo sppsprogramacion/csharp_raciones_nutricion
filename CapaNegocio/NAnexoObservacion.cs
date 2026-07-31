@@ -20,13 +20,13 @@ namespace CapaNegocio
         }
 
 
-        public void CrearObservacionElaborada(DAnexoObservacion observacion)
+        public void CrearObservacion(DAnexoObservacion observacion)
         {
             anexoObservacionDAO.Insertar(observacion);
 
         }
 
-        public void EditarObservacionElaborada(DAnexoObservacion observacion)
+        public void EditarObservacion(DAnexoObservacion observacion)
         {
             anexoObservacionDAO.Editar(observacion);
 

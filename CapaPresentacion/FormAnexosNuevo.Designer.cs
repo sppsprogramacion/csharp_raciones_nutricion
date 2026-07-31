@@ -45,7 +45,7 @@
             this.dtpFechaInicio.Location = new System.Drawing.Point(12, 27);
             this.dtpFechaInicio.Name = "dtpFechaInicio";
             this.dtpFechaInicio.Size = new System.Drawing.Size(118, 21);
-            this.dtpFechaInicio.TabIndex = 130;
+            this.dtpFechaInicio.TabIndex = 1;
             // 
             // label34
             // 
@@ -68,11 +68,12 @@
             // 
             // txtDescripcion
             // 
+            this.txtDescripcion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDescripcion.Location = new System.Drawing.Point(13, 69);
             this.txtDescripcion.Multiline = true;
             this.txtDescripcion.Name = "txtDescripcion";
             this.txtDescripcion.Size = new System.Drawing.Size(375, 95);
-            this.txtDescripcion.TabIndex = 124;
+            this.txtDescripcion.TabIndex = 2;
             // 
             // btnGuardar
             // 
@@ -84,7 +85,7 @@
             this.btnGuardar.Location = new System.Drawing.Point(404, 68);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(98, 40);
-            this.btnGuardar.TabIndex = 125;
+            this.btnGuardar.TabIndex = 3;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = false;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
@@ -99,7 +100,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(405, 111);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(98, 40);
-            this.btnCancelar.TabIndex = 126;
+            this.btnCancelar.TabIndex = 4;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
@@ -111,7 +112,7 @@
             this.dtgAnexos.Name = "dtgAnexos";
             this.dtgAnexos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgAnexos.Size = new System.Drawing.Size(747, 203);
-            this.dtgAnexos.TabIndex = 127;
+            this.dtgAnexos.TabIndex = 5;
             this.dtgAnexos.DoubleClick += new System.EventHandler(this.dtgAnexos_DoubleClick);
             this.dtgAnexos.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dtgAnexos_KeyDown);
             // 

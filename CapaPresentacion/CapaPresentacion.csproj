@@ -137,6 +137,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormAnexoDetalleEditar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAnexoDetalleEditar.Designer.cs">
+      <DependentUpon>FormAnexoDetalleEditar.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormAnexoObservaciones.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +154,12 @@
     </Compile>
     <Compile Include="FormAnexosBuscar.Designer.cs">
       <DependentUpon>FormAnexosBuscar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormAnexosEditar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAnexosEditar.Designer.cs">
+      <DependentUpon>FormAnexosEditar.cs</DependentUpon>
     </Compile>
     <Compile Include="FormAnexosNuevo.cs">
       <SubType>Form</SubType>
@@ -276,11 +288,17 @@
     <Compile Include="Validaciones\Usuarios\ValidacionesUsuarios\UsuarioEditarContraseniaValidator.cs" />
     <Compile Include="Validaciones\Usuarios\ValidacionesUsuarios\UsuarioEditarValidator.cs" />
     <Compile Include="Validaciones\Usuarios\ValidacionesUsuarios\UsuarioNuevoValidator.cs" />
+    <EmbeddedResource Include="FormAnexoDetalleEditar.resx">
+      <DependentUpon>FormAnexoDetalleEditar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormAnexoObservaciones.resx">
       <DependentUpon>FormAnexoObservaciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormAnexosBuscar.resx">
       <DependentUpon>FormAnexosBuscar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAnexosEditar.resx">
+      <DependentUpon>FormAnexosEditar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormAnexosNuevo.resx">
       <DependentUpon>FormAnexosNuevo.cs</DependentUpon>
@@ -378,7 +396,9 @@
       <Name>CommonCache</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Validaciones\AnexosDetallesEditar\" />
+  </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>

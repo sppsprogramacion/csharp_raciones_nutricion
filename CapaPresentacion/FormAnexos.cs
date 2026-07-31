@@ -58,6 +58,8 @@ namespace CapaPresentacion
                     dtpFechaInicio.Text = formulario.FechaInicio;
                     txtDescripcion.Text = formulario.Descripcion;
                     txtFechaCarga.Text = formulario.FechaCarga;
+
+                    this.CargarDataAnexosDetalles();
                 }
             }
         }
@@ -74,6 +76,8 @@ namespace CapaPresentacion
                     dtpFechaInicio.Text = formulario.FechaInicio;
                     txtDescripcion.Text = formulario.Descripcion;
                     txtFechaCarga.Text = formulario.FechaCarga;
+
+                    this.CargarDataAnexosDetalles();
                 }
             }
         }
@@ -130,9 +134,9 @@ namespace CapaPresentacion
                 nAnexoDetalles.InsertarUnDetalle(anexoDetalle);
                 MessageBox.Show("Creado correctamente", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                this.LimpiarControles();
                 this.CargarDataAnexosDetalles();
 
-                //this.LimpiarControles();
             }
             catch (Exception ex)
             {
@@ -146,11 +150,58 @@ namespace CapaPresentacion
         }
 
 
+        private void btnObservaciones_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtIdAnexo.Text))
+            {
+                MessageBox.Show("Debe seleccionar un anexo", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            FormAnexoObservaciones formAnexoObservaciones = new FormAnexoObservaciones(Convert.ToInt32(txtIdAnexo.Text));
+            formAnexoObservaciones.ShowDialog();
+        }
+
         private void btnActualizarAnexo_Click(object sender, EventArgs e)
         {
             this.CargarDataAnexosDetalles();
         }
 
+        private void btnEliminarRegistrosCargados_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtIdAnexo.Text))
+            {
+                MessageBox.Show("Debe seleccionar un Anexo", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            //advertencia al usuario
+            DialogResult resultado = MessageBox.Show(
+                "⚠️ Esta acción eliminará todos los resgistros cargados para este anexo.\n\n¿Desea continuar?",
+                "Confirmar eliminación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (resultado == DialogResult.No)
+                return;
+
+
+            try
+            {
+                var nAnexoDetalles = new NAnexoDetalles();
+
+                nAnexoDetalles.EliminarDetalles(Convert.ToInt32(txtIdAnexo.Text));
+                MessageBox.Show("Eliminado correctamente", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                this.CargarDataAnexosDetalles();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
 
 
         //METODO PARA OBTENER LA LISTA DE ANEXOS
@@ -199,9 +250,8 @@ namespace CapaPresentacion
                 dtgAnexoDetalles.Columns[2].Width = 150;
             }
         }
-
-        
         //FIN METODO PARA OBTENER LA LISTA DE ANEXOS..............................................
+
 
         //LIMPIAR CONTROLES
         private void LimpiarControles()
@@ -210,43 +260,26 @@ namespace CapaPresentacion
             txtDetalle.Text = string.Empty;
             txtCantidad.Text = string.Empty;
             txtFactor.Text = string.Empty;
-
-
         }
 
-        private void btnEliminarRegistrosCargados_Click(object sender, EventArgs e)
+        private void btnEditarEncabezado_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtIdAnexo.Text))
             {
-                MessageBox.Show("Debe seleccionar un Anexo", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Debe seleccionar un anexo", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
-            //advertencia al usuario
-            DialogResult resultado = MessageBox.Show(
-                "⚠️ Esta acción eliminará todos los resgistros cargados para este anexo.\n\n¿Desea continuar?",
-                "Confirmar eliminación",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning
-            );
-
-            if (resultado == DialogResult.No)
-                return;
-
-
-            try
+            
+            using (FormAnexosEditar formulario = new FormAnexosEditar(Convert.ToInt32(txtIdAnexo.Text), dtpFechaInicio.Value.Date, txtDescripcion.Text))
             {
-                var nAnexoDetalles = new NAnexoDetalles();
-
-                nAnexoDetalles.EliminarDetalles(Convert.ToInt32(txtIdAnexo.Text));
-                MessageBox.Show("Eliminado correctamente", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                this.CargarDataAnexosDetalles();
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                // Aquí se abre el FormularioB
+                if (formulario.ShowDialog() == DialogResult.OK)
+                {
+                    // Recién después de cerrar FormularioB, puedo leer el dato
+                    dtpFechaInicio.Value = formulario.FechaInicioGlobal;
+                    txtDescripcion.Text = formulario.DescripcionGlobal;
+                }
             }
         }
         //FIN LIMPIAR CONTROLES...................................................................

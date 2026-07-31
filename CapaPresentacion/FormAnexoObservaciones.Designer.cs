@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblDatos = new System.Windows.Forms.Label();
             this.chkVigente = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.txtIdObservacion = new System.Windows.Forms.TextBox();
@@ -43,32 +42,21 @@
             ((System.ComponentModel.ISupportInitialize)(this.dtgObservaciones)).BeginInit();
             this.SuspendLayout();
             // 
-            // lblDatos
-            // 
-            this.lblDatos.AutoSize = true;
-            this.lblDatos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDatos.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblDatos.Location = new System.Drawing.Point(18, 8);
-            this.lblDatos.Name = "lblDatos";
-            this.lblDatos.Size = new System.Drawing.Size(59, 16);
-            this.lblDatos.TabIndex = 124;
-            this.lblDatos.Text = "DATOS";
-            // 
             // chkVigente
             // 
             this.chkVigente.AutoSize = true;
             this.chkVigente.Enabled = false;
-            this.chkVigente.Location = new System.Drawing.Point(21, 140);
+            this.chkVigente.Location = new System.Drawing.Point(21, 117);
             this.chkVigente.Name = "chkVigente";
             this.chkVigente.Size = new System.Drawing.Size(62, 17);
-            this.chkVigente.TabIndex = 123;
+            this.chkVigente.TabIndex = 3;
             this.chkVigente.Text = "Vigente";
             this.chkVigente.UseVisualStyleBackColor = true;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(13, 37);
+            this.label11.Location = new System.Drawing.Point(13, 14);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(98, 13);
             this.label11.TabIndex = 122;
@@ -77,15 +65,15 @@
             // txtIdObservacion
             // 
             this.txtIdObservacion.Enabled = false;
-            this.txtIdObservacion.Location = new System.Drawing.Point(16, 53);
+            this.txtIdObservacion.Location = new System.Drawing.Point(16, 30);
             this.txtIdObservacion.Name = "txtIdObservacion";
             this.txtIdObservacion.Size = new System.Drawing.Size(133, 20);
-            this.txtIdObservacion.TabIndex = 113;
+            this.txtIdObservacion.TabIndex = 1;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(18, 121);
+            this.label8.Location = new System.Drawing.Point(18, 98);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(54, 13);
             this.label8.TabIndex = 121;
@@ -94,7 +82,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 78);
+            this.label4.Location = new System.Drawing.Point(13, 55);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(84, 13);
             this.label4.TabIndex = 120;
@@ -103,10 +91,10 @@
             // txtObservacion
             // 
             this.txtObservacion.Enabled = false;
-            this.txtObservacion.Location = new System.Drawing.Point(16, 94);
+            this.txtObservacion.Location = new System.Drawing.Point(16, 71);
             this.txtObservacion.Name = "txtObservacion";
             this.txtObservacion.Size = new System.Drawing.Size(653, 20);
-            this.txtObservacion.TabIndex = 114;
+            this.txtObservacion.TabIndex = 2;
             // 
             // btnEditar
             // 
@@ -118,9 +106,10 @@
             this.btnEditar.Location = new System.Drawing.Point(688, 60);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(98, 40);
-            this.btnEditar.TabIndex = 116;
+            this.btnEditar.TabIndex = 5;
             this.btnEditar.Text = "Editar";
             this.btnEditar.UseVisualStyleBackColor = false;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnNuevo
             // 
@@ -132,7 +121,7 @@
             this.btnNuevo.Location = new System.Drawing.Point(688, 17);
             this.btnNuevo.Name = "btnNuevo";
             this.btnNuevo.Size = new System.Drawing.Size(98, 40);
-            this.btnNuevo.TabIndex = 115;
+            this.btnNuevo.TabIndex = 4;
             this.btnNuevo.Text = "Nuevo";
             this.btnNuevo.UseVisualStyleBackColor = false;
             this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
@@ -148,9 +137,10 @@
             this.btnGuardar.Location = new System.Drawing.Point(688, 112);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(98, 40);
-            this.btnGuardar.TabIndex = 117;
+            this.btnGuardar.TabIndex = 6;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = false;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // btnCancelar
             // 
@@ -163,9 +153,10 @@
             this.btnCancelar.Location = new System.Drawing.Point(689, 155);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(98, 40);
-            this.btnCancelar.TabIndex = 118;
+            this.btnCancelar.TabIndex = 7;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = false;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // dtgObservaciones
             // 
@@ -174,14 +165,15 @@
             this.dtgObservaciones.Name = "dtgObservaciones";
             this.dtgObservaciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgObservaciones.Size = new System.Drawing.Size(776, 203);
-            this.dtgObservaciones.TabIndex = 119;
+            this.dtgObservaciones.TabIndex = 8;
+            this.dtgObservaciones.DoubleClick += new System.EventHandler(this.dtgObservaciones_DoubleClick);
+            this.dtgObservaciones.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dtgObservaciones_KeyDown);
             // 
             // FormAnexoObservaciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.lblDatos);
             this.Controls.Add(this.chkVigente);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.txtIdObservacion);
@@ -203,8 +195,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lblDatos;
         private System.Windows.Forms.CheckBox chkVigente;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtIdObservacion;

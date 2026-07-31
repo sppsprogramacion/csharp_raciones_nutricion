@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnObservaciones = new System.Windows.Forms.Button();
             this.dtpFechaInicio = new System.Windows.Forms.DateTimePicker();
             this.btnEliminarRegistrosCargados = new System.Windows.Forms.Button();
@@ -70,9 +70,10 @@
             this.btnObservaciones.Location = new System.Drawing.Point(127, 170);
             this.btnObservaciones.Name = "btnObservaciones";
             this.btnObservaciones.Size = new System.Drawing.Size(112, 28);
-            this.btnObservaciones.TabIndex = 180;
+            this.btnObservaciones.TabIndex = 4;
             this.btnObservaciones.Text = "Observaciones";
             this.btnObservaciones.UseVisualStyleBackColor = false;
+            this.btnObservaciones.Click += new System.EventHandler(this.btnObservaciones_Click);
             // 
             // dtpFechaInicio
             // 
@@ -91,10 +92,10 @@
             this.btnEliminarRegistrosCargados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminarRegistrosCargados.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminarRegistrosCargados.ForeColor = System.Drawing.Color.Red;
-            this.btnEliminarRegistrosCargados.Location = new System.Drawing.Point(264, 222);
+            this.btnEliminarRegistrosCargados.Location = new System.Drawing.Point(265, 222);
             this.btnEliminarRegistrosCargados.Name = "btnEliminarRegistrosCargados";
             this.btnEliminarRegistrosCargados.Size = new System.Drawing.Size(196, 28);
-            this.btnEliminarRegistrosCargados.TabIndex = 176;
+            this.btnEliminarRegistrosCargados.TabIndex = 7;
             this.btnEliminarRegistrosCargados.Text = "Eliminar registros cargadas";
             this.btnEliminarRegistrosCargados.UseVisualStyleBackColor = false;
             this.btnEliminarRegistrosCargados.Click += new System.EventHandler(this.btnEliminarRegistrosCargados_Click);
@@ -109,9 +110,10 @@
             this.btnEditarEncabezado.Location = new System.Drawing.Point(393, 96);
             this.btnEditarEncabezado.Name = "btnEditarEncabezado";
             this.btnEditarEncabezado.Size = new System.Drawing.Size(85, 28);
-            this.btnEditarEncabezado.TabIndex = 175;
+            this.btnEditarEncabezado.TabIndex = 3;
             this.btnEditarEncabezado.Text = "Editar";
             this.btnEditarEncabezado.UseVisualStyleBackColor = false;
+            this.btnEditarEncabezado.Click += new System.EventHandler(this.btnEditarEncabezado_Click);
             // 
             // btnActualizarAnexo
             // 
@@ -120,10 +122,10 @@
             this.btnActualizarAnexo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnActualizarAnexo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnActualizarAnexo.ForeColor = System.Drawing.Color.Indigo;
-            this.btnActualizarAnexo.Location = new System.Drawing.Point(153, 222);
+            this.btnActualizarAnexo.Location = new System.Drawing.Point(154, 222);
             this.btnActualizarAnexo.Name = "btnActualizarAnexo";
             this.btnActualizarAnexo.Size = new System.Drawing.Size(98, 28);
-            this.btnActualizarAnexo.TabIndex = 172;
+            this.btnActualizarAnexo.TabIndex = 6;
             this.btnActualizarAnexo.Text = "Actualizar";
             this.btnActualizarAnexo.UseVisualStyleBackColor = false;
             this.btnActualizarAnexo.Click += new System.EventHandler(this.btnActualizarAnexo_Click);
@@ -138,7 +140,7 @@
             this.btnBuscar.Location = new System.Drawing.Point(393, 23);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(85, 28);
-            this.btnBuscar.TabIndex = 171;
+            this.btnBuscar.TabIndex = 1;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = false;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
@@ -153,7 +155,7 @@
             this.btnNuevo.Location = new System.Drawing.Point(393, 61);
             this.btnNuevo.Name = "btnNuevo";
             this.btnNuevo.Size = new System.Drawing.Size(85, 28);
-            this.btnNuevo.TabIndex = 170;
+            this.btnNuevo.TabIndex = 2;
             this.btnNuevo.Text = "Nuevo";
             this.btnNuevo.UseVisualStyleBackColor = false;
             this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
@@ -214,6 +216,7 @@
             // 
             // txtDescripcion
             // 
+            this.txtDescripcion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDescripcion.Location = new System.Drawing.Point(10, 60);
             this.txtDescripcion.Multiline = true;
             this.txtDescripcion.Name = "txtDescripcion";
@@ -226,20 +229,20 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(7, 237);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(134, 13);
+            this.label2.Size = new System.Drawing.Size(126, 13);
             this.label2.TabIndex = 159;
-            this.label2.Text = "REGISTROS DEL ANEXO";
+            this.label2.Text = "DETALLES DEL ANEXO";
             // 
             // dtgAnexoDetalles
             // 
             this.dtgAnexoDetalles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgAnexoDetalles.Location = new System.Drawing.Point(10, 253);
             this.dtgAnexoDetalles.Name = "dtgAnexoDetalles";
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtgAnexoDetalles.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtgAnexoDetalles.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dtgAnexoDetalles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgAnexoDetalles.Size = new System.Drawing.Size(918, 300);
-            this.dtgAnexoDetalles.TabIndex = 157;
+            this.dtgAnexoDetalles.TabIndex = 8;
             // 
             // label5
             // 
@@ -257,14 +260,14 @@
             this.cmbMenus.Location = new System.Drawing.Point(9, 34);
             this.cmbMenus.Name = "cmbMenus";
             this.cmbMenus.Size = new System.Drawing.Size(284, 21);
-            this.cmbMenus.TabIndex = 154;
+            this.cmbMenus.TabIndex = 1;
             // 
             // txtCantidad
             // 
             this.txtCantidad.Location = new System.Drawing.Point(8, 121);
             this.txtCantidad.Name = "txtCantidad";
             this.txtCantidad.Size = new System.Drawing.Size(90, 20);
-            this.txtCantidad.TabIndex = 181;
+            this.txtCantidad.TabIndex = 3;
             // 
             // label1
             // 
@@ -289,7 +292,7 @@
             this.txtFactor.Location = new System.Drawing.Point(116, 121);
             this.txtFactor.Name = "txtFactor";
             this.txtFactor.Size = new System.Drawing.Size(90, 20);
-            this.txtFactor.TabIndex = 183;
+            this.txtFactor.TabIndex = 4;
             // 
             // label8
             // 
@@ -305,7 +308,7 @@
             this.txtDetalle.Location = new System.Drawing.Point(9, 79);
             this.txtDetalle.Name = "txtDetalle";
             this.txtDetalle.Size = new System.Drawing.Size(398, 20);
-            this.txtDetalle.TabIndex = 185;
+            this.txtDetalle.TabIndex = 2;
             // 
             // btnGuardarCantidad
             // 
@@ -317,7 +320,7 @@
             this.btnGuardarCantidad.Location = new System.Drawing.Point(227, 149);
             this.btnGuardarCantidad.Name = "btnGuardarCantidad";
             this.btnGuardarCantidad.Size = new System.Drawing.Size(85, 28);
-            this.btnGuardarCantidad.TabIndex = 177;
+            this.btnGuardarCantidad.TabIndex = 5;
             this.btnGuardarCantidad.Text = "Guardar";
             this.btnGuardarCantidad.UseVisualStyleBackColor = false;
             this.btnGuardarCantidad.Click += new System.EventHandler(this.btnGuardarCantidad_Click);
@@ -332,7 +335,7 @@
             this.btnCancelarGuardarCantidad.Location = new System.Drawing.Point(322, 149);
             this.btnCancelarGuardarCantidad.Name = "btnCancelarGuardarCantidad";
             this.btnCancelarGuardarCantidad.Size = new System.Drawing.Size(85, 28);
-            this.btnCancelarGuardarCantidad.TabIndex = 179;
+            this.btnCancelarGuardarCantidad.TabIndex = 6;
             this.btnCancelarGuardarCantidad.Text = "Cancelar";
             this.btnCancelarGuardarCantidad.UseVisualStyleBackColor = false;
             this.btnCancelarGuardarCantidad.Click += new System.EventHandler(this.btnCancelarGuardarCantidad_Click);
@@ -352,7 +355,7 @@
             this.gboxCargaDetalle.Location = new System.Drawing.Point(508, 13);
             this.gboxCargaDetalle.Name = "gboxCargaDetalle";
             this.gboxCargaDetalle.Size = new System.Drawing.Size(420, 195);
-            this.gboxCargaDetalle.TabIndex = 187;
+            this.gboxCargaDetalle.TabIndex = 5;
             this.gboxCargaDetalle.TabStop = false;
             this.gboxCargaDetalle.Text = "Carga cantidad";
             // 

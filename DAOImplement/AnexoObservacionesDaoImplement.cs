@@ -74,7 +74,7 @@ namespace DAOImplement
                 using (var db = new MiDbContext())
                 {
                     // Verificar si existe
-                    var existente = db.ObservacionesElaborada.Find(observacion.id_anexo_observacion);
+                    var existente = db.AnexosObservaciones.Find(observacion.id_anexo_observacion);
                     if (existente == null)
                         throw new Exception("La observacion que intenta editar no existe.");
 

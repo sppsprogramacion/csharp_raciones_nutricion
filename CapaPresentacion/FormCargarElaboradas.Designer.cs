@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnActualizarUnidades = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.btnNuevo = new System.Windows.Forms.Button();
@@ -184,6 +184,7 @@
             // txtDetalles
             // 
             this.txtDetalles.Enabled = false;
+            this.txtDetalles.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDetalles.Location = new System.Drawing.Point(9, 57);
             this.txtDetalles.Multiline = true;
             this.txtDetalles.Name = "txtDetalles";
@@ -228,8 +229,8 @@
             this.dtgUnidadesCantidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgUnidadesCantidades.Location = new System.Drawing.Point(9, 321);
             this.dtgUnidadesCantidades.Name = "dtgUnidadesCantidades";
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtgUnidadesCantidades.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtgUnidadesCantidades.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dtgUnidadesCantidades.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgUnidadesCantidades.Size = new System.Drawing.Size(1231, 378);
             this.dtgUnidadesCantidades.TabIndex = 112;
