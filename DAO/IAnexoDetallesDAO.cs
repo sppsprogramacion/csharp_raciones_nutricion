@@ -12,8 +12,7 @@ namespace DAO
         //void InsertarLista(List<DRacionElaboradaDetalles> listaDetalles);
         void InsertarUno(DAnexoDetalle anexoDetalle);
         void Editar(DAnexoDetalle anexoDetalle);
-        DAnexoDetalle ObtenerPorId(int id);
-
+        (DAnexoDetalle anexoDetalle, string error) ObtenerPorId(int id);
         (List<DAnexoDetalle> lista, string error) ListaXIdAnexo(int idAnexo);        
         (List<DAnexoDetalle> lista, string error) ListaXFechaAnexo(string fechaInicio, string fechaFin);
         (List<DAnexoDetalle> lista, string error) ListaTodos();

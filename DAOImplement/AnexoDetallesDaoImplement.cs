@@ -187,9 +187,36 @@ namespace DAOImplement
         }
         //FIN LISTA X ID_ANEXO
 
-        public DAnexoDetalle ObtenerPorId(int id)
+        public (DAnexoDetalle anexoDetalle, string error) ObtenerPorId(int id)
         {
-            throw new NotImplementedException();
+            DAnexoDetalle anexoDetalle = new DAnexoDetalle();
+
+            try
+            {
+                using (var db = new MiDbContext())
+                {
+                    anexoDetalle = db.AnexosDetalles
+                     .Include(s => s.anexo)
+                     .Include(s => s.anexo_menu)
+                     .Include(s => s.usuario)
+                     .Where(s => s.anexo_id == id)
+                     .OrderBy(s => s.id_anexo_detalle)   // Orden ascendente
+                     .FirstOrDefault();
+
+                    return (anexoDetalle, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                // 🟦 Detecta si realmente es error de conexión MySQL
+                if (ErrorHelper.EsErrorDeConexion(ex))
+                {
+                    return (null, "No hay conexión con el servidor de base de datos.");
+                }
+
+                // Si no es mysqlEx → error inesperado
+                return (null, "Error inesperado: " + ex.Message);
+            }
         }
 
         public void EliminarAnexosCargados(int idAnexo)
