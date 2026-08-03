@@ -73,6 +73,7 @@
             this.btnCancelarGuardarCantidad.TabIndex = 6;
             this.btnCancelarGuardarCantidad.Text = "Cancelar";
             this.btnCancelarGuardarCantidad.UseVisualStyleBackColor = false;
+            this.btnCancelarGuardarCantidad.Click += new System.EventHandler(this.btnCancelarGuardarCantidad_Click);
             // 
             // cmbMenus
             // 
@@ -103,6 +104,7 @@
             this.btnGuardarCantidad.TabIndex = 5;
             this.btnGuardarCantidad.Text = "Guardar";
             this.btnGuardarCantidad.UseVisualStyleBackColor = false;
+            this.btnGuardarCantidad.Click += new System.EventHandler(this.btnGuardarCantidad_Click);
             // 
             // txtCantidad
             // 
@@ -172,6 +174,7 @@
             this.Controls.Add(this.btnGuardarCantidad);
             this.Controls.Add(this.txtCantidad);
             this.Name = "FormAnexoDetalleEditar";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EDITAR DETALLE";
             this.Load += new System.EventHandler(this.FormAnexoDetalleEditar_Load);
             this.ResumeLayout(false);

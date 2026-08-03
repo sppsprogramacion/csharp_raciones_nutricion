@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnObservaciones = new System.Windows.Forms.Button();
             this.dtpFechaInicio = new System.Windows.Forms.DateTimePicker();
             this.btnEliminarRegistrosCargados = new System.Windows.Forms.Button();
@@ -238,11 +238,12 @@
             this.dtgAnexoDetalles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgAnexoDetalles.Location = new System.Drawing.Point(10, 253);
             this.dtgAnexoDetalles.Name = "dtgAnexoDetalles";
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtgAnexoDetalles.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtgAnexoDetalles.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dtgAnexoDetalles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgAnexoDetalles.Size = new System.Drawing.Size(918, 300);
             this.dtgAnexoDetalles.TabIndex = 8;
+            this.dtgAnexoDetalles.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dtgAnexoDetalles_KeyDown);
             // 
             // label5
             // 

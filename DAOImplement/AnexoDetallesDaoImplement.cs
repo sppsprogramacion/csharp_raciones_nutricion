@@ -80,6 +80,8 @@ namespace DAOImplement
                         throw new Exception("El detalle que intenta editar no existe.");
 
                     // Actualizar manualmente los campos
+                    existente.anexo_menu_id = anexoDetalle.anexo_menu_id;
+                    existente.detalle = anexoDetalle.detalle;
                     existente.cantidad = anexoDetalle.cantidad;
                     existente.factor = anexoDetalle.factor;
                     // Agregar acá todos los campos que quieras actualizar
@@ -199,7 +201,7 @@ namespace DAOImplement
                      .Include(s => s.anexo)
                      .Include(s => s.anexo_menu)
                      .Include(s => s.usuario)
-                     .Where(s => s.anexo_id == id)
+                     .Where(s => s.id_anexo_detalle == id)
                      .OrderBy(s => s.id_anexo_detalle)   // Orden ascendente
                      .FirstOrDefault();
 

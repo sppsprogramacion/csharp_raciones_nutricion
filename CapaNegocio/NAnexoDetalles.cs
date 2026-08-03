@@ -30,6 +30,13 @@ namespace CapaNegocio
 
         }
 
+        //buscar POR id
+        public (DAnexoDetalle anexoDetalle, string error) BuscarXIdDetalle(int idDetalles)
+        {
+            return anexoDetallesDAO.ObtenerPorId(idDetalles);
+        }
+        //FIN buscar POR id..................................
+
         public (List<DAnexoDetalle> lista, string error) ListarXIdAnexo(int idAnexo)
         {
             return anexoDetallesDAO.ListaXIdAnexo(idAnexo);

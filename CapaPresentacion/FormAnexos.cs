@@ -282,6 +282,41 @@ namespace CapaPresentacion
                 }
             }
         }
+
+        private void dtgAnexoDetalles_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtIdAnexo.Text))
+            {
+                MessageBox.Show("Debe seleccionar un anexo", "Nutricion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            //AL PRESIONAR ENTER MOSTRAR
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+
+                if (dtgAnexoDetalles.SelectedRows.Count > 0)
+                {
+                    int idAnexoDetalle = Convert.ToInt32(this.dtgAnexoDetalles.CurrentRow.Cells["Id"].Value);
+                    using (FormAnexoDetalleEditar formulario = new FormAnexoDetalleEditar(idAnexoDetalle))
+                    {
+                        // Aquí se abre el FormularioB
+                        if (formulario.ShowDialog() == DialogResult.OK)
+                        {
+                            this.CargarDataAnexosDetalles();
+                            
+                        }
+                    }
+
+                }//fin if
+                else
+                {
+                    MessageBox.Show("Debe seleccionar un registro.");
+                }
+
+            }
+        }
         //FIN LIMPIAR CONTROLES...................................................................
 
     }
