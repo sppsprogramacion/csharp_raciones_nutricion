@@ -629,8 +629,21 @@ namespace CapaPresentacion
 
             foreach (DMenu menu in listaMenusFiltro)
             {
-                
-                listaFiltroDetallesXMenu = listaRacionElaboradasDetalles.Where(x => x.tipo_menu.menu_id == menu.id_menu && x.tipo_menu.menu_id != 7).ToList();
+                if(menu.id_menu == 1 || menu.id_menu == 2){
+                    listaFiltroDetallesXMenu = listaRacionElaboradasDetalles.Where(x => x.tipo_menu.menu_id == menu.id_menu && x.tipo_menu.menu_id != 7 && x.unidad_id != 13 && x.unidad_id != 14).ToList();
+
+                }
+
+                if (menu.id_menu == 6)
+                {
+                    listaFiltroDetallesXMenu = listaRacionElaboradasDetalles.Where(x => (x.tipo_menu.menu_id == menu.id_menu && x.tipo_menu.menu_id != 7) || (x.unidad_id == 13 || x.unidad_id == 14)).ToList();
+
+                }
+                if (menu.id_menu != 1 && menu.id_menu != 2 && menu.id_menu != 6)
+                {
+                    listaFiltroDetallesXMenu = listaRacionElaboradasDetalles.Where(x => x.tipo_menu.menu_id == menu.id_menu && x.tipo_menu.menu_id != 7).ToList();
+                }
+
                 int desayuno = 0;
                 int almuerzo = 0;
                 int merienda = 0;

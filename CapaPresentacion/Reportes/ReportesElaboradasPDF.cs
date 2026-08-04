@@ -273,7 +273,7 @@ namespace CapaPresentacion.Reportes
             celdaTextoTotal2da.Border = Rectangle.NO_BORDER;
             tablaTotal2da.AddCell(celdaTextoTotal2da);
             //celda organismo
-            PdfPCell celdaTotal2da = new PdfPCell(new Phrase(total, fuenteTotal));
+            PdfPCell celdaTotal2da = new PdfPCell(new Phrase(total2da.ToString(), fuenteTotal));
             celdaTotal2da.PaddingTop = 3f;
             celdaTotal2da.PaddingBottom = 0f;
             celdaTotal2da.HorizontalAlignment = Element.ALIGN_CENTER;
