@@ -38,7 +38,8 @@ namespace CapaPresentacion.Reportes
 
             string organismo = "Div. Nutricion";
 
-            // Crear tabla 1 columna
+            //--- Encabezado ---
+            // Crear tabla encabezado
             PdfPTable tablaEncabezado = new PdfPTable(1);
             tablaEncabezado.WidthPercentage = 20; // ocupa 1/5 de la página
             tablaEncabezado.HorizontalAlignment = Element.ALIGN_LEFT; // tabla a la izquierda
@@ -58,34 +59,36 @@ namespace CapaPresentacion.Reportes
             celdaOrganismo.Border = Rectangle.NO_BORDER;
             celdaOrganismo.HorizontalAlignment = Element.ALIGN_CENTER;
             tablaEncabezado.AddCell(celdaOrganismo);
-            //tablaEncabezado.AddCell(new Paragraph(organismo, fuenteOrganismo));
 
             // Agregar tabla al documento
             doc.Add(tablaEncabezado);
-            //fin logo encabezado.....................................
 
-            //fecha
-            //DateTime fechaHoy = DateTime.Now;
+            //--- Fin Encabezado ---
+
+            //--- FECHA ---
             DateTime fechaPlanillaRendicion = Convert.ToDateTime(fechaRendicion);
             CultureInfo cultura = new CultureInfo("es-ES");
 
             // "d 'de' MMMM 'de' yyyy" → ejemplo: "9 de septiembre de 2025"
             string fechaCompleta = "Salta, " + fechaPlanillaRendicion.ToString("d 'de' MMMM 'de' yyyy", cultura);
 
-            //doc.Add(new Paragraph(" "));
             doc.Add(new Paragraph(fechaCompleta, fuenteNormal)
             {
                 Alignment = Element.ALIGN_RIGHT
             });
-            //fin fecha.............................
+            //--- FECHA ---
 
-            //datos planilla
+            //--- TITULO planilla ---
             Paragraph titulo = new Paragraph("PLANILLA de LIQUIDACION: " + numero_rendicion + "° Rendición ‐ Periodo del " + inicio.ToString("dd/MM/yyyy") + " al " + fin.ToString("dd/MM/yyyy"), fuenteTitulo);
             titulo.Alignment = Element.ALIGN_CENTER;
             doc.Add(titulo);
+
+            //--- FIN Titulo planilla ---
+
             doc.Add(new Paragraph(" "));
 
-            //UNA pagina cuando son por quincena            
+            //UNA pagina cuando son por quincena
+            //--- TABLA planilla
             PdfPTable tablaPlanilla = new PdfPTable(encabezadoPlanilla.Count);
             tablaPlanilla.WidthPercentage = 100;
             float[] anchos = Enumerable.Repeat(0.8f, encabezadoPlanilla.Count).ToArray();
@@ -162,8 +165,12 @@ namespace CapaPresentacion.Reportes
             //Agregar firmas
             AgregarFirmasPiePagina(doc, writer);
 
+            //--- FIN TABLA planilla ---
+
             // --------------------------------- Nueva página ----------------------------------------------
             doc.NewPage();
+
+            //--- PAGINA Tabla Menus agrupados ---
 
             // Agregar tabla encabezado al documento
             doc.Add(tablaEncabezado);
@@ -252,7 +259,6 @@ namespace CapaPresentacion.Reportes
             //agregar contenedor al documentp
             doc.Add(contenedor);
 
-            //doc.Add(tabla);
 
             // Crear tabla tablaTotal2da  columna
             PdfPTable tablaTotal2da = new PdfPTable(2);
@@ -287,6 +293,7 @@ namespace CapaPresentacion.Reportes
             //Agregar firmas
             AgregarFirmasPiePagina(doc, writer);
 
+            //--- FIN PAGINA Tabla Menus agrupados ---
 
             doc.Close(); // Cierra el documento pero NO el MemoryStream
             ms.Position = 0;
@@ -755,209 +762,6 @@ namespace CapaPresentacion.Reportes
         }
         //FIN PLANILLA RENDICION MENDUAL..................................................................  
 
-        //PLANILLA PARTE DIARIO
-        public static MemoryStream RepPdfPlanillaParteDiario(List<DUnidadMenuCantidades> listaUnidadesCantidades)
-        {
-            MemoryStream ms = new MemoryStream();
-
-            Document doc = new Document(PageSize.A4.Rotate(), 5, 5, 5, 5);
-
-            PdfWriter writer = PdfWriter.GetInstance(doc, ms);
-            writer.CloseStream = false;
-
-            doc.Open();
-
-            // Fuentes
-            Font fuenteLogo = FontFactory.GetFont(FontFactory.TIMES_BOLD, 8);
-            Font fuenteOrganismo = FontFactory.GetFont(FontFactory.TIMES, 8);
-            Font fuenteTitulo = FontFactory.GetFont(FontFactory.TIMES_BOLD, 9);
-            Font fuenteEncabezado = FontFactory.GetFont(FontFactory.TIMES_BOLD, 7);
-            Font fuenteCelda = FontFactory.GetFont(FontFactory.TIMES, 7);
-            Font fuenteTotales = FontFactory.GetFont(FontFactory.TIMES_BOLD, 7);
-
-            // Encabezado
-            PdfPTable tablaEncabezado = new PdfPTable(2);
-            tablaEncabezado.WidthPercentage = 100;
-            tablaEncabezado.SetWidths(new float[] { 30f, 70f });
-
-            PdfPCell celdaIzq = new PdfPCell(
-                new Phrase(
-                    "SERVICIO PENITENCIARIO DE LA\nPROVINCIA DE SALTA\nDiv. Nutrición",
-                    fuenteLogo));
-
-            celdaIzq.Border = Rectangle.NO_BORDER;
-            celdaIzq.HorizontalAlignment = Element.ALIGN_CENTER;
-
-            PdfPCell celdaFecha = new PdfPCell(
-                new Phrase(
-                    "Salta, " + DateTime.Now.ToString("dddd d 'de' MMMM 'de' yyyy"),
-                    fuenteLogo));
-
-            celdaFecha.Border = Rectangle.NO_BORDER;
-            celdaFecha.HorizontalAlignment = Element.ALIGN_RIGHT;
-
-            tablaEncabezado.AddCell(celdaIzq);
-            tablaEncabezado.AddCell(celdaFecha);
-
-            doc.Add(tablaEncabezado);
-
-            Paragraph titulo = new Paragraph(
-                "Raciones SOLICITADAS",
-                fuenteTitulo);
-
-            titulo.Alignment = Element.ALIGN_CENTER;
-
-            doc.Add(titulo);
-
-            doc.Add(new Paragraph(" "));
-
-            // AQUÍ VENDRÁ LA TABLA
-            PdfPTable tabla = new PdfPTable(23);
-            tabla.WidthPercentage = 100;
-
-            tabla.SetWidths(new float[]
-            {
-                4f,      // Unidad
-
-                .7f,.7f, // P12
-                .7f,.7f, // P24
-                .7f,.7f, // IntN
-                .7f,.7f, // Astr
-                .7f,.7f, // Celi
-                .7f,.7f, // AFib
-                .7f,.7f, // Hep
-                .7f,.7f, // SSal
-                .7f,.7f, // HivTbc
-                .7f,.7f, // Men
-                .7f,.7f  // SobreAl
-            });
-
-            //agregar filas de encabezados
-            // UNIDADES
-            PdfPCell celdaUnidad = new PdfPCell(new Phrase("Unidades\nCarcelarias", fuenteEncabezado));
-            celdaUnidad.Rowspan = 3;
-            celdaUnidad.HorizontalAlignment = Element.ALIGN_CENTER;
-            celdaUnidad.VerticalAlignment = Element.ALIGN_MIDDLE;
-            tabla.AddCell(celdaUnidad);
-
-            // PERSONAL (12Hs + 24Hs = 4 columnas)
-            PdfPCell celdaPersonal = new PdfPCell(
-                new Phrase("PERSONAL", fuenteEncabezado));
-
-            celdaPersonal.Colspan = 4;
-            celdaPersonal.HorizontalAlignment = Element.ALIGN_CENTER;
-            tabla.AddCell(celdaPersonal);
-
-            // INTERNOS NORMAL (2 columnas)
-            PdfPCell celdaInternos = new PdfPCell(new Phrase("Internos\n(Normal)", fuenteEncabezado));
-            celdaInternos.Colspan = 2;
-            celdaInternos.Rowspan = 2;
-            celdaInternos.HorizontalAlignment = Element.ALIGN_CENTER;
-            celdaInternos.VerticalAlignment = Element.ALIGN_MIDDLE;
-            tabla.AddCell(celdaInternos);
-
-            // REGIMEN DIETOTERAPICO (16 columnas)
-            PdfPCell celdaRegimen = new PdfPCell(new Phrase("Régimen DIETOTERÁPICO: Personal/Internos",fuenteEncabezado));
-            celdaRegimen.Colspan = 16;
-            celdaRegimen.HorizontalAlignment = Element.ALIGN_CENTER;
-            tabla.AddCell(celdaRegimen);
-
-            //--segunda fila encabezado
-            AgregarGrupo(tabla, "12Hs", fuenteEncabezado);
-            AgregarGrupo(tabla, "24Hs", fuenteEncabezado);
-
-            AgregarGrupo(tabla, "Dieta\nAstring.", fuenteEncabezado);
-            AgregarGrupo(tabla, "Dieta\nCelíaco", fuenteEncabezado);
-            AgregarGrupo(tabla, "Dieta Alta\nen Fibra", fuenteEncabezado);
-            AgregarGrupo(tabla, "Dieta Hepato\nProtectora", fuenteEncabezado);
-            AgregarGrupo(tabla, "Dieta\nS/Sal", fuenteEncabezado);
-            AgregarGrupo(tabla, "Dieta\nHIV/TBC", fuenteEncabezado);
-            AgregarGrupo(tabla, "Menores", fuenteEncabezado);
-            AgregarGrupo(tabla, "Sobre\nAlim.", fuenteEncabezado);
-
-
-            //--tercer fila encabezado
-            
-            BaseColor colorBlanco = BaseColor.WHITE;
-            BaseColor colorAlternado = new BaseColor(244, 220, 180); // parecido a SandyBrown
-            for (int i = 0; i < 11; i++)
-            {
-                BaseColor color = (i % 2 == 0)
-                    ? colorBlanco
-                    : colorAlternado;
-
-                PdfPCell celdaA = new PdfPCell(new Phrase("Alm.", fuenteEncabezado));
-                celdaA.BackgroundColor = color;
-                celdaA.HorizontalAlignment = Element.ALIGN_CENTER;
-                tabla.AddCell(celdaA);
-
-                PdfPCell celdaC = new PdfPCell(new Phrase("Cena", fuenteEncabezado));
-                celdaC.BackgroundColor = color;
-                celdaC.HorizontalAlignment = Element.ALIGN_CENTER;
-                tabla.AddCell(celdaC);
-            }
-
-
-            //agregar celdas
-            foreach (DUnidadMenuCantidades item in listaUnidadesCantidades)
-            {
-                Font fuente = item.unidad == "Totales"
-                    ? fuenteTotales
-                    : fuenteCelda;
-
-                BaseColor colorFondo = item.unidad == "Totales"
-                    ? BaseColor.LIGHT_GRAY
-                    : BaseColor.WHITE;
-                
-
-                AgregarCelda(tabla, item.unidad, fuente, item.unidad == "Totales" ? BaseColor.LIGHT_GRAY : BaseColor.WHITE,
-                    Element.ALIGN_LEFT);
-
-                // Valores numéricos
-                int[] valores =
-                {
-                    item.P12_A, item.P12_C,
-                    item.P24_A, item.P24_C,
-                    item.IntN_A, item.IntN_C,
-                    item.Astr_A, item.Astr_C,
-                    item.Celi_A, item.Celi_C,
-                    item.AFib_A, item.AFib_C,
-                    item.Hep_A, item.Hep_C,
-                    item.SSal_A, item.SSal_C,
-                    item.HivTbc_A, item.HivTbc_C,
-                    item.Men_A, item.Men_C,
-                    item.SobreAl_A, item.SobreAl_C
-                };
-
-                //color de las columnas
-                BaseColor colorAlternado2 = new BaseColor(244, 220, 180);
-
-                for (int grupo = 0; grupo < 11; grupo++)
-                {
-                    BaseColor colorGrupo = (grupo % 2 == 0)
-                        ? BaseColor.WHITE
-                        : colorAlternado2;
-
-                    // Si es la fila Totales, mantener gris
-                    if (item.unidad == "Totales")
-                        colorGrupo = BaseColor.LIGHT_GRAY;
-
-                    AgregarCelda(tabla,valores[grupo * 2].ToString(),fuente,colorGrupo);
-
-                    AgregarCelda(tabla, valores[grupo * 2 + 1].ToString(), fuente, colorGrupo);
-                }
-            }
-
-            //agregar tabla
-            doc.Add(tabla);
-
-            doc.Close();
-
-            ms.Position = 0;
-
-            return ms;
-        }
-        //FIN PLANILLA PARTE DIARIO
 
         //AGREGAR FILA
         private static void AgregarFila(
